@@ -7,9 +7,9 @@ import { useListings } from "@/hooks/useListings";
 import { format } from "date-fns";
 
 export function FeaturedListings() {
-  const { listings: products, isLoading: productsLoading } = useListings({ type: "product", limit: 12 });
-  const { listings: services, isLoading: servicesLoading } = useListings({ type: "service", limit: 8 });
-  const { listings: events, isLoading: eventsLoading } = useListings({ type: "event", limit: 8 });
+  const { listings: products, isLoading: productsLoading } = useListings({ type: "product", limit: 30 });
+  const { listings: services, isLoading: servicesLoading } = useListings({ type: "service", limit: 30 });
+  const { listings: events, isLoading: eventsLoading } = useListings({ type: "event", limit: 30 });
 
   const isLoading = productsLoading || servicesLoading || eventsLoading;
 
