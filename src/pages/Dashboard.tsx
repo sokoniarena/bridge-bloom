@@ -1,19 +1,20 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { Plus, Eye, Edit, Trash2, Package, Sparkles, Calendar, TrendingUp, Heart, Loader2 } from "lucide-react";
+import { Plus, Eye, Edit, Trash2, Package, Sparkles, Calendar, TrendingUp, Heart, Loader2, User } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { ListingForm } from "@/components/dashboard/ListingForm";
 import { SponsorRequestButton } from "@/components/dashboard/SponsorRequestButton";
+import { ProfileEditor } from "@/components/profile/ProfileEditor";
 import { cn } from "@/lib/utils";
 
 interface Listing {
@@ -44,13 +45,14 @@ const typeIcons = {
 export default function Dashboard() {
   const { user } = useAuth();
   const { toast } = useToast();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [listings, setListings] = useState<Listing[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingListing, setEditingListing] = useState<Listing | null>(null);
-  const [activeTab, setActiveTab] = useState("all");
+  const [listingTypeFilter, setListingTypeFilter] = useState("all");
+  const [dashboardTab, setDashboardTab] = useState(searchParams.get("tab") || "listings");
 
-  // Stats
   const [stats, setStats] = useState({
     total: 0,
     active: 0,
@@ -76,13 +78,10 @@ export default function Dashboard() {
       });
     } else {
       setListings(data || []);
-      
-      // Calculate stats
       const total = data?.length || 0;
       const active = data?.filter((l) => l.status === "available").length || 0;
       const views = data?.reduce((sum, l) => sum + (l.views_count || 0), 0) || 0;
       const favorites = data?.reduce((sum, l) => sum + (l.favorites_count || 0), 0) || 0;
-      
       setStats({ total, active, views, favorites });
     }
     setIsLoading(false);
@@ -99,11 +98,7 @@ export default function Dashboard() {
       .eq("id", listingId);
 
     if (error) {
-      toast({
-        title: "Error updating status",
-        description: error.message,
-        variant: "destructive",
-      });
+      toast({ title: "Error updating status", description: error.message, variant: "destructive" });
     } else {
       toast({ title: "Status updated" });
       fetchListings();
@@ -111,17 +106,10 @@ export default function Dashboard() {
   };
 
   const handleDelete = async (listingId: string) => {
-    const { error } = await supabase
-      .from("listings")
-      .delete()
-      .eq("id", listingId);
+    const { error } = await supabase.from("listings").delete().eq("id", listingId);
 
     if (error) {
-      toast({
-        title: "Error deleting listing",
-        description: error.message,
-        variant: "destructive",
-      });
+      toast({ title: "Error deleting listing", description: error.message, variant: "destructive" });
     } else {
       toast({ title: "Listing deleted" });
       fetchListings();
@@ -144,8 +132,8 @@ export default function Dashboard() {
   };
 
   const filteredListings = listings.filter((listing) => {
-    if (activeTab === "all") return true;
-    return listing.listing_type === activeTab;
+    if (listingTypeFilter === "all") return true;
+    return listing.listing_type === listingTypeFilter;
   });
 
   return (
@@ -155,228 +143,215 @@ export default function Dashboard() {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div>
             <h1 className="font-display text-3xl font-bold mb-1">Dashboard</h1>
-            <p className="text-muted-foreground">Manage your listings and track performance</p>
+            <p className="text-muted-foreground">Manage your listings and profile</p>
           </div>
-          <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
-            <DialogTrigger asChild>
-              <Button size="lg">
-                <Plus className="h-4 w-4" />
-                Create Listing
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-              <DialogHeader>
-                <DialogTitle>{editingListing ? "Edit Listing" : "Create New Listing"}</DialogTitle>
-                <DialogDescription>
-                  {editingListing ? "Update your listing details" : "Fill in the details for your new listing"}
-                </DialogDescription>
-              </DialogHeader>
-              <ListingForm
-                listing={editingListing}
-                onSuccess={handleFormSuccess}
-                onCancel={handleFormClose}
-              />
-            </DialogContent>
-          </Dialog>
+          <Tabs value={dashboardTab} onValueChange={(v) => { setDashboardTab(v); setSearchParams({ tab: v }); }}>
+            <TabsList>
+              <TabsTrigger value="listings">
+                <Package className="h-4 w-4 mr-1" />
+                Listings
+              </TabsTrigger>
+              <TabsTrigger value="profile">
+                <User className="h-4 w-4 mr-1" />
+                Profile
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
         </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-primary/10">
-                  <Package className="h-5 w-5 text-primary" />
-                </div>
-                <div>
-                  <p className="text-2xl font-bold">{stats.total}</p>
-                  <p className="text-sm text-muted-foreground">Total Listings</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-green-100 dark:bg-green-900">
-                  <TrendingUp className="h-5 w-5 text-green-600" />
-                </div>
-                <div>
-                  <p className="text-2xl font-bold">{stats.active}</p>
-                  <p className="text-sm text-muted-foreground">Active</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-blue-100 dark:bg-blue-900">
-                  <Eye className="h-5 w-5 text-blue-600" />
-                </div>
-                <div>
-                  <p className="text-2xl font-bold">{stats.views}</p>
-                  <p className="text-sm text-muted-foreground">Total Views</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-rose-100 dark:bg-rose-900">
-                  <Heart className="h-5 w-5 text-rose-600" />
-                </div>
-                <div>
-                  <p className="text-2xl font-bold">{stats.favorites}</p>
-                  <p className="text-sm text-muted-foreground">Favorites</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Listings */}
-        <Card>
-          <CardHeader>
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-              <CardTitle>Your Listings</CardTitle>
-              <Tabs value={activeTab} onValueChange={setActiveTab}>
-                <TabsList>
-                  <TabsTrigger value="all">All</TabsTrigger>
-                  <TabsTrigger value="product">Products</TabsTrigger>
-                  <TabsTrigger value="service">Services</TabsTrigger>
-                  <TabsTrigger value="event">Events</TabsTrigger>
-                </TabsList>
-              </Tabs>
-            </div>
-          </CardHeader>
-          <CardContent>
-            {isLoading ? (
-              <div className="flex items-center justify-center py-12">
-                <Loader2 className="h-8 w-8 animate-spin text-primary" />
-              </div>
-            ) : filteredListings.length === 0 ? (
-              <div className="text-center py-12">
-                <Package className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                <h3 className="font-semibold text-lg mb-2">No listings yet</h3>
-                <p className="text-muted-foreground mb-4">
-                  Create your first listing to start selling
-                </p>
-                <Button onClick={() => setIsFormOpen(true)}>
-                  <Plus className="h-4 w-4" />
-                  Create Listing
-                </Button>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {filteredListings.map((listing) => {
-                  const TypeIcon = typeIcons[listing.listing_type];
-                  return (
-                    <div
-                      key={listing.id}
-                      className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 rounded-lg border bg-card hover:shadow-md transition-shadow"
-                    >
-                      <div className="flex items-center gap-4">
-                        {/* Thumbnail */}
-                        <div className="w-16 h-16 rounded-lg bg-muted overflow-hidden shrink-0">
-                          {listing.images?.[0] ? (
-                            <img
-                              src={listing.images[0]}
-                              alt={listing.title}
-                              className="w-full h-full object-cover"
-                            />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center">
-                              <TypeIcon className="h-6 w-6 text-muted-foreground" />
-                            </div>
-                          )}
-                        </div>
-
-                        {/* Details */}
-                        <div className="min-w-0">
-                          <div className="flex items-center gap-2 mb-1">
-                            <TypeIcon className="h-4 w-4 text-muted-foreground" />
-                            <h3 className="font-medium truncate">{listing.title}</h3>
-                          </div>
-                          <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                            <span className="flex items-center gap-1">
-                              <Eye className="h-3 w-3" />
-                              {listing.views_count}
-                            </span>
-                            <span className="flex items-center gap-1">
-                              <Heart className="h-3 w-3" />
-                              {listing.favorites_count}
-                            </span>
-                            {listing.price && (
-                              <span className="font-medium text-foreground">
-                                KES {listing.price.toLocaleString()}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Actions */}
-                      <div className="flex items-center gap-3">
-                        <Select
-                          value={listing.status}
-                          onValueChange={(value: "available" | "out_of_stock" | "expired" | "draft") => handleStatusChange(listing.id, value)}
-                        >
-                          <SelectTrigger className="w-36">
-                            <Badge variant="secondary" className={cn("text-xs", statusColors[listing.status])}>
-                              {listing.status.replace("_", " ")}
-                            </Badge>
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="available">Available</SelectItem>
-                            <SelectItem value="out_of_stock">Out of Stock</SelectItem>
-                            <SelectItem value="expired">Expired</SelectItem>
-                            <SelectItem value="draft">Draft</SelectItem>
-                          </SelectContent>
-                        </Select>
-
-                        <Button variant="ghost" size="icon" onClick={() => handleEdit(listing)}>
-                          <Edit className="h-4 w-4" />
-                        </Button>
-
-                        <SponsorRequestButton 
-                          listingId={listing.id} 
-                          listingTitle={listing.title} 
-                        />
-
-                        <AlertDialog>
-                          <AlertDialogTrigger asChild>
-                            <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive">
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
-                          </AlertDialogTrigger>
-                          <AlertDialogContent>
-                            <AlertDialogHeader>
-                              <AlertDialogTitle>Delete Listing?</AlertDialogTitle>
-                              <AlertDialogDescription>
-                                This action cannot be undone. This will permanently delete your listing.
-                              </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                              <AlertDialogCancel>Cancel</AlertDialogCancel>
-                              <AlertDialogAction
-                                onClick={() => handleDelete(listing.id)}
-                                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                              >
-                                Delete
-                              </AlertDialogAction>
-                            </AlertDialogFooter>
-                          </AlertDialogContent>
-                        </AlertDialog>
-                      </div>
+        {dashboardTab === "profile" ? (
+          <ProfileEditor />
+        ) : (
+          <>
+            {/* Stats Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+              <Card>
+                <CardContent className="p-4">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-primary/10">
+                      <Package className="h-5 w-5 text-primary" />
                     </div>
-                  );
-                })}
+                    <div>
+                      <p className="text-2xl font-bold">{stats.total}</p>
+                      <p className="text-sm text-muted-foreground">Total Listings</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-4">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-accent/20">
+                      <TrendingUp className="h-5 w-5 text-accent-foreground" />
+                    </div>
+                    <div>
+                      <p className="text-2xl font-bold">{stats.active}</p>
+                      <p className="text-sm text-muted-foreground">Active</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-4">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-secondary">
+                      <Eye className="h-5 w-5 text-secondary-foreground" />
+                    </div>
+                    <div>
+                      <p className="text-2xl font-bold">{stats.views}</p>
+                      <p className="text-sm text-muted-foreground">Total Views</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-4">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-destructive/10">
+                      <Heart className="h-5 w-5 text-destructive" />
+                    </div>
+                    <div>
+                      <p className="text-2xl font-bold">{stats.favorites}</p>
+                      <p className="text-sm text-muted-foreground">Favorites</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Listings Card */}
+            <Card>
+              <div className="p-6 border-b">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                  <h2 className="font-semibold text-lg">Your Listings</h2>
+                  <div className="flex items-center gap-3">
+                    <Tabs value={listingTypeFilter} onValueChange={setListingTypeFilter}>
+                      <TabsList>
+                        <TabsTrigger value="all">All</TabsTrigger>
+                        <TabsTrigger value="product">Products</TabsTrigger>
+                        <TabsTrigger value="service">Services</TabsTrigger>
+                        <TabsTrigger value="event">Events</TabsTrigger>
+                      </TabsList>
+                    </Tabs>
+                    <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
+                      <DialogTrigger asChild>
+                        <Button>
+                          <Plus className="h-4 w-4" />
+                          Create
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                        <DialogHeader>
+                          <DialogTitle>{editingListing ? "Edit Listing" : "Create New Listing"}</DialogTitle>
+                          <DialogDescription>
+                            {editingListing ? "Update your listing details" : "Fill in the details for your new listing"}
+                          </DialogDescription>
+                        </DialogHeader>
+                        <ListingForm listing={editingListing} onSuccess={handleFormSuccess} onCancel={handleFormClose} />
+                      </DialogContent>
+                    </Dialog>
+                  </div>
+                </div>
               </div>
-            )}
-          </CardContent>
-        </Card>
+              <CardContent className="p-6">
+                {isLoading ? (
+                  <div className="flex items-center justify-center py-12">
+                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                  </div>
+                ) : filteredListings.length === 0 ? (
+                  <div className="text-center py-12">
+                    <Package className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                    <h3 className="font-semibold text-lg mb-2">No listings yet</h3>
+                    <p className="text-muted-foreground mb-4">Create your first listing to start selling</p>
+                    <Button onClick={() => setIsFormOpen(true)}>
+                      <Plus className="h-4 w-4" />
+                      Create Listing
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {filteredListings.map((listing) => {
+                      const TypeIcon = typeIcons[listing.listing_type];
+                      return (
+                        <div
+                          key={listing.id}
+                          className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 rounded-lg border bg-card hover:shadow-md transition-shadow"
+                        >
+                          <div className="flex items-center gap-4">
+                            <div className="w-16 h-16 rounded-lg bg-muted overflow-hidden shrink-0">
+                              {listing.images?.[0] ? (
+                                <img src={listing.images[0]} alt={listing.title} className="w-full h-full object-cover" />
+                              ) : (
+                                <div className="w-full h-full flex items-center justify-center">
+                                  <TypeIcon className="h-6 w-6 text-muted-foreground" />
+                                </div>
+                              )}
+                            </div>
+                            <div className="min-w-0">
+                              <div className="flex items-center gap-2 mb-1">
+                                <TypeIcon className="h-4 w-4 text-muted-foreground" />
+                                <h3 className="font-medium truncate">{listing.title}</h3>
+                              </div>
+                              <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                                <span className="flex items-center gap-1">
+                                  <Eye className="h-3 w-3" />
+                                  {listing.views_count}
+                                </span>
+                                <span className="flex items-center gap-1">
+                                  <Heart className="h-3 w-3" />
+                                  {listing.favorites_count}
+                                </span>
+                                {listing.price && <span className="font-medium text-foreground">KES {listing.price.toLocaleString()}</span>}
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <Select value={listing.status} onValueChange={(value: "available" | "out_of_stock" | "expired" | "draft") => handleStatusChange(listing.id, value)}>
+                              <SelectTrigger className="w-36">
+                                <Badge variant="secondary" className={cn("text-xs", statusColors[listing.status])}>
+                                  {listing.status.replace("_", " ")}
+                                </Badge>
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="available">Available</SelectItem>
+                                <SelectItem value="out_of_stock">Out of Stock</SelectItem>
+                                <SelectItem value="expired">Expired</SelectItem>
+                                <SelectItem value="draft">Draft</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <Button variant="ghost" size="icon" onClick={() => handleEdit(listing)}>
+                              <Edit className="h-4 w-4" />
+                            </Button>
+                            <SponsorRequestButton listingId={listing.id} listingTitle={listing.title} />
+                            <AlertDialog>
+                              <AlertDialogTrigger asChild>
+                                <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive">
+                                  <Trash2 className="h-4 w-4" />
+                                </Button>
+                              </AlertDialogTrigger>
+                              <AlertDialogContent>
+                                <AlertDialogHeader>
+                                  <AlertDialogTitle>Delete Listing?</AlertDialogTitle>
+                                  <AlertDialogDescription>This action cannot be undone. This will permanently delete your listing.</AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                  <AlertDialogAction onClick={() => handleDelete(listing.id)} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                                    Delete
+                                  </AlertDialogAction>
+                                </AlertDialogFooter>
+                              </AlertDialogContent>
+                            </AlertDialog>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </>
+        )}
       </div>
     </Layout>
   );

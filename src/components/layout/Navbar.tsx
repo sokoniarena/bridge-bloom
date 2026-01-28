@@ -3,9 +3,10 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Menu, Search, ShoppingBag, Sparkles, Calendar, User, X, LogOut, LayoutDashboard, Shield } from "lucide-react";
+import { Menu, Search, ShoppingBag, Sparkles, Calendar, User, X, LogOut, LayoutDashboard, Shield, Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
+import { NotificationBell } from "@/components/notifications/NotificationBell";
 
 const navLinks = [
   { href: "/products", label: "Products", icon: ShoppingBag },
@@ -65,6 +66,16 @@ export function Navbar() {
               <Search className="h-5 w-5" />
             </Link>
           </Button>
+
+          {user && <NotificationBell />}
+
+          {user && (
+            <Button variant="ghost" size="icon" asChild>
+              <Link to="/favorites">
+                <Heart className="h-5 w-5" />
+              </Link>
+            </Button>
+          )}
 
           {user ? (
             <DropdownMenu>
@@ -160,6 +171,14 @@ export function Navbar() {
 
                   {user && (
                     <>
+                      <Link
+                        to="/favorites"
+                        onClick={() => setIsOpen(false)}
+                        className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-muted"
+                      >
+                        <Heart className="h-5 w-5" />
+                        Favorites
+                      </Link>
                       <Link
                         to="/dashboard"
                         onClick={() => setIsOpen(false)}

@@ -1,48 +1,316 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { ListingCard } from "@/components/listings/ListingCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Search as SearchIcon, SlidersHorizontal, X } from "lucide-react";
+import { Slider } from "@/components/ui/slider";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Skeleton } from "@/components/ui/skeleton";
+import { supabase } from "@/integrations/supabase/client";
+import {
+  Search as SearchIcon,
+  SlidersHorizontal,
+  X,
+  MapPin,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 
-// Combined mock data
-const allListings = [
-  // Products
-  { id: "1", title: "iPhone 15 Pro Max 256GB", price: 145000, originalPrice: 180000, image: "https://images.unsplash.com/photo-1696446701796-da61225697cc?w=500&q=80", location: "Nairobi, Westlands", category: "product" as const, isSponsored: true, rating: 4.9 },
-  { id: "2", title: "Toyota Vitz 2018", price: 950000, image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=500&q=80", location: "Mombasa", category: "product" as const, rating: 4.7 },
-  { id: "3", title: "Samsung 55\" 4K Smart TV", price: 65000, image: "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=500&q=80", location: "Kisumu", category: "product" as const, rating: 4.8 },
-  { id: "4", title: "MacBook Pro M3 14\"", price: 280000, image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&q=80", location: "Nairobi, CBD", category: "product" as const, rating: 5.0 },
-  // Services
-  { id: "s1", title: "Professional Home Cleaning", price: 3500, image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=500&q=80", location: "Nairobi", category: "service" as const, rating: 4.9, isSponsored: true },
-  { id: "s2", title: "Web Development Services", price: 50000, image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=500&q=80", location: "Remote", category: "service" as const, rating: 5.0 },
-  // Events
-  { id: "e1", title: "Tech Week 2024", price: 5000, image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=500&q=80", location: "KICC", category: "event" as const, eventDate: "Mar 15", isSponsored: true },
-  { id: "e2", title: "Blankets & Wine", price: 3500, image: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=500&q=80", location: "Ngong", category: "event" as const, eventDate: "Mar 22" },
+interface Listing {
+  id: string;
+  title: string;
+  price: number | null;
+  original_price: number | null;
+  images: string[];
+  location: string;
+  listing_type: "product" | "service" | "event";
+  is_sponsored: boolean;
+  is_featured: boolean;
+  is_free: boolean;
+  event_date: string | null;
+  created_at: string;
+}
+
+const ITEMS_PER_PAGE = 12;
+
+const LOCATIONS = [
+  "All Locations",
+  "Nairobi",
+  "Mombasa",
+  "Kisumu",
+  "Nakuru",
+  "Eldoret",
+  "Thika",
+  "Malindi",
+  "Kitale",
+  "Garissa",
+  "Nyeri",
+];
+
+const CATEGORIES = [
+  "All Categories",
+  "Electronics",
+  "Vehicles",
+  "Fashion",
+  "Home & Garden",
+  "Sports",
+  "Services",
+  "Events",
+  "Others",
 ];
 
 export default function Search() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState(searchParams.get("q") || "");
-  const [activeTab, setActiveTab] = useState("all");
-  const [sortBy, setSortBy] = useState("relevance");
+  const [listings, setListings] = useState<Listing[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [totalCount, setTotalCount] = useState(0);
 
-  const filteredListings = allListings.filter((listing) => {
-    const matchesQuery = query === "" || 
-      listing.title.toLowerCase().includes(query.toLowerCase()) ||
-      listing.location.toLowerCase().includes(query.toLowerCase());
-    
-    const matchesCategory = activeTab === "all" || listing.category === activeTab;
-    
-    return matchesQuery && matchesCategory;
-  });
+  // Filters
+  const [activeTab, setActiveTab] = useState(
+    searchParams.get("type") || "all"
+  );
+  const [sortBy, setSortBy] = useState(searchParams.get("sort") || "newest");
+  const [selectedLocation, setSelectedLocation] = useState(
+    searchParams.get("location") || "All Locations"
+  );
+  const [selectedCategory, setSelectedCategory] = useState(
+    searchParams.get("category") || "All Categories"
+  );
+  const [priceRange, setPriceRange] = useState<[number, number]>([
+    parseInt(searchParams.get("minPrice") || "0"),
+    parseInt(searchParams.get("maxPrice") || "1000000"),
+  ]);
+  const [currentPage, setCurrentPage] = useState(
+    parseInt(searchParams.get("page") || "1")
+  );
+
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+
+  const fetchListings = useCallback(async () => {
+    setIsLoading(true);
+
+    let queryBuilder = supabase
+      .from("listings")
+      .select("*", { count: "exact" })
+      .eq("status", "available");
+
+    // Search query
+    if (query) {
+      queryBuilder = queryBuilder.or(
+        `title.ilike.%${query}%,description.ilike.%${query}%,location.ilike.%${query}%`
+      );
+    }
+
+    // Category filter (listing type)
+    if (activeTab !== "all") {
+      const listingType = activeTab as "product" | "service" | "event";
+      queryBuilder = queryBuilder.eq("listing_type", listingType);
+    }
+
+    // Location filter
+    if (selectedLocation !== "All Locations") {
+      queryBuilder = queryBuilder.ilike("location", `%${selectedLocation}%`);
+    }
+
+    // Category filter (category field)
+    if (selectedCategory !== "All Categories") {
+      queryBuilder = queryBuilder.eq("category", selectedCategory);
+    }
+
+    // Price filter
+    if (priceRange[0] > 0) {
+      queryBuilder = queryBuilder.gte("price", priceRange[0]);
+    }
+    if (priceRange[1] < 1000000) {
+      queryBuilder = queryBuilder.lte("price", priceRange[1]);
+    }
+
+    // Sorting
+    switch (sortBy) {
+      case "newest":
+        queryBuilder = queryBuilder.order("created_at", { ascending: false });
+        break;
+      case "oldest":
+        queryBuilder = queryBuilder.order("created_at", { ascending: true });
+        break;
+      case "price-low":
+        queryBuilder = queryBuilder.order("price", {
+          ascending: true,
+          nullsFirst: false,
+        });
+        break;
+      case "price-high":
+        queryBuilder = queryBuilder.order("price", {
+          ascending: false,
+          nullsFirst: false,
+        });
+        break;
+      default:
+        // Relevance - sponsored first, then by created_at
+        queryBuilder = queryBuilder
+          .order("is_sponsored", { ascending: false })
+          .order("created_at", { ascending: false });
+    }
+
+    // Pagination
+    const from = (currentPage - 1) * ITEMS_PER_PAGE;
+    const to = from + ITEMS_PER_PAGE - 1;
+    queryBuilder = queryBuilder.range(from, to);
+
+    const { data, count } = await queryBuilder;
+
+    if (data) {
+      setListings(data as Listing[]);
+      setTotalCount(count || 0);
+    }
+
+    setIsLoading(false);
+  }, [query, activeTab, sortBy, selectedLocation, selectedCategory, priceRange, currentPage]);
+
+  useEffect(() => {
+    fetchListings();
+  }, [fetchListings]);
+
+  // Update URL params when filters change
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (query) params.set("q", query);
+    if (activeTab !== "all") params.set("type", activeTab);
+    if (sortBy !== "newest") params.set("sort", sortBy);
+    if (selectedLocation !== "All Locations")
+      params.set("location", selectedLocation);
+    if (selectedCategory !== "All Categories")
+      params.set("category", selectedCategory);
+    if (priceRange[0] > 0) params.set("minPrice", priceRange[0].toString());
+    if (priceRange[1] < 1000000)
+      params.set("maxPrice", priceRange[1].toString());
+    if (currentPage > 1) params.set("page", currentPage.toString());
+
+    setSearchParams(params, { replace: true });
+  }, [
+    query,
+    activeTab,
+    sortBy,
+    selectedLocation,
+    selectedCategory,
+    priceRange,
+    currentPage,
+    setSearchParams,
+  ]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    setSearchParams(query ? { q: query } : {});
+    setCurrentPage(1);
+    fetchListings();
   };
+
+  const clearFilters = () => {
+    setSelectedLocation("All Locations");
+    setSelectedCategory("All Categories");
+    setPriceRange([0, 1000000]);
+    setCurrentPage(1);
+    setIsFiltersOpen(false);
+  };
+
+  const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
+
+  const FiltersContent = () => (
+    <div className="space-y-6">
+      {/* Location */}
+      <div className="space-y-2">
+        <Label>Location</Label>
+        <Select value={selectedLocation} onValueChange={setSelectedLocation}>
+          <SelectTrigger>
+            <SelectValue placeholder="Select location" />
+          </SelectTrigger>
+          <SelectContent>
+            {LOCATIONS.map((loc) => (
+              <SelectItem key={loc} value={loc}>
+                {loc}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      {/* Category */}
+      <div className="space-y-2">
+        <Label>Category</Label>
+        <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+          <SelectTrigger>
+            <SelectValue placeholder="Select category" />
+          </SelectTrigger>
+          <SelectContent>
+            {CATEGORIES.map((cat) => (
+              <SelectItem key={cat} value={cat}>
+                {cat}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      {/* Price Range */}
+      <div className="space-y-4">
+        <Label>
+          Price Range: KES {priceRange[0].toLocaleString()} - KES{" "}
+          {priceRange[1].toLocaleString()}
+        </Label>
+        <Slider
+          value={priceRange}
+          onValueChange={(value) => setPriceRange(value as [number, number])}
+          max={1000000}
+          step={5000}
+          className="mt-2"
+        />
+        <div className="flex gap-2">
+          <Input
+            type="number"
+            value={priceRange[0]}
+            onChange={(e) =>
+              setPriceRange([parseInt(e.target.value) || 0, priceRange[1]])
+            }
+            placeholder="Min"
+          />
+          <Input
+            type="number"
+            value={priceRange[1]}
+            onChange={(e) =>
+              setPriceRange([priceRange[0], parseInt(e.target.value) || 1000000])
+            }
+            placeholder="Max"
+          />
+        </div>
+      </div>
+
+      <div className="flex gap-2">
+        <Button variant="outline" className="flex-1" onClick={clearFilters}>
+          Clear All
+        </Button>
+        <Button className="flex-1" onClick={() => setIsFiltersOpen(false)}>
+          Apply Filters
+        </Button>
+      </div>
+    </div>
+  );
 
   return (
     <Layout>
@@ -50,7 +318,7 @@ export default function Search() {
       <div className="bg-muted/30 border-b">
         <div className="container py-8">
           <h1 className="font-display text-3xl font-bold mb-4">Search</h1>
-          
+
           <form onSubmit={handleSearch}>
             <div className="flex gap-3 max-w-2xl">
               <div className="relative flex-1">
@@ -65,7 +333,10 @@ export default function Search() {
                 {query && (
                   <button
                     type="button"
-                    onClick={() => setQuery("")}
+                    onClick={() => {
+                      setQuery("");
+                      setCurrentPage(1);
+                    }}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                   >
                     <X className="h-5 w-5" />
@@ -84,7 +355,13 @@ export default function Search() {
       <div className="container py-8">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
           {/* Category Tabs */}
-          <Tabs value={activeTab} onValueChange={setActiveTab}>
+          <Tabs
+            value={activeTab}
+            onValueChange={(v) => {
+              setActiveTab(v);
+              setCurrentPage(1);
+            }}
+          >
             <TabsList>
               <TabsTrigger value="all">All</TabsTrigger>
               <TabsTrigger value="product">Products</TabsTrigger>
@@ -94,51 +371,234 @@ export default function Search() {
           </Tabs>
 
           <div className="flex items-center gap-3">
-            <Select value={sortBy} onValueChange={setSortBy}>
+            <Select
+              value={sortBy}
+              onValueChange={(v) => {
+                setSortBy(v);
+                setCurrentPage(1);
+              }}
+            >
               <SelectTrigger className="w-40">
                 <SelectValue placeholder="Sort by" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="relevance">Most Relevant</SelectItem>
                 <SelectItem value="newest">Newest First</SelectItem>
+                <SelectItem value="oldest">Oldest First</SelectItem>
                 <SelectItem value="price-low">Price: Low to High</SelectItem>
                 <SelectItem value="price-high">Price: High to Low</SelectItem>
               </SelectContent>
             </Select>
 
-            <Button variant="outline">
-              <SlidersHorizontal className="h-4 w-4" />
-              Filters
-            </Button>
+            {/* Desktop Filters */}
+            <div className="hidden md:block">
+              <Sheet open={isFiltersOpen} onOpenChange={setIsFiltersOpen}>
+                <SheetTrigger asChild>
+                  <Button variant="outline">
+                    <SlidersHorizontal className="h-4 w-4" />
+                    Filters
+                  </Button>
+                </SheetTrigger>
+                <SheetContent>
+                  <SheetHeader>
+                    <SheetTitle>Filters</SheetTitle>
+                    <SheetDescription>
+                      Refine your search results
+                    </SheetDescription>
+                  </SheetHeader>
+                  <div className="mt-6">
+                    <FiltersContent />
+                  </div>
+                </SheetContent>
+              </Sheet>
+            </div>
+
+            {/* Mobile Filters */}
+            <div className="md:hidden">
+              <Sheet open={isFiltersOpen} onOpenChange={setIsFiltersOpen}>
+                <SheetTrigger asChild>
+                  <Button variant="outline" size="icon">
+                    <SlidersHorizontal className="h-4 w-4" />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="bottom" className="h-[80vh]">
+                  <SheetHeader>
+                    <SheetTitle>Filters</SheetTitle>
+                    <SheetDescription>
+                      Refine your search results
+                    </SheetDescription>
+                  </SheetHeader>
+                  <div className="mt-6">
+                    <FiltersContent />
+                  </div>
+                </SheetContent>
+              </Sheet>
+            </div>
           </div>
         </div>
+
+        {/* Active Filters */}
+        {(selectedLocation !== "All Locations" ||
+          selectedCategory !== "All Categories" ||
+          priceRange[0] > 0 ||
+          priceRange[1] < 1000000) && (
+          <div className="flex flex-wrap gap-2 mb-4">
+            {selectedLocation !== "All Locations" && (
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => setSelectedLocation("All Locations")}
+              >
+                <MapPin className="h-3 w-3 mr-1" />
+                {selectedLocation}
+                <X className="h-3 w-3 ml-1" />
+              </Button>
+            )}
+            {selectedCategory !== "All Categories" && (
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => setSelectedCategory("All Categories")}
+              >
+                {selectedCategory}
+                <X className="h-3 w-3 ml-1" />
+              </Button>
+            )}
+            {(priceRange[0] > 0 || priceRange[1] < 1000000) && (
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => setPriceRange([0, 1000000])}
+              >
+                KES {priceRange[0].toLocaleString()} -{" "}
+                {priceRange[1].toLocaleString()}
+                <X className="h-3 w-3 ml-1" />
+              </Button>
+            )}
+          </div>
+        )}
 
         {/* Results Count */}
         <p className="text-muted-foreground mb-6">
           {query && (
             <>
-              Showing results for "<span className="font-medium text-foreground">{query}</span>" • 
+              Showing results for "
+              <span className="font-medium text-foreground">{query}</span>" •{" "}
             </>
           )}
-          {" "}<span className="font-medium text-foreground">{filteredListings.length}</span> items found
+          <span className="font-medium text-foreground">{totalCount}</span>{" "}
+          items found
         </p>
 
         {/* Grid */}
-        {filteredListings.length > 0 ? (
+        {isLoading ? (
           <div className="listing-grid">
-            {filteredListings.map((listing) => (
-              <ListingCard key={listing.id} {...listing} />
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div key={i} className="space-y-3">
+                <Skeleton className="aspect-[4/3] rounded-xl" />
+                <Skeleton className="h-4 w-3/4" />
+                <Skeleton className="h-4 w-1/2" />
+              </div>
             ))}
           </div>
+        ) : listings.length > 0 ? (
+          <>
+            <div className="listing-grid">
+              {listings.map((listing) => (
+                <ListingCard
+                  key={listing.id}
+                  id={listing.id}
+                  title={listing.title}
+                  price={listing.price || 0}
+                  originalPrice={listing.original_price || undefined}
+                  image={listing.images?.[0] || "/placeholder.svg"}
+                  location={listing.location}
+                  category={listing.listing_type}
+                  isSponsored={listing.is_sponsored}
+                  isFeatured={listing.is_featured}
+                  isFree={listing.is_free}
+                  eventDate={
+                    listing.event_date
+                      ? new Date(listing.event_date).toLocaleDateString(
+                          "en-US",
+                          { month: "short", day: "numeric" }
+                        )
+                      : undefined
+                  }
+                />
+              ))}
+            </div>
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="flex items-center justify-center gap-2 mt-8">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  disabled={currentPage === 1}
+                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </Button>
+
+                <div className="flex items-center gap-1">
+                  {Array.from({ length: Math.min(5, totalPages) }).map(
+                    (_, i) => {
+                      let pageNum;
+                      if (totalPages <= 5) {
+                        pageNum = i + 1;
+                      } else if (currentPage <= 3) {
+                        pageNum = i + 1;
+                      } else if (currentPage >= totalPages - 2) {
+                        pageNum = totalPages - 4 + i;
+                      } else {
+                        pageNum = currentPage - 2 + i;
+                      }
+
+                      return (
+                        <Button
+                          key={pageNum}
+                          variant={
+                            currentPage === pageNum ? "default" : "outline"
+                          }
+                          size="icon"
+                          onClick={() => setCurrentPage(pageNum)}
+                        >
+                          {pageNum}
+                        </Button>
+                      );
+                    }
+                  )}
+                </div>
+
+                <Button
+                  variant="outline"
+                  size="icon"
+                  disabled={currentPage === totalPages}
+                  onClick={() =>
+                    setCurrentPage((p) => Math.min(totalPages, p + 1))
+                  }
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+              </div>
+            )}
+          </>
         ) : (
           <div className="text-center py-16">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-muted mb-4">
               <SearchIcon className="h-8 w-8 text-muted-foreground" />
             </div>
-            <h3 className="font-display text-xl font-semibold mb-2">No results found</h3>
+            <h3 className="font-display text-xl font-semibold mb-2">
+              No results found
+            </h3>
             <p className="text-muted-foreground max-w-md mx-auto">
-              Try adjusting your search or filters to find what you're looking for.
+              Try adjusting your search or filters to find what you're looking
+              for.
             </p>
+            <Button variant="outline" className="mt-4" onClick={clearFilters}>
+              Clear All Filters
+            </Button>
           </div>
         )}
       </div>

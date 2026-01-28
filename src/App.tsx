@@ -17,6 +17,8 @@ import Admin from "./pages/Admin";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import ListingDetail from "./pages/ListingDetail";
+import Profile from "./pages/Profile";
+import Favorites from "./pages/Favorites";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -36,6 +38,8 @@ const App = () => (
             <Route path="/search" element={<Search />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/favorites" element={<Favorites />} />
+            <Route path="/profile/:userId" element={<Profile />} />
             <Route
               path="/dashboard"
               element={

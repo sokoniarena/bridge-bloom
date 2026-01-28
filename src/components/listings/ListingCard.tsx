@@ -3,6 +3,7 @@ import { Heart, MapPin, Star, Clock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useFavorites } from "@/hooks/useFavorites";
 
 interface ListingCardProps {
   id: string;
@@ -34,6 +35,8 @@ export function ListingCard({
   isFree = false,
 }: ListingCardProps) {
   const categoryPath = category === "product" ? "products" : category === "service" ? "services" : "events";
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const isFav = isFavorite(id);
   
   return (
     <Link to={`/${categoryPath}/${id}`} className="group">
@@ -74,13 +77,17 @@ export function ListingCard({
           <Button
             variant="glass"
             size="icon"
-            className="absolute top-2 right-2 h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity"
+            className={cn(
+              "absolute top-2 right-2 h-8 w-8 transition-opacity",
+              isFav ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+            )}
             onClick={(e) => {
               e.preventDefault();
-              // TODO: Add to favorites
+              e.stopPropagation();
+              toggleFavorite(id);
             }}
           >
-            <Heart className="h-4 w-4" />
+            <Heart className={cn("h-4 w-4", isFav && "fill-destructive text-destructive")} />
           </Button>
         </div>
 
