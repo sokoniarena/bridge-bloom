@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { ListingCard } from "@/components/listings/ListingCard";
@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/client";
+import { useDebounce } from "@/hooks/useDebounce";
 import {
   Search as SearchIcon,
   SlidersHorizontal,
@@ -104,6 +105,10 @@ export default function Search() {
 
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
 
+  // Debounce search query and price range for smooth UX
+  const debouncedQuery = useDebounce(query, 300);
+  const debouncedPriceRange = useDebounce(priceRange, 400);
+
   const fetchListings = useCallback(async () => {
     setIsLoading(true);
 
@@ -112,10 +117,12 @@ export default function Search() {
       .select("*", { count: "exact" })
       .eq("status", "available");
 
-    // Search query
-    if (query) {
+    // Deep search query - search across multiple fields with improved matching
+    if (debouncedQuery && debouncedQuery.trim()) {
+      const searchTerm = debouncedQuery.trim();
+      // Search across title, description, location, category, and subcategory
       queryBuilder = queryBuilder.or(
-        `title.ilike.%${query}%,description.ilike.%${query}%,location.ilike.%${query}%`
+        `title.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%,location.ilike.%${searchTerm}%,category.ilike.%${searchTerm}%,subcategory.ilike.%${searchTerm}%`
       );
     }
 
@@ -135,15 +142,15 @@ export default function Search() {
       queryBuilder = queryBuilder.eq("category", selectedCategory);
     }
 
-    // Price filter
-    if (priceRange[0] > 0) {
-      queryBuilder = queryBuilder.gte("price", priceRange[0]);
+    // Price filter with debounced values
+    if (debouncedPriceRange[0] > 0) {
+      queryBuilder = queryBuilder.gte("price", debouncedPriceRange[0]);
     }
-    if (priceRange[1] < 1000000) {
-      queryBuilder = queryBuilder.lte("price", priceRange[1]);
+    if (debouncedPriceRange[1] < 1000000) {
+      queryBuilder = queryBuilder.lte("price", debouncedPriceRange[1]);
     }
 
-    // Sorting
+    // Sorting - Fixed and comprehensive
     switch (sortBy) {
       case "newest":
         queryBuilder = queryBuilder.order("created_at", { ascending: false });
@@ -152,21 +159,27 @@ export default function Search() {
         queryBuilder = queryBuilder.order("created_at", { ascending: true });
         break;
       case "price-low":
-        queryBuilder = queryBuilder.order("price", {
-          ascending: true,
-          nullsFirst: false,
-        });
+        queryBuilder = queryBuilder
+          .order("price", { ascending: true, nullsFirst: false })
+          .order("created_at", { ascending: false });
         break;
       case "price-high":
-        queryBuilder = queryBuilder.order("price", {
-          ascending: false,
-          nullsFirst: false,
-        });
+        queryBuilder = queryBuilder
+          .order("price", { ascending: false, nullsFirst: false })
+          .order("created_at", { ascending: false });
+        break;
+      case "popular":
+        queryBuilder = queryBuilder
+          .order("views_count", { ascending: false })
+          .order("favorites_count", { ascending: false })
+          .order("created_at", { ascending: false });
         break;
       default:
-        // Relevance - sponsored first, then by created_at
+        // Relevance - sponsored first, then featured, then by views and recency
         queryBuilder = queryBuilder
           .order("is_sponsored", { ascending: false })
+          .order("is_featured", { ascending: false })
+          .order("views_count", { ascending: false })
           .order("created_at", { ascending: false });
     }
 
@@ -175,43 +188,47 @@ export default function Search() {
     const to = from + ITEMS_PER_PAGE - 1;
     queryBuilder = queryBuilder.range(from, to);
 
-    const { data, count } = await queryBuilder;
+    const { data, count, error } = await queryBuilder;
 
-    if (data) {
+    if (error) {
+      console.error("Search error:", error);
+      setListings([]);
+      setTotalCount(0);
+    } else if (data) {
       setListings(data as Listing[]);
       setTotalCount(count || 0);
     }
 
     setIsLoading(false);
-  }, [query, activeTab, sortBy, selectedLocation, selectedCategory, priceRange, currentPage]);
+  }, [debouncedQuery, activeTab, sortBy, selectedLocation, selectedCategory, debouncedPriceRange, currentPage]);
 
   useEffect(() => {
     fetchListings();
   }, [fetchListings]);
 
-  // Update URL params when filters change
+  // Update URL params when filters change (debounced values for price)
   useEffect(() => {
     const params = new URLSearchParams();
-    if (query) params.set("q", query);
+    if (debouncedQuery) params.set("q", debouncedQuery);
     if (activeTab !== "all") params.set("type", activeTab);
     if (sortBy !== "newest") params.set("sort", sortBy);
     if (selectedLocation !== "All Locations")
       params.set("location", selectedLocation);
     if (selectedCategory !== "All Categories")
       params.set("category", selectedCategory);
-    if (priceRange[0] > 0) params.set("minPrice", priceRange[0].toString());
-    if (priceRange[1] < 1000000)
-      params.set("maxPrice", priceRange[1].toString());
+    if (debouncedPriceRange[0] > 0) params.set("minPrice", debouncedPriceRange[0].toString());
+    if (debouncedPriceRange[1] < 1000000)
+      params.set("maxPrice", debouncedPriceRange[1].toString());
     if (currentPage > 1) params.set("page", currentPage.toString());
 
     setSearchParams(params, { replace: true });
   }, [
-    query,
+    debouncedQuery,
     activeTab,
     sortBy,
     selectedLocation,
     selectedCategory,
-    priceRange,
+    debouncedPriceRange,
     currentPage,
     setSearchParams,
   ]);
@@ -219,7 +236,6 @@ export default function Search() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     setCurrentPage(1);
-    fetchListings();
   };
 
   const clearFilters = () => {
@@ -270,34 +286,49 @@ export default function Search() {
 
       {/* Price Range */}
       <div className="space-y-4">
-        <Label>
-          Price Range: KES {priceRange[0].toLocaleString()} - KES{" "}
-          {priceRange[1].toLocaleString()}
-        </Label>
-        <Slider
-          value={priceRange}
-          onValueChange={(value) => setPriceRange(value as [number, number])}
-          max={1000000}
-          step={5000}
-          className="mt-2"
-        />
-        <div className="flex gap-2">
-          <Input
-            type="number"
-            value={priceRange[0]}
-            onChange={(e) =>
-              setPriceRange([parseInt(e.target.value) || 0, priceRange[1]])
-            }
-            placeholder="Min"
+        <div className="flex items-center justify-between">
+          <Label className="text-sm font-medium">Price Range</Label>
+          <span className="text-xs text-muted-foreground">
+            KES {priceRange[0].toLocaleString()} - KES {priceRange[1].toLocaleString()}
+          </span>
+        </div>
+        <div className="pt-2 pb-4">
+          <Slider
+            value={priceRange}
+            onValueChange={(value) => setPriceRange(value as [number, number])}
+            min={0}
+            max={1000000}
+            step={1000}
+            minStepsBetweenThumbs={1}
           />
-          <Input
-            type="number"
-            value={priceRange[1]}
-            onChange={(e) =>
-              setPriceRange([priceRange[0], parseInt(e.target.value) || 1000000])
-            }
-            placeholder="Max"
-          />
+        </div>
+        <div className="flex gap-3">
+          <div className="flex-1">
+            <Label className="text-xs text-muted-foreground mb-1 block">Min Price</Label>
+            <Input
+              type="number"
+              value={priceRange[0]}
+              onChange={(e) => {
+                const val = parseInt(e.target.value) || 0;
+                setPriceRange([Math.min(val, priceRange[1] - 1000), priceRange[1]]);
+              }}
+              placeholder="0"
+              className="h-9"
+            />
+          </div>
+          <div className="flex-1">
+            <Label className="text-xs text-muted-foreground mb-1 block">Max Price</Label>
+            <Input
+              type="number"
+              value={priceRange[1]}
+              onChange={(e) => {
+                const val = parseInt(e.target.value) || 1000000;
+                setPriceRange([priceRange[0], Math.max(val, priceRange[0] + 1000)]);
+              }}
+              placeholder="1,000,000"
+              className="h-9"
+            />
+          </div>
         </div>
       </div>
 
@@ -387,6 +418,7 @@ export default function Search() {
                 <SelectItem value="oldest">Oldest First</SelectItem>
                 <SelectItem value="price-low">Price: Low to High</SelectItem>
                 <SelectItem value="price-high">Price: High to Low</SelectItem>
+                <SelectItem value="popular">Most Popular</SelectItem>
               </SelectContent>
             </Select>
 
@@ -480,14 +512,19 @@ export default function Search() {
 
         {/* Results Count */}
         <p className="text-muted-foreground mb-6">
-          {query && (
+          {debouncedQuery && (
             <>
               Showing results for "
-              <span className="font-medium text-foreground">{query}</span>" •{" "}
+              <span className="font-medium text-foreground">{debouncedQuery}</span>" •{" "}
             </>
           )}
           <span className="font-medium text-foreground">{totalCount}</span>{" "}
           items found
+          {sortBy !== "relevance" && (
+            <span className="text-xs ml-2">
+              (sorted by {sortBy === "newest" ? "newest" : sortBy === "oldest" ? "oldest" : sortBy === "price-low" ? "price ↑" : sortBy === "price-high" ? "price ↓" : "popularity"})
+            </span>
+          )}
         </p>
 
         {/* Grid */}
