@@ -1,15 +1,56 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Loader2 } from "lucide-react";
+import { ArrowRight, Loader2, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ListingCard } from "@/components/listings/ListingCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useListings } from "@/hooks/useListings";
 import { format } from "date-fns";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+
+interface SponsoredListing {
+  id: string;
+  title: string;
+  price: number | null;
+  original_price: number | null;
+  images: string[];
+  location: string;
+  listing_type: "product" | "service" | "event";
+  is_sponsored: boolean;
+  is_featured: boolean;
+  is_free: boolean;
+  favorites_count: number | null;
+  event_date: string | null;
+}
 
 export function FeaturedListings() {
   const { listings: products, isLoading: productsLoading } = useListings({ type: "product", limit: 30 });
   const { listings: services, isLoading: servicesLoading } = useListings({ type: "service", limit: 30 });
   const { listings: events, isLoading: eventsLoading } = useListings({ type: "event", limit: 30 });
+
+  // Fetch ALL sponsored listings across all types
+  const [sponsoredListings, setSponsoredListings] = useState<SponsoredListing[]>([]);
+  const [sponsoredLoading, setSponsoredLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchSponsored = async () => {
+      setSponsoredLoading(true);
+      const { data, error } = await supabase
+        .from("listings")
+        .select("*")
+        .eq("status", "available")
+        .eq("is_sponsored", true)
+        .order("created_at", { ascending: false })
+        .limit(12);
+
+      if (!error && data) {
+        setSponsoredListings(data as SponsoredListing[]);
+      }
+      setSponsoredLoading(false);
+    };
+
+    fetchSponsored();
+  }, []);
 
   const isLoading = productsLoading || servicesLoading || eventsLoading;
 
@@ -31,6 +72,30 @@ export function FeaturedListings() {
   return (
     <section className="py-16 md:py-20 bg-muted/30">
       <div className="container">
+        {/* Sponsored Listings Section - Always visible if there are sponsored ads */}
+        {sponsoredListings.length > 0 && (
+          <div className="mb-12">
+            <div className="flex items-center gap-2 mb-6">
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/30">
+                <Sparkles className="h-4 w-4 text-primary" />
+                <span className="text-sm font-semibold text-primary">Sponsored</span>
+              </div>
+              <h3 className="font-display text-xl font-semibold">Promoted Listings</h3>
+            </div>
+            {sponsoredLoading ? (
+              <div className="flex items-center justify-center py-8">
+                <Loader2 className="h-6 w-6 animate-spin text-primary" />
+              </div>
+            ) : (
+              <div className="listing-grid">
+                {sponsoredListings.map((listing) => (
+                  <ListingCard key={listing.id} {...mapListingToCard(listing)} />
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>
