@@ -83,6 +83,16 @@ export default function Messages() {
     }
   }, [user]);
 
+  // Update active conversation when URL or conversations change
+  useEffect(() => {
+    if (activeConversationId && conversations.length > 0) {
+      const active = conversations.find(c => c.id === activeConversationId);
+      setActiveConversation(active || null);
+    } else if (!activeConversationId) {
+      setActiveConversation(null);
+    }
+  }, [activeConversationId, conversations]);
+
   // Fetch messages when conversation changes
   useEffect(() => {
     if (activeConversationId && user) {
@@ -154,12 +164,6 @@ export default function Messages() {
       );
 
       setConversations(enrichedConvos);
-      
-      // Set active conversation
-      if (activeConversationId) {
-        const active = enrichedConvos.find(c => c.id === activeConversationId);
-        setActiveConversation(active || null);
-      }
     }
 
     setIsLoading(false);
