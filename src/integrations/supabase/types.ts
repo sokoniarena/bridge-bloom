@@ -14,16 +14,259 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      audit_logs: {
+        Row: {
+          action: string
+          created_at: string
+          entity_id: string | null
+          entity_type: string
+          id: string
+          metadata: Json | null
+          new_data: Json | null
+          old_data: Json | null
+          user_email: string | null
+          user_id: string | null
+          user_ip: string | null
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          entity_id?: string | null
+          entity_type: string
+          id?: string
+          metadata?: Json | null
+          new_data?: Json | null
+          old_data?: Json | null
+          user_email?: string | null
+          user_id?: string | null
+          user_ip?: string | null
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          entity_id?: string | null
+          entity_type?: string
+          id?: string
+          metadata?: Json | null
+          new_data?: Json | null
+          old_data?: Json | null
+          user_email?: string | null
+          user_id?: string | null
+          user_ip?: string | null
+        }
+        Relationships: []
+      }
+      favorites: {
+        Row: {
+          created_at: string
+          id: string
+          listing_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          listing_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          listing_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "favorites_listing_id_fkey"
+            columns: ["listing_id"]
+            isOneToOne: false
+            referencedRelation: "listings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      listings: {
+        Row: {
+          category: string | null
+          created_at: string
+          delivery_available: boolean | null
+          description: string
+          event_date: string | null
+          event_end_date: string | null
+          expires_at: string | null
+          favorites_count: number | null
+          id: string
+          images: string[] | null
+          is_featured: boolean | null
+          is_free: boolean | null
+          is_negotiable: boolean | null
+          is_sponsored: boolean | null
+          latitude: number | null
+          listing_type: Database["public"]["Enums"]["listing_type"]
+          location: string
+          longitude: number | null
+          original_price: number | null
+          price: number | null
+          sponsored_until: string | null
+          status: Database["public"]["Enums"]["listing_status"]
+          subcategory: string | null
+          title: string
+          updated_at: string
+          user_id: string
+          views_count: number | null
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          delivery_available?: boolean | null
+          description: string
+          event_date?: string | null
+          event_end_date?: string | null
+          expires_at?: string | null
+          favorites_count?: number | null
+          id?: string
+          images?: string[] | null
+          is_featured?: boolean | null
+          is_free?: boolean | null
+          is_negotiable?: boolean | null
+          is_sponsored?: boolean | null
+          latitude?: number | null
+          listing_type: Database["public"]["Enums"]["listing_type"]
+          location: string
+          longitude?: number | null
+          original_price?: number | null
+          price?: number | null
+          sponsored_until?: string | null
+          status?: Database["public"]["Enums"]["listing_status"]
+          subcategory?: string | null
+          title: string
+          updated_at?: string
+          user_id: string
+          views_count?: number | null
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          delivery_available?: boolean | null
+          description?: string
+          event_date?: string | null
+          event_end_date?: string | null
+          expires_at?: string | null
+          favorites_count?: number | null
+          id?: string
+          images?: string[] | null
+          is_featured?: boolean | null
+          is_free?: boolean | null
+          is_negotiable?: boolean | null
+          is_sponsored?: boolean | null
+          latitude?: number | null
+          listing_type?: Database["public"]["Enums"]["listing_type"]
+          location?: string
+          longitude?: number | null
+          original_price?: number | null
+          price?: number | null
+          sponsored_until?: string | null
+          status?: Database["public"]["Enums"]["listing_status"]
+          subcategory?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+          views_count?: number | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          created_at: string
+          email: string
+          id: string
+          is_verified: boolean | null
+          location: string | null
+          phone: string | null
+          updated_at: string
+          user_id: string
+          username: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          is_verified?: boolean | null
+          location?: string | null
+          phone?: string | null
+          updated_at?: string
+          user_id: string
+          username: string
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          is_verified?: boolean | null
+          location?: string | null
+          phone?: string | null
+          updated_at?: string
+          user_id?: string
+          username?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      create_audit_log: {
+        Args: {
+          p_action: string
+          p_entity_id: string
+          p_entity_type: string
+          p_metadata?: Json
+          p_new_data?: Json
+          p_old_data?: Json
+          p_user_id: string
+        }
+        Returns: string
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
+      listing_status: "available" | "out_of_stock" | "expired" | "draft"
+      listing_type: "product" | "service" | "event"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +393,10 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+      listing_status: ["available", "out_of_stock", "expired", "draft"],
+      listing_type: ["product", "service", "event"],
+    },
   },
 } as const
