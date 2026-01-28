@@ -1,0 +1,2210 @@
+[
+  {
+    "id": "prod_1756681529741_i9pkl",
+    "title": "backpack pump",
+    "description": "durable",
+    "price": 2600,
+    "originalPrice": 3500,
+    "condition": "new",
+    "category": "agriculture",
+    "location": "Nyahururu",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756681520/sokoni-arena/u4cu2ovqmikro9f1ahxn.png",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756681522/sokoni-arena/qs3ix0tnzqrcj0rwprjs.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756681525/sokoni-arena/rum8htrt230ugouovpjh.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756681528/sokoni-arena/kika4cska2nvwpvtaguf.png"
+    ],
+    "seller": {
+      "name": "shiru",
+      "phone": "0114720927",
+      "whatsapp": "0114720927",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-08-31"
+  },
+  {
+    "id": "prod_1756715507463_duz9s",
+    "title": "Hp Z Book",
+    "description": "Hp Z Book  Core i7 11th gen 2.50Ghz 8cores 16 logical processor\n32gb RAM 512gb Ssd \nWebcam 15\" \nBack light Keybord",
+    "price": 55000,
+    "originalPrice": 58999,
+    "condition": "refurbished",
+    "category": "electronics",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756715505/sokoni-arena/jel61xhjqg9h61qm8avp.webp"
+    ],
+    "seller": {
+      "name": "Onetech Computers",
+      "phone": "0708405238",
+      "whatsapp": "0708405238",
+      "email": "",
+      "verified": true
+    },
+    "isHotDeal": true,
+    "featured": true,
+    "dateAdded": "2025-09-01"
+  },
+  {
+    "id": "prod_1756715726754_dn3zw",
+    "title": "Hp Omen Keyboard",
+    "description": "Hp Omen Keyboard  wired keyboard with red back light \nGaming Keyboard",
+    "price": 4000,
+    "originalPrice": 4599,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756715722/sokoni-arena/bjl9a5pcstpjxqv6idcc.webp",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756715725/sokoni-arena/nivwcar9zwvb27hvidpk.webp"
+    ],
+    "seller": {
+      "name": "Computer Fairy KE",
+      "phone": "0708698886",
+      "whatsapp": "0708698886",
+      "email": "0708698886",
+      "verified": false
+    },
+    "isHotDeal": true,
+    "featured": false,
+    "dateAdded": "2025-09-01"
+  },
+  {
+    "id": "prod_1756716201391_vmlfn",
+    "title": "Dell optiplex 3050",
+    "description": "Dell optiplex 3050\nIntel core i7 7th gen\n8gb Ram 500Gb",
+    "price": 18000,
+    "originalPrice": 18999,
+    "condition": "refurbished",
+    "category": "electronics",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756716196/sokoni-arena/uhkg2e1zbtiojf8m0vzm.png",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756716199/sokoni-arena/fpext8oy5sxmfpz3knpy.webp"
+    ],
+    "seller": {
+      "name": "Computer Fairy",
+      "phone": "0708698886",
+      "whatsapp": "0708698886",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": false,
+    "featured": true,
+    "dateAdded": "2025-09-01"
+  },
+  {
+    "id": "prod_1756716627290_irx0v",
+    "title": "Dell p2422h 24\"",
+    "description": "Dell p2422h 24\"\nFull HD Frameless Monitor",
+    "price": 11500,
+    "originalPrice": 11999,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756716620/sokoni-arena/w3svzt5msvyza7beftdb.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756716623/sokoni-arena/ussmcyug9kv2bgilecif.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756716625/sokoni-arena/fmtt4hdkod81ch8mphuo.jpg"
+    ],
+    "seller": {
+      "name": "Computer Fairy KE",
+      "phone": "0708698886",
+      "whatsapp": "0708698886",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": false,
+    "featured": true,
+    "dateAdded": "2025-09-01"
+  },
+  {
+    "id": "prod_1756720025644_eltf9",
+    "title": "Swift subwoofer",
+    "description": "2000watts double voice coil",
+    "price": 8500,
+    "originalPrice": 9000,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nyahururu",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756720024/sokoni-arena/sbcmb9azvwwbq9daxhlp.jpg"
+    ],
+    "seller": {
+      "name": "Salem Equipments",
+      "phone": "0794125899",
+      "whatsapp": "0794125899",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": true,
+    "featured": false,
+    "dateAdded": "2025-09-01"
+  },
+  {
+    "id": "prod_1756720307332_f1r2t",
+    "title": "Swift equaliser",
+    "description": "Powerful and efficient",
+    "price": 3000,
+    "originalPrice": 3500,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nyahururu",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756720305/sokoni-arena/zeylzamjiqf0i3qs1ptk.jpg"
+    ],
+    "seller": {
+      "name": "Cisco",
+      "phone": "0794125899",
+      "whatsapp": "0794125899",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": false,
+    "featured": true,
+    "dateAdded": "2025-09-01"
+  },
+  {
+    "id": "prod_1756730368710_6wzcl",
+    "title": "Lenovo t14",
+    "description": "Lenovo t14  Core i5 10th gen \n16Gb RAM 256Gb ssd",
+    "price": 28000,
+    "originalPrice": 30000,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756730364/sokoni-arena/ot0uy8wzjsfzfcd2k5yz.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756730367/sokoni-arena/ikvgpc5c5fb3ugd8piko.webp"
+    ],
+    "seller": {
+      "name": "Onetech Computers",
+      "phone": "0708405238",
+      "whatsapp": "0708405238",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": false,
+    "featured": true,
+    "dateAdded": "2025-09-01"
+  },
+  {
+    "id": "prod_1756730707497_b37vv",
+    "title": "Macbook 2017",
+    "description": "Macbook 2017\nwith a free bag and mouse",
+    "price": 30000,
+    "originalPrice": 37999,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756730695/sokoni-arena/pk2ojgl6q7m7gwryrdwk.webp",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756730698/sokoni-arena/vskungnwmhcvxszgiyut.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756730701/sokoni-arena/er6qzwxn9ifikw4xg9qj.webp",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756730705/sokoni-arena/vygbo0n67wr7dnvm7fey.webp"
+    ],
+    "seller": {
+      "name": "Laptops Factory",
+      "phone": "0704089181",
+      "whatsapp": "0704089181",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-01"
+  },
+  {
+    "id": "prod_1756731845109_dvm8c",
+    "title": "LG E2411PB-BN Monitor",
+    "description": "Lcd 24\" Wide",
+    "price": 5000,
+    "originalPrice": 6400,
+    "condition": "refurbished",
+    "category": "electronics",
+    "location": "Nyahururu",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756731843/sokoni-arena/rzzjpgp8oksshqyeodt0.jpg"
+    ],
+    "seller": {
+      "name": "shamateck Stores",
+      "phone": "0703880807",
+      "whatsapp": "0703880807",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-01"
+  },
+  {
+    "id": "prod_1756732532593_oaju7",
+    "title": "Macbook air",
+    "description": "Macbook air core i5 \n8Gb RAM  512Gb ssd",
+    "price": 22500,
+    "originalPrice": 25500,
+    "condition": "refurbished",
+    "category": "electronics",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756732523/sokoni-arena/iycjhpfseqcczr2edtgr.webp",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756732527/sokoni-arena/qfmgnv9pei8qh0xlpqcf.png",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756732531/sokoni-arena/jxfsl852tjnqr5bsyzy8.png"
+    ],
+    "seller": {
+      "name": "Onetech computers",
+      "phone": "0708405238",
+      "whatsapp": "0708405238",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-01"
+  },
+  {
+    "id": "prod_1756733178281_ozqfl",
+    "title": "Hp Elitebook 1040g8",
+    "description": "Hp Elitebook 1040g8\ncore i7 11th gen 3.1 Ghz \n32Gb RAM 512Gb Ssd",
+    "price": 55000,
+    "originalPrice": 60999,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756733170/sokoni-arena/liyg4g3mq6bgatq15ic1.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756733173/sokoni-arena/xl93ix3cqcr4mvhitydu.png"
+    ],
+    "seller": {
+      "name": "Laptops Factory",
+      "phone": "0704089181",
+      "whatsapp": "0704089181",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-01"
+  },
+  {
+    "id": "prod_1756733492894_jjmax",
+    "title": "Lenovo Thinkbook",
+    "description": "Lenovo Thinkbook Core i5 13th gen\n8Gb RAM 512Gb Ssd",
+    "price": 75000,
+    "originalPrice": 80999,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756733488/sokoni-arena/eko02hqsmozhh3lctjwk.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756733491/sokoni-arena/t92o0hzd85klpccsnqiz.webp"
+    ],
+    "seller": {
+      "name": "Onetech Computers",
+      "phone": "0708405238",
+      "whatsapp": "0708405238",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-01"
+  },
+  {
+    "id": "prod_1756733989413_btvrj",
+    "title": "Hp Victus",
+    "description": "Hp Victus Core i5-13420H 8Cores 12-Threads 4.60Ghz\nNvidia RTX 3050 6GB Graphics Card \n16Gb RAM 512Gb Ssd \n144Hz Refresh Rate",
+    "price": 75000,
+    "originalPrice": 79999,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756733974/sokoni-arena/vy0xgmpmnwj3y1ryo3eh.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756733979/sokoni-arena/mamx4t0kw2dv88tmercn.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756733983/sokoni-arena/bljoh59j6kkevwvhqnbp.png",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756733987/sokoni-arena/cca01jd1gsq832qxr1cg.webp"
+    ],
+    "seller": {
+      "name": "Gamecity Electronics",
+      "phone": "0712248706",
+      "whatsapp": "0712248706",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-01"
+  },
+  {
+    "id": "prod_1756734324264_0esdy",
+    "title": "Pioneer 12\"",
+    "description": "Pioneer 12\" TS-W312D4\n 1600watts\n12 inches subwoofer \nDouble coil with double magnet",
+    "price": 8499,
+    "originalPrice": 9000,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756734318/sokoni-arena/i7dxhhabc88hbfds862k.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756734322/sokoni-arena/mvfnjixiygtmelorlifm.webp"
+    ],
+    "seller": {
+      "name": "Urbanfix Electronics",
+      "phone": "0791070295",
+      "whatsapp": "0791070295",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": false,
+    "featured": true,
+    "dateAdded": "2025-09-01"
+  },
+  {
+    "id": "prod_1756735525435_jpbnh",
+    "title": "Marcedes Benz E200",
+    "description": "Marcedes Benz E200 AMG Line(Pearl Whites).\nMilage 66,000Kms\n2000Cc Petrol :: AMG Line :: Panoramic Sunroof :: Black Leather seats :: Fully loaded",
+    "price": 4800000,
+    "originalPrice": 5000000,
+    "condition": "used",
+    "category": "vehicles",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756735518/sokoni-arena/ji6yvfhbt6hx3eq7rj2p.webp",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756735521/sokoni-arena/aqhmk90volmp825z3pp7.webp",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756735523/sokoni-arena/jo3uelcrmvmkljml6izp.jpg"
+    ],
+    "seller": {
+      "name": "Auto-Place",
+      "phone": "0768040814",
+      "whatsapp": "0768040814",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": true,
+    "featured": false,
+    "dateAdded": "2025-09-01"
+  },
+  {
+    "id": "prod_1756738486234_uv5ge",
+    "title": "2018 Honda Vezel",
+    "description": "2018 Honda Vezel Jungle Green +Hybrid\nMilage 50k Km + 27 Km/L\nAlloy rims\nLane Keep assist\nSeat warmers\nMemory Seats \n7-Speed Dct",
+    "price": 2650000,
+    "originalPrice": 2999999,
+    "condition": "used",
+    "category": "vehicles",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756738481/sokoni-arena/ozwds33vbmgosn1fsjwg.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756738484/sokoni-arena/qdnoukm3c7pde86lbwe8.jpg"
+    ],
+    "seller": {
+      "name": "Gashmotors_Ke",
+      "phone": "0705725537",
+      "whatsapp": "0705725537",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": true,
+    "featured": false,
+    "dateAdded": "2025-09-01"
+  },
+  {
+    "id": "prod_1756739281844_8oiwx",
+    "title": "2022 Marcedes Benz s500",
+    "description": "2022 Marcedes Benz s500\nEngine Displacement- 3000CC\nmileage-5000miles\n3.0L inline-6 Turbo with Mild Hybrid Drive \nOutput power; 429 Horsepower @5,500rpm & 384 lb-ft torque @1,600rpm\n9-speed automatic transmission \nAll-wheel drivetrain (4MATIC)\n0-60 mph in around 4.9 seconds\nPearl white Exterior\nAdaptive LED lighting with Ultra Range high beams",
+    "price": 18800000,
+    "originalPrice": 20000000,
+    "condition": "used",
+    "category": "vehicles",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756739269/sokoni-arena/syevpgeyu47jorfg4gyi.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756739272/sokoni-arena/qmajmdcx9zwgrjauqncc.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756739275/sokoni-arena/cpffwrbmmi5zg3ibixso.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756739280/sokoni-arena/z0ikqpihdtesuabkxdkv.jpg"
+    ],
+    "seller": {
+      "name": "Awarded_auto.cars",
+      "phone": "0748399843",
+      "whatsapp": "0748399843",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-01"
+  },
+  {
+    "id": "prod_1756754946336_f6bdb",
+    "title": "2018 AUDI A5",
+    "description": "2018 AUDI A5 SUNROOF 2000CC TFSI PETROL POWERED ENGINE\nElectric adjustable fabric heated seats Multi Functional steering wheel\nOriginal alloy sports rims",
+    "price": 4500000,
+    "originalPrice": 4999999,
+    "condition": "used",
+    "category": "vehicles",
+    "location": "Mombasa",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756754935/sokoni-arena/kcaqb9vcrfos2uzbxh3t.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756754938/sokoni-arena/tfkcg5gfjvunls4feuzt.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756754941/sokoni-arena/dn943gznm4i6y2pc6fu5.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756754944/sokoni-arena/qmklg3nxvr91wrecacpe.jpg"
+    ],
+    "seller": {
+      "name": "Mombasa Motors",
+      "phone": "0700803405",
+      "whatsapp": "0700803405",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": true,
+    "featured": true,
+    "dateAdded": "2025-09-01"
+  },
+  {
+    "id": "prod_1756755620261_1u0qd",
+    "title": "2017 Audi A5 S LINE B9 QUATTRO",
+    "description": "2017 Audi A5 S LINE B9 QUATTRO With sunroof \nEngine capacity::2000CC \nEngine type 4-Cylinder in-line 16-valve Turbo charged \nFUEL TYPE :: Petrol \nPerformance; power=252 HP,  Torque= 370NM",
+    "price": 3950000,
+    "originalPrice": 3999999,
+    "condition": "used",
+    "category": "vehicles",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756755609/sokoni-arena/rd4nx84vfrug1covxu97.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756755612/sokoni-arena/zriegcqyhls86r5gv7i0.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756755615/sokoni-arena/lnkfqgtzpb03xiqsadbc.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756755618/sokoni-arena/n3stsgkskn4slsknyamt.jpg"
+    ],
+    "seller": {
+      "name": "NairobiDrive Autos",
+      "phone": "0701128886",
+      "whatsapp": "0701128886",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": false,
+    "featured": true,
+    "dateAdded": "2025-09-01"
+  },
+  {
+    "id": "prod_1756756649079_ec15h",
+    "title": "Dell G16 7630",
+    "description": "Dell G16 7630 \nIntel Core i9 13900HX 24 cores , 32CPUs\n16Gb ddr5-5600Mhs RAM \n1TB PCie Gen 4 NVME M.2 ssd\nQHD 16.1\" inch\n240Hz Refresh rate \nNvidia Geforce RtX 4060 Laptop GPU 8Gb,\nRGB Back light Keyboard",
+    "price": 155000,
+    "originalPrice": 160000,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756756633/sokoni-arena/y5l6ql8ksicvwdz9f6ba.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756756637/sokoni-arena/lxtjf9hanmkorfrlk9bv.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756756640/sokoni-arena/ytb3oic4yzp7zqnj5kap.webp",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756756643/sokoni-arena/cklr6t8nt3yidoyvwfow.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756756647/sokoni-arena/idwmjogttuceyhjok4f8.jpg"
+    ],
+    "seller": {
+      "name": "The Tech Tunnel",
+      "phone": "0740718067",
+      "whatsapp": "0740718067",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-01"
+  },
+  {
+    "id": "prod_1756757871792_cw185",
+    "title": "Dinner set",
+    "description": "6 cups\n6 plates",
+    "price": 1800,
+    "originalPrice": 2000,
+    "condition": "new",
+    "category": "home",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756757870/sokoni-arena/fkwxp1gieydulecu1edj.jpg"
+    ],
+    "seller": {
+      "name": "Steve hub collection",
+      "phone": "0745158721",
+      "whatsapp": "0745158721",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-01"
+  },
+  {
+    "id": "prod_1756758651406_eknju",
+    "title": "2018-AUDI TT COUPE CONVERTIBLE",
+    "description": "2018-AUDI TT COUPE CONVERTIBLE\nEngine type: 2.0L turbocharged 4 -cylider engine\nHorsepower: 288hp\nTorque: 280lb-ft @1800-5,200rpm\nTransmission: 6-speed dual-clutch automatic(stronic)",
+    "price": 4700000,
+    "originalPrice": 4999999,
+    "condition": "used",
+    "category": "vehicles",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756758640/sokoni-arena/st3knq6ml1q0tf5leqyh.webp",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756758644/sokoni-arena/ysug2024xwrbviulfram.webp",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756758646/sokoni-arena/ayftckiuz843st4ctsfc.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756758650/sokoni-arena/lj2xn2ifilsu3akuab91.webp"
+    ],
+    "seller": {
+      "name": "MASLAH",
+      "phone": "0742445688",
+      "whatsapp": "0742445688",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-01"
+  },
+  {
+    "id": "prod_1756759391894_v3x3t",
+    "title": "Shoe rack",
+    "description": "Shoe rack Carries 40 pairs",
+    "price": 4500,
+    "originalPrice": 4999,
+    "condition": "new",
+    "category": "home",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756759387/sokoni-arena/wxu566y0kwkxecoyc4ag.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756759390/sokoni-arena/qwg7obaozlik6tfboro6.jpg"
+    ],
+    "seller": {
+      "name": "Elegant interior",
+      "phone": "0722330932",
+      "whatsapp": "0722330932",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": true,
+    "featured": false,
+    "dateAdded": "2025-09-01"
+  },
+  {
+    "id": "prod_1756759723997_jmej3",
+    "title": "Simple open closet",
+    "description": "Simple open closet",
+    "price": 15000,
+    "originalPrice": 16999,
+    "condition": "new",
+    "category": "home",
+    "location": "Nyahururu",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756759718/sokoni-arena/nkkdpua1catz20zrbp5i.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756759722/sokoni-arena/rpod3flfzobmnnlvtfh1.jpg"
+    ],
+    "seller": {
+      "name": "Cisco",
+      "phone": "0708083263",
+      "whatsapp": "0708083263",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": false,
+    "featured": true,
+    "dateAdded": "2025-09-01"
+  },
+  {
+    "id": "prod_1756760035392_0avm3",
+    "title": "Coffee Table",
+    "description": "Coffee Table",
+    "price": 4500,
+    "originalPrice": 5000,
+    "condition": "new",
+    "category": "home",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756760034/sokoni-arena/m2by1szgpfu0kzla24fk.jpg"
+    ],
+    "seller": {
+      "name": "Royal Home Furniture",
+      "phone": "0741303028",
+      "whatsapp": "0741303028",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": false,
+    "featured": true,
+    "dateAdded": "2025-09-01"
+  },
+  {
+    "id": "prod_1756820626899_kwg1l",
+    "title": "lenovo m625q mini pc",
+    "description": "Amd e2 - 9000e\n4gb ram - DDR3\n128gb ssd\nkeyboard + mouse",
+    "price": 8000,
+    "originalPrice": 9500,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756820625/sokoni-arena/ubqjqdxiwbxacuyeqvg5.jpg"
+    ],
+    "seller": {
+      "name": "Shamatech stores",
+      "phone": "0703880807",
+      "whatsapp": "0703880807",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-02"
+  },
+  {
+    "id": "prod_1756820932637_fydpg",
+    "title": "Hp Elitedesk 705 g4 sff",
+    "description": "AMD RYZEN 5 2400\nRADEON VEGA GPU - 2GB\n16gb ram\n250gb hdd",
+    "price": 14000,
+    "originalPrice": 15500,
+    "condition": "refurbished",
+    "category": "electronics",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756820922/sokoni-arena/vtr6izdo4wozcxxruxof.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756820927/sokoni-arena/vfixveyrafxk4fjqlzbs.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756820931/sokoni-arena/kclnsgbmordkou7d3zub.jpg"
+    ],
+    "seller": {
+      "name": "Shamatech Stores",
+      "phone": "0703880807",
+      "whatsapp": "0703880807",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-02"
+  },
+  {
+    "id": "prod_1756821420179_h51ba",
+    "title": "PC Apple imac 18, 1",
+    "description": "Intel (R)tm I5 - 73600\n2017 model\ncpu speed - 2.30MHZ\n8gb ram DDR4\nIntel Iris Plus graphics 640 1536mb\n1Tb HDD",
+    "price": 5000,
+    "originalPrice": 58000,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756821418/sokoni-arena/blkrc42te5hysnbbkvbr.jpg"
+    ],
+    "seller": {
+      "name": "Shamatech stores",
+      "phone": "0703880807",
+      "whatsapp": "0703880807",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-02"
+  },
+  {
+    "id": "prod_1756821885276_jljkz",
+    "title": "Dell Optiplex 7040 m7",
+    "description": "Intel Core i7 gen 6\n8gb ram\n500gb hdd",
+    "price": 16000,
+    "originalPrice": 18000,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nyahururu",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756821878/sokoni-arena/nvqohifus4razpmmao4b.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756821880/sokoni-arena/pgblsyonen3yngsjvqhu.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756821883/sokoni-arena/iqp6madfatro4zg40tpv.jpg"
+    ],
+    "seller": {
+      "name": "shamatech Stores",
+      "phone": "0703880807",
+      "whatsapp": "0703880807",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": true,
+    "featured": true,
+    "dateAdded": "2025-09-02"
+  },
+  {
+    "id": "prod_1756822311349_3m7yc",
+    "title": "Imac 16",
+    "description": "Intel Core I5 tm 52500 (2015)",
+    "price": 38000,
+    "originalPrice": 40500,
+    "condition": "refurbished",
+    "category": "electronics",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756822301/sokoni-arena/q3spgtsjsb6nwvohpgcj.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756822306/sokoni-arena/ge0abttzr9odsnpvcost.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756822309/sokoni-arena/ga2leyfix8nekmqftnhw.jpg"
+    ],
+    "seller": {
+      "name": "Shamatech Stores",
+      "phone": "0703880807",
+      "whatsapp": "0703880807",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": false,
+    "featured": true,
+    "dateAdded": "2025-09-02"
+  },
+  {
+    "id": "prod_1756822615377_2clp9",
+    "title": "Hp Elite Display Monitor",
+    "description": "22 inch wide with webcam",
+    "price": 7500,
+    "originalPrice": 9500,
+    "condition": "refurbished",
+    "category": "electronics",
+    "location": "Nyahururu",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756822608/sokoni-arena/ty0c5t3p0rvr4tdngd8s.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756822611/sokoni-arena/muynelyo03ymupbohxad.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756822613/sokoni-arena/zkiaj5zu3ypclwsmaimx.png"
+    ],
+    "seller": {
+      "name": "Shamatech stores",
+      "phone": "0703880807",
+      "whatsapp": "0703880807",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-02"
+  },
+  {
+    "id": "prod_1756822886425_dvtew",
+    "title": "swift crossover",
+    "description": "three way",
+    "price": 4000,
+    "originalPrice": 5500,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nyahururu",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756822884/sokoni-arena/nrvzd5ynzjgh2t6myeyb.jpg"
+    ],
+    "seller": {
+      "name": "salem Equipments",
+      "phone": "0794125899",
+      "whatsapp": "0794125899",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": false,
+    "featured": true,
+    "dateAdded": "2025-09-02"
+  },
+  {
+    "id": "prod_1756823089812_c7yxb",
+    "title": "swift Installation kit",
+    "description": "four gauge",
+    "price": 2500,
+    "originalPrice": 3000,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nyahururu",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756823088/sokoni-arena/zu4zg0lhcnaq4jccw1mv.jpg"
+    ],
+    "seller": {
+      "name": "Salem equipments",
+      "phone": "0794125899",
+      "whatsapp": "0794125899",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-02"
+  },
+  {
+    "id": "prod_1756823343392_ko81u",
+    "title": "swift monoblock amplifier",
+    "description": "four channel 1600 heavy duty",
+    "price": 7500,
+    "originalPrice": 8500,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nyahururu, Nairobi, Nakuru, Naivasha",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756823341/sokoni-arena/az9zihcg5yubcprppuh4.jpg"
+    ],
+    "seller": {
+      "name": "Salem Equipments",
+      "phone": "0794125899",
+      "whatsapp": "0794125899",
+      "email": "",
+      "verified": false
+    },
+    "isHotDeal": true,
+    "featured": true,
+    "dateAdded": "2025-09-02"
+  },
+  {
+    "id": "prod_1756895707838_tdusi",
+    "title": "swift midrange speakers",
+    "description": "6*9 high power with descents 8d sounds",
+    "price": 3500,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "electronics",
+    "location": "nyahururu",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1756895707/sokoni-arena/tldrllebvbvy1bqtyu3u.jpg"
+    ],
+    "seller": {
+      "username": "salem Equiments",
+      "name": "Salem Equipments",
+      "phone": "0794125899",
+      "whatsapp": "0794125899",
+      "email": "matrixsolutions@gmail.com",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-03"
+  },
+  {
+    "id": "prod_1757406103038_gnlb4",
+    "title": "Dell Precision 3630",
+    "description": "Core i7 16Gb Ram 1Tb Hdd and 2Gb Graphics Card",
+    "price": 70000,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1757406101/sokoni-arena/xmidvbdfgriytyqtxwhl.jpg"
+    ],
+    "seller": {
+      "username": "Comrade computer Garage",
+      "name": "Comrade computer Garage",
+      "phone": "0727 296529",
+      "whatsapp": "0727 296529",
+      "email": "@comradescomputergarage",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-09"
+  },
+  {
+    "id": "prod_1757785799295_f5x2f",
+    "title": "120 watts laptop charger for Hp",
+    "description": "120 watts laptop charger for Hp",
+    "price": 1000,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nairobi but deliver country wide",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1757785798/sokoni-arena/szpnfnqa5vuxt97wqi1d.jpg"
+    ],
+    "seller": {
+      "username": "Computer comrades",
+      "name": "Computer comrades",
+      "phone": "0727 296529",
+      "whatsapp": "0727 296529",
+      "email": "@computercommrades",
+      "verified": false
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-13"
+  },
+  {
+    "id": "prod_1757786629928_whb3e",
+    "title": "Mini pc",
+    "description": "Hp 800g3 Intel Core i5 7th Gen 8gb Ram 256gb SSD",
+    "price": 13500,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nairobi Available country wide",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1757786629/sokoni-arena/u6j4hcqecjyeboi557je.jpg"
+    ],
+    "seller": {
+      "username": "Computer commrades",
+      "name": "Computer commrades",
+      "phone": "0727 296529",
+      "whatsapp": "0727 296529",
+      "email": "@computercommrades",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-13"
+  },
+  {
+    "id": "prod_1757787710515_mwz44",
+    "title": "2023 used boxer motor bike",
+    "description": "Driven 9580 miles",
+    "price": 35000,
+    "originalPrice": null,
+    "condition": "used",
+    "category": "vehicles",
+    "location": "Nyahururu",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1757787698/sokoni-arena/tneoh5rdwzl3yu91vqxk.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1757787702/sokoni-arena/rxhzbgzwq0xgzc9giyns.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1757787705/sokoni-arena/havgf1lu2y67wgxmizyi.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1757787710/sokoni-arena/fi3yfaclhmdwkiyz2wdn.jpg"
+    ],
+    "seller": {
+      "username": "Dann Danson",
+      "name": "Dann Danson",
+      "phone": "0752040871",
+      "whatsapp": "0752040871",
+      "email": "@danson",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-13"
+  },
+  {
+    "id": "prod_1757793202978_mjpnh",
+    "title": "Toyota Townce manual diesel",
+    "description": "Toyota Townce manual diesel price negotiable upon viewing of the car",
+    "price": 320000,
+    "originalPrice": null,
+    "condition": "used",
+    "category": "vehicles",
+    "location": "Nyahururu",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1757793187/sokoni-arena/zrvgr3jvmegy1lrzzljl.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1757793191/sokoni-arena/injft0sucszl1jv9qfsg.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1757793195/sokoni-arena/plbkhsrqzeqp9sgy0wu4.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1757793198/sokoni-arena/n1slml5g1ryzv5p6g4sk.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1757793202/sokoni-arena/fyhllpvqewqrarmkzw54.jpg"
+    ],
+    "seller": {
+      "username": "Kevin automotors Yard",
+      "name": "Kevin automotors Yard",
+      "phone": "0748430906",
+      "whatsapp": "0748430906",
+      "email": "@Kevin automotors Yard",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-13"
+  },
+  {
+    "id": "prod_1758014964314_m8vdn",
+    "title": "Nec Laptop",
+    "description": "New Intel 11th gen 4Gb 64Gb ssd",
+    "price": 10000,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nairobi but distribute countrywide",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758014960/sokoni-arena/eey3vidgm7p4bjxribtu.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758014964/sokoni-arena/qhrrimpx31qox0wwteqi.jpg"
+    ],
+    "seller": {
+      "username": "Onetech Computers",
+      "name": "Onetech Computers",
+      "phone": "0708 405238",
+      "whatsapp": "0708 405238",
+      "email": "@onetech",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-16"
+  },
+  {
+    "id": "prod_1758101592573_h3wh5",
+    "title": "gaming keyboard and mouse",
+    "description": "Mechanical RGB Back lit keyboard",
+    "price": 1700,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nyahururu/Country wide delivery",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758101577/sokoni-arena/ilmdxbvtot1bgbooorsc.webp",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758101581/sokoni-arena/cusdjzvb8bktqshcfqy7.webp",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758101585/sokoni-arena/on88xsgjp8pqwcmqyfnf.webp",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758101589/sokoni-arena/glbexqwihhe4ior9eyef.webp",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758101592/sokoni-arena/eizbpsmogwhjgnvoxdxp.webp"
+    ],
+    "seller": {
+      "username": "Matrix solutions",
+      "name": "matrix solutions",
+      "phone": "0114701233",
+      "whatsapp": "0114701233",
+      "email": "matrixsolutions254@gmail.com",
+      "verified": true
+    },
+    "isHotDeal": true,
+    "featured": false,
+    "dateAdded": "2025-09-17"
+  },
+  {
+    "id": "prod_1758101822081_mi31x",
+    "title": "Gaming Headphones",
+    "description": "High Definition Sound And Clear High Quality Microphone",
+    "price": 1800,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nyahururu/Country Wide delivery",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758101810/sokoni-arena/co3i895vqis5yxsa79l0.webp",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758101813/sokoni-arena/lwenf5cvzo4sfhh9tmqe.webp",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758101817/sokoni-arena/ihelkjz95apaezagtxrv.webp",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758101821/sokoni-arena/pcs4sgnrnpjwqnqffdpc.webp"
+    ],
+    "seller": {
+      "username": "matrix solutions",
+      "name": "matrix solutions",
+      "phone": "0114701233",
+      "whatsapp": "0114701233",
+      "email": "matrixsolutions254@gmail.com",
+      "verified": true
+    },
+    "isHotDeal": true,
+    "featured": false,
+    "dateAdded": "2025-09-17"
+  },
+  {
+    "id": "prod_1758102231043_i6itj",
+    "title": "Blender",
+    "description": "All In One High Quality blender",
+    "price": 1800,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "home",
+    "location": "Nyahururu/Country wide delivery",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758102223/sokoni-arena/ysvlijwxygpenzcsfjuo.webp",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758102227/sokoni-arena/d7pjc6lfmkt3shdx2mo9.webp",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758102230/sokoni-arena/nyjhmua1vmhgorrtgshl.webp"
+    ],
+    "seller": {
+      "username": "Matrix Solutions",
+      "name": "Matrix Solutions",
+      "phone": "0114701233",
+      "whatsapp": "0114701233",
+      "email": "matrixsolutions254@gmail.com",
+      "verified": true
+    },
+    "isHotDeal": true,
+    "featured": false,
+    "dateAdded": "2025-09-17"
+  },
+  {
+    "id": "prod_1758103937384_upshg",
+    "title": "Mkopa furniture",
+    "description": "Lipa mdogo mdogo sofa seats",
+    "price": 3500,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "home",
+    "location": "Uasin Gishu",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758103924/sokoni-arena/f5fswbfrcmaauod1pxwo.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758103928/sokoni-arena/camgvup3na5lr23x1kmh.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758103933/sokoni-arena/dwve39lhfaehkhj30fws.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758103936/sokoni-arena/lrccztjpc8yzeahs42hx.jpg"
+    ],
+    "seller": {
+      "username": "Mkopa furniture",
+      "name": "Mkopa furniture",
+      "phone": "0785124736",
+      "whatsapp": "0785124736",
+      "email": "@mkopa",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-17"
+  },
+  {
+    "id": "prod_1758445884287_p0tpf",
+    "title": "3 seater sofa",
+    "description": "3 seater sofa\n3+3",
+    "price": 45000,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "home",
+    "location": "Utawala, Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758445883/sokoni-arena/n6zxfefnq6vjsnlr7nqu.jpg"
+    ],
+    "seller": {
+      "username": "Nairobi Furniture Shop",
+      "name": "Nairobi Furniture Shop",
+      "phone": "0791374385",
+      "whatsapp": "0791374385",
+      "email": "@naifur",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-21"
+  },
+  {
+    "id": "prod_1758446350473_tsv2o",
+    "title": "Beds",
+    "description": "The beds are made from hardwood. Strong, stable and durable. Pay on delivery\nPrices range From sizes\n4*6= 25,999\n5*6= 28,500\n6*6= 31,500",
+    "price": 31500,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "home",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758446346/sokoni-arena/mdrljwrunaniizfwmory.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758446350/sokoni-arena/wcpss4rsxwlhuvghbgbe.jpg"
+    ],
+    "seller": {
+      "username": "soledad Furniture",
+      "name": "soledad Furniture",
+      "phone": "0700516832",
+      "whatsapp": "0700516832",
+      "email": "@soledad Furniture",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-21"
+  },
+  {
+    "id": "prod_1758448123142_ft4i9",
+    "title": "Metallic desk + Headrest chair + Movable drawer",
+    "description": "Metallic desk + Headrest chair + Movable drawer",
+    "price": 22000,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "home",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758448118/sokoni-arena/rff5kz0ifxa15xrxuig6.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758448122/sokoni-arena/fcekih2pt5zlcnfd1m4d.jpg"
+    ],
+    "seller": {
+      "username": "FurnitureHomeland",
+      "name": "FurnitureHomeland",
+      "phone": "0718324621",
+      "whatsapp": "0718324621",
+      "email": "@furniturehomeland",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-21"
+  },
+  {
+    "id": "prod_1758477586978_axa06",
+    "title": "blender",
+    "description": "IPCONE1.5L 2 In 1 Motor Stainless Steel Blender HT-JD-004 Quality With Grinder Juicer",
+    "price": 1700,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "home",
+    "location": "Nyahururu",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758477576/sokoni-arena/jmagyhmgowpbv9xcfooi.webp",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758477579/sokoni-arena/ysklbuvlf1hvw5gw9ps7.webp",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758477583/sokoni-arena/j3vcaocyluo7xnwxrsif.webp",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758477586/sokoni-arena/onn1bkm7pcj9k53csjxl.webp"
+    ],
+    "seller": {
+      "username": "Joel",
+      "name": "Joel",
+      "phone": "0708543789",
+      "whatsapp": "0708543789",
+      "email": "joelmwangi254@gmail.com",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-21"
+  },
+  {
+    "id": "prod_1758478392808_1y7gs",
+    "title": "Blender",
+    "description": "IPCONE1.5L 2 In 1 Motor Stainless Steel Blender HT-JD-004 Quality With Grinder Juicer",
+    "price": 1700,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "home",
+    "location": "Nyahururu",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758478385/sokoni-arena/zkcrn3evwqafo3amiorg.webp",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758478388/sokoni-arena/dldgpvzwq4adqxe6f5o2.webp",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758478392/sokoni-arena/plkol8sodmiry8xxycch.webp"
+    ],
+    "seller": {
+      "username": "Joel",
+      "name": "Joel",
+      "phone": "0708543789",
+      "whatsapp": "0708543789",
+      "email": "joelmwangi254@gmail.com",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-21"
+  },
+  {
+    "id": "prod_1758490190040_21asz",
+    "title": "Vanity Dresser",
+    "description": "Wonderful big rectangular white and black trending vanity dresser made by naifur designs for your bedroom",
+    "price": 65000,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "home",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758490181/sokoni-arena/m3clrdzj6huurtpljhcf.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758490185/sokoni-arena/ghb3qfrsorgnkithjjkl.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758490189/sokoni-arena/kea0lxt4wapqtsmtwcxc.jpg"
+    ],
+    "seller": {
+      "username": "Nairobi Furniture shop",
+      "name": "Nairobi Furniture shop",
+      "phone": "0791374385",
+      "whatsapp": "0791374385",
+      "email": "@naifur",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-21"
+  },
+  {
+    "id": "prod_1758490563716_1fbhr",
+    "title": "RTX 4060",
+    "description": "RTX 4060 8Gb Dedicated graphics",
+    "price": 55000,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nairobi Kimanthi street",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758490556/sokoni-arena/volsfwlkrbkuawa6bvil.png",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758490559/sokoni-arena/nj1ukwrryesdu1xtka4p.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758490562/sokoni-arena/csa1artubqduwpc6uxmh.jpg"
+    ],
+    "seller": {
+      "username": "IT Brands KE",
+      "name": "IT Brands KE",
+      "phone": "0745140140",
+      "whatsapp": "0728140140",
+      "email": "@itbrandske",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-21"
+  },
+  {
+    "id": "prod_1758491086084_gjizj",
+    "title": "Pioneer subwoofer in the subwoofer box",
+    "description": "Pioneer subwoofer in the subwoofer box with double coil 1600 watts subwoofer",
+    "price": 14499,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nyahururu",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758491079/sokoni-arena/jmn6radwveyayuqkd4mb.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758491082/sokoni-arena/z9p7d0zklw9duq29gqvp.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758491085/sokoni-arena/pfzrvvwewdoj22a8lplu.jpg"
+    ],
+    "seller": {
+      "username": "Matrix solutions",
+      "name": "Matrix solutions",
+      "phone": "0708083263",
+      "whatsapp": "0708083263",
+      "email": "@Matrix solutions",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-21"
+  },
+  {
+    "id": "prod_1758491734720_z8kac",
+    "title": "2022 Marcedes- Benz GLE 400 d",
+    "description": "2022 Marcedes- Benz GLE 400 d , with wald Sports line\nEngine: 3.0 L inline-6 turbo-diesel Top speed of 240Km/ Hr",
+    "price": 17800000,
+    "originalPrice": null,
+    "condition": "used",
+    "category": "vehicles",
+    "location": "Mombasa",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758491727/sokoni-arena/gea4tavqunk2qu5xpltz.webp",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758491730/sokoni-arena/ntpkncvygu4bzjgfplso.webp",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758491734/sokoni-arena/u4le9r1hottsq5bxhuqq.webp"
+    ],
+    "seller": {
+      "username": "Awarded auto Cars",
+      "name": "Awarded auto Cars",
+      "phone": "0748399843",
+      "whatsapp": "0748399843",
+      "email": "@awardedcars",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-21"
+  },
+  {
+    "id": "prod_1758492196089_hl9rl",
+    "title": "Custom Build Gaming PC",
+    "description": "Custom Build Gaming PC You send your specs and the type of casing then the price will be provided for you this is the minimum price for a gaming pc",
+    "price": 50000,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758492184/sokoni-arena/cgzixm2usxtmzupwysmy.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758492188/sokoni-arena/vjozc4fnrv7ntuoawxjc.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758492191/sokoni-arena/qopcw1m1ysourasgvinj.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758492195/sokoni-arena/ropwnbtjo2m14vmomf31.jpg"
+    ],
+    "seller": {
+      "username": "imports by gambii",
+      "name": "Gambii",
+      "phone": "0791510671",
+      "whatsapp": "0791510671",
+      "email": "@importsbygambii",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-21"
+  },
+  {
+    "id": "prod_1758492482330_usti8",
+    "title": "2-in-1 Projector",
+    "description": "Its a gaming Projector",
+    "price": 11000,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758492477/sokoni-arena/vyoyy6vnv9hvoqwlvquh.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758492481/sokoni-arena/odxcipqloohchuizcc08.png"
+    ],
+    "seller": {
+      "username": "importsbygambii",
+      "name": "importsbygambii",
+      "phone": "0791510671",
+      "whatsapp": "0791510671",
+      "email": "@importsbygambii",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-21"
+  },
+  {
+    "id": "prod_1758492942760_beawl",
+    "title": "Travel suitcase",
+    "description": "Travel suitcase medium size",
+    "price": 2500,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "fashion",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758492938/sokoni-arena/e7bcnaiz4upgzt9nuc1b.webp",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758492942/sokoni-arena/mdesz8xsoa0hxnsswutn.jpg"
+    ],
+    "seller": {
+      "username": "Desimo Travel Gear",
+      "name": "Desimo Travel Gear",
+      "phone": "0792202802",
+      "whatsapp": "0792202802",
+      "email": "@desimotravelgear",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-21"
+  },
+  {
+    "id": "prod_1758493189126_fnmou",
+    "title": "Laptop Bags",
+    "description": "Laptop Bags",
+    "price": 1000,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758493185/sokoni-arena/kwkfuhjcknmlvxf3buts.webp",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758493188/sokoni-arena/kaywtye5lfiq0hpj6qm5.webp"
+    ],
+    "seller": {
+      "username": "Brimat Computers",
+      "name": "Brimat Computers",
+      "phone": "0711179871",
+      "whatsapp": "0711179871",
+      "email": "@Brimatcomputers",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-21"
+  },
+  {
+    "id": "prod_1758493530604_wf87z",
+    "title": "Bra for Ladies",
+    "description": "Bra for Ladies all sizes available",
+    "price": 400,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "fashion",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758493526/sokoni-arena/ctajitoinmyc8sebp85u.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758493529/sokoni-arena/tpnrb7j5w7ecb2x8eazb.jpg"
+    ],
+    "seller": {
+      "username": "Shop 68",
+      "name": "Shop 68",
+      "phone": "0748643593",
+      "whatsapp": "0748643593",
+      "email": "@shop68",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-21"
+  },
+  {
+    "id": "prod_1758493819779_phjpj",
+    "title": "Men Boxers",
+    "description": "Men Boxers very stylish and also with all colors and all sizes comes with 5 boxers",
+    "price": 850,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "fashion",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758493811/sokoni-arena/atc8lk22tyqh45hx9dqh.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758493815/sokoni-arena/kuwe81aibkxq2gysa936.webp",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758493819/sokoni-arena/rvut6iqccf6z52sxs7jm.jpg"
+    ],
+    "seller": {
+      "username": "shop 68",
+      "name": "shop 68",
+      "phone": "0748643593",
+      "whatsapp": "0748643593",
+      "email": "@shop68",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-21"
+  },
+  {
+    "id": "prod_1758541654568_bhklb",
+    "title": "Office Table",
+    "description": "Office Table 1.2M* 2Feet",
+    "price": 8500,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "home",
+    "location": "Nyahururu",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758541650/sokoni-arena/dun6mj47otjvaduir7q4.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758541654/sokoni-arena/aiy7oqh8uga9qzimwaoe.jpg"
+    ],
+    "seller": {
+      "username": "Matrix solutions",
+      "name": "Matrix solutions",
+      "phone": "0114701233",
+      "whatsapp": "0114701233",
+      "email": "@matrixsolutions",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-22"
+  },
+  {
+    "id": "prod_1758541820796_svcyw",
+    "title": "Office Table",
+    "description": "Office Table 1.2Meter*2Feet",
+    "price": 6000,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "home",
+    "location": "Nyahururu",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758541816/sokoni-arena/km5pn1ka72xnihmaa1us.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758541820/sokoni-arena/rqypgdy285pnildanezg.jpg"
+    ],
+    "seller": {
+      "username": "Matrix Solutions",
+      "name": "Matrix Solutions",
+      "phone": "0114701233",
+      "whatsapp": "0114701233",
+      "email": "@matrixsolutions",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-22"
+  },
+  {
+    "id": "prod_1758542249261_d22p2",
+    "title": "Nissan Note Nismo.",
+    "description": "YOM: 2016.\nEngine: 1600cc.\nManual Transmission.\n\nAccident Free.\nOriginal Paint.\nFully Wrapped.\n5-Speed Gear Box.\nTop Speed - 260km/hr.\nOriginal Nissan Alloy Rims.\nNew Tyres All Round.\nKeyless Ignition.\nAndroid Screen. \nPowerful Surround Music System.\nXenon Headlights.\nReverse Camera.\nClean Dark Interior.",
+    "price": 1100000,
+    "originalPrice": null,
+    "condition": "used",
+    "category": "vehicles",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758542233/sokoni-arena/steklzuas9wcerbkztxs.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758542237/sokoni-arena/jszchklaxm0ayqdbiu4w.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758542241/sokoni-arena/runltwmcddn4y2sgiwgr.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758542244/sokoni-arena/w26rkzsdtutzbrc5ercw.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758542248/sokoni-arena/bvin2xnvzcbocvshurxi.jpg"
+    ],
+    "seller": {
+      "username": "TECH?MOTORS",
+      "name": "TECH?MOTORS",
+      "phone": "0106?943283",
+      "whatsapp": "0106?943283",
+      "email": "@TECH?MOTORS",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-22"
+  },
+  {
+    "id": "prod_1758542761105_p7x4f",
+    "title": "Subaru Forester SH-5.",
+    "description": "YOM: 2008.\nEngine: 1990cc.\nAutomatic Transmission.\n\nAccident Free.\nProfessionally Repainted.\nNon-Turbo Unit.\nLeather Interior. \nPerfect Suspension.?\nNew Tyres All Round \n16? Alloy Rims.\nClean Dark Interior.",
+    "price": 1090000,
+    "originalPrice": null,
+    "condition": "used",
+    "category": "vehicles",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758542745/sokoni-arena/qusz0svs7m0zpkh2q7tx.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758542749/sokoni-arena/bnwuaih4bg9aaixbt7co.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758542752/sokoni-arena/omitxczavzqbdvbwgklq.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758542756/sokoni-arena/iqbr206dqneqkzfjcfzu.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758542760/sokoni-arena/pfz0vhjio0d99xoks4nf.jpg"
+    ],
+    "seller": {
+      "username": "TECH?MOTORS",
+      "name": "TECH?MOTORS",
+      "phone": "0106?943283",
+      "whatsapp": "0106?943283",
+      "email": "@TECH?MOTORS",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-22"
+  },
+  {
+    "id": "prod_1758564635406_ell1d",
+    "title": "Jua kali amplifier",
+    "description": "Jua kali amplifier",
+    "price": 8000,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758564625/sokoni-arena/yhlyayrccty1vtjjcwhq.png",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758564630/sokoni-arena/penmnxogkd2pnnydhmv9.png",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758564635/sokoni-arena/cteh5lfj444lnnelmezc.png"
+    ],
+    "seller": {
+      "username": "soundhub7",
+      "name": "soundhub7",
+      "phone": "0724869633",
+      "whatsapp": "0724078500",
+      "email": "@ soundhub7",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-22"
+  },
+  {
+    "id": "prod_1758565162819_01hhp",
+    "title": "mixer amplifier",
+    "description": "mixer amplifier",
+    "price": 7000,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758565158/sokoni-arena/bsmgywrawkgsz0apyzkp.png",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758565162/sokoni-arena/lonixyakwzxlql6bocj5.png"
+    ],
+    "seller": {
+      "username": "blimbytwosamms",
+      "name": "blimbytwosamms",
+      "phone": "0720100636",
+      "whatsapp": "0720100636",
+      "email": "@ blimbytwosamms",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-22"
+  },
+  {
+    "id": "prod_1758565476233_i33tx",
+    "title": "Sonar Decoder",
+    "description": "A free to air decoder providing you with the best entertainment in Kenya for Free of charege",
+    "price": 1000,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758565472/sokoni-arena/whirzxmz3devsxly344z.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758565475/sokoni-arena/hedusikqjl4qgd9dzsib.webp"
+    ],
+    "seller": {
+      "username": "blimbytwosamms",
+      "name": "blimbytwosamms",
+      "phone": "0720100636",
+      "whatsapp": "0720100636",
+      "email": "@blimbly",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-22"
+  },
+  {
+    "id": "prod_1758566198565_z76kp",
+    "title": "Gaming Pc",
+    "description": "- Ryzen 9 5900x\n- 64gb ddr4\n- ASRock b550 pro 4\n- Deepcool ag620 dual tower cooler\n- SAMA SV01 PC case 4x fans\n- Deepcool PL750D power supply",
+    "price": 87000,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758566188/sokoni-arena/tafrzr5eqh1qd0ihm4kc.png",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758566192/sokoni-arena/jehqsnylrqslz6ea1u9q.png",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758566197/sokoni-arena/qmv33ej2p2jwx5bjfdqf.png"
+    ],
+    "seller": {
+      "username": "thepcgamer254",
+      "name": "thepcgamer254",
+      "phone": "0111743938",
+      "whatsapp": "0111743938",
+      "email": "@thepcgamerke",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-22"
+  },
+  {
+    "id": "prod_1758566432518_lwbdz",
+    "title": "Gaming pc",
+    "description": "? AMD Ryzen 7 9800x3d\n? Asus prime RTX 5070 12gb\n? 1tb NVme WD gen 4\n? 32gb ddr5 patriot viper RGB\n? 1000w psu deepcool\n? msi b650-p wifi\n? SAMA SV01 case\n? Thermalright prism 360mm liquid cooler",
+    "price": 300000,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758566424/sokoni-arena/gqhrzjohtquys3jlcrje.png",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758566428/sokoni-arena/qp78xocbp7rludzqqci6.png",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758566432/sokoni-arena/zyr9jejwtud11atjbdbz.png"
+    ],
+    "seller": {
+      "username": "thepcgamer254",
+      "name": "thepcgamer254",
+      "phone": "0111743938",
+      "whatsapp": "0111743938",
+      "email": "@pcgamer254",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-22"
+  },
+  {
+    "id": "prod_1758566917852_dh50c",
+    "title": "RTX 5060",
+    "description": "16GB 128-Bit GDDR7\n1 x HDMI 2.1b 3 x DisplayPort 2.1b\n4608 Cores CUDA Cores\nPCI Express 5.0 x 16 (use x8)",
+    "price": 88000,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758566907/sokoni-arena/kbyhk5l4yechhvwytch5.webp",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758566911/sokoni-arena/z1clemywssky9xijvhhn.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758566917/sokoni-arena/gzvu9kgcuzkn2631bqil.png"
+    ],
+    "seller": {
+      "username": "the pcgamer 254",
+      "name": "the pcgamer 254",
+      "phone": "0111743938",
+      "whatsapp": "0111743938",
+      "email": "@thepcgamer254",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-22"
+  },
+  {
+    "id": "prod_1758567297205_vrkn6",
+    "title": "potie",
+    "description": "Goodbye Diapers?, Hello Independence!?\nPotty Training made simple with our easy to use training potty. Visit us today or DM to order.",
+    "price": 4500,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "home",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758567285/sokoni-arena/wewemknowqz0ppnmcmsc.png",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758567289/sokoni-arena/haygeiy4urcspdsn9asz.png",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758567293/sokoni-arena/yvgzrdtv9kemioubgxoy.png",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758567296/sokoni-arena/hyvvkaek6yx6xspil22o.png"
+    ],
+    "seller": {
+      "username": "angies_baby",
+      "name": "angies_baby",
+      "phone": "0727600734",
+      "whatsapp": "0717039512",
+      "email": "@ angies_baby",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-22"
+  },
+  {
+    "id": "prod_1758567726848_eyck2",
+    "title": "Red Ballet Outfit",
+    "description": "Red Ballet Outfit ,Age: 2 years to 5 years\nShoes: 24 to 43 (Black, White, Peach & Pink)\nStocking: White, Black & Pink",
+    "price": 3100,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "fashion",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758567715/sokoni-arena/w5nyc8ctbz0psgq6kxe0.png",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758567718/sokoni-arena/qks1tfn5obulltub1pwi.png",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758567722/sokoni-arena/vwko1kofzi4eingywshp.png",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758567726/sokoni-arena/wb2cw497nydkamstih4n.png"
+    ],
+    "seller": {
+      "username": "angies_baby",
+      "name": "angies_baby",
+      "phone": "0722143631",
+      "whatsapp": "0722143631",
+      "email": "@ angies_baby",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-22"
+  },
+  {
+    "id": "prod_1758568479452_0w61j",
+    "title": "Good quality swim bags",
+    "description": "*Waterproof\n* Large storage capacity\n*Lightweight\n* Extra compartment\n* Goggles compartment\n* Drawstring straps\n* Easy to use",
+    "price": 1500,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "fashion",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758568462/sokoni-arena/rt9h2aj7rdaluxkrfctx.png",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758568466/sokoni-arena/vuvmcwhh3iyhf8oqvdyj.png",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758568470/sokoni-arena/iznkqn0jrqkfx9ygqrpg.png",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758568474/sokoni-arena/zyl0x7m28xnclcbzsbcb.png",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758568479/sokoni-arena/hpjkwsbkrsupt2wnu9ai.png"
+    ],
+    "seller": {
+      "username": "angies_baby",
+      "name": "angies_baby",
+      "phone": "0722143631",
+      "whatsapp": "0722143631",
+      "email": "@angiebaby",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-22"
+  },
+  {
+    "id": "prod_1758568932539_croo9",
+    "title": "Vitron 43inch Tv",
+    "description": "Wi-Fi | HDMI | USB | AV Ports ? Seamless connectivity\n? Inbuilt Decoder + Powerful Sound\n? Frameless Modern Design",
+    "price": 17999,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758568925/sokoni-arena/gzq7lxugtlmrbsg4vnnl.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758568928/sokoni-arena/jh49nsvsmawaqf5hbzdl.webp",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758568932/sokoni-arena/cwl3xfcwal715uyq9vf0.jpg"
+    ],
+    "seller": {
+      "username": "jaza_nyumba",
+      "name": "jaza_nyumba",
+      "phone": "0741 367 770",
+      "whatsapp": "0741 367 770",
+      "email": "@ jaza_nyumba",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-22"
+  },
+  {
+    "id": "prod_1758569318416_timmp",
+    "title": "Hisense 55\" 4K UHD TV",
+    "description": "Crystal Clear Entertainment! Hisense 55\" 4K UHD TV Experience your favorite movies, shows, and games in breathtaking detail! Get the stunning Hisense 55-inch A7 Series 4K UHD Smart TV at an incredible price you won't find anywhere else",
+    "price": 47777,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758569309/sokoni-arena/mkpnldzt4tr3gk0dae8m.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758569313/sokoni-arena/ga4wqhcwyjqa4fbpasul.webp",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758569317/sokoni-arena/iokjptv6vst3krnp1mfv.jpg"
+    ],
+    "seller": {
+      "username": "jaza_nyumba",
+      "name": "jaza_nyumba",
+      "phone": "0741 367 770",
+      "whatsapp": "0741 367 770",
+      "email": "@ jaza_nyumba",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-22"
+  },
+  {
+    "id": "prod_1758569672798_g160c",
+    "title": "Syinix 32\" Smart TV",
+    "description": "Upgrade your home entertainment on a budget! The Syinix 32-inch Smart Android TV offers a world of content and brilliant visuals at an unbeatable price",
+    "price": 10666,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758569665/sokoni-arena/jq0phmb0ozpzmcbcf7uq.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758569668/sokoni-arena/zwzk3ff2wx9kinc4egty.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758569672/sokoni-arena/qics80okfmari2oibtpv.jpg"
+    ],
+    "seller": {
+      "username": "jaza_nyumba",
+      "name": "jaza_nyumba",
+      "phone": "741367770",
+      "whatsapp": "741367770",
+      "email": "@ jaza_nyumba",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-22"
+  },
+  {
+    "id": "prod_1758620920722_o84s9",
+    "title": "Mercedes Benz E250",
+    "description": "2017 MERCEDES BENZ E250\n\n?2000cc petrol \n? automatic transmission \n?Full spec\n?Panoramic sunroof",
+    "price": 4700000,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "vehicles",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758620905/sokoni-arena/hga1enny9xd7seyyiequ.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758620909/sokoni-arena/pug6imsovljyiqtq1zds.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758620912/sokoni-arena/wr3yuykhu6ppz5dmtww2.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758620916/sokoni-arena/opqonyve1xjhyd99um1b.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758620920/sokoni-arena/qfpyniatmy7madzilclw.jpg"
+    ],
+    "seller": {
+      "username": "Iyan Maina",
+      "name": "Iyan Maina",
+      "phone": "0790948740",
+      "whatsapp": "0790948740",
+      "email": "iyanmaina@gmail.com",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-23"
+  },
+  {
+    "id": "prod_1758653802684_6sv08",
+    "title": "Toyota Hilux",
+    "description": "Toyota Hilux manual diesel 6gear 4wd good condition 2017yr",
+    "price": 2800000,
+    "originalPrice": null,
+    "condition": "used",
+    "category": "vehicles",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758653790/sokoni-arena/kfixbsds6pc9ob5b54zu.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758653794/sokoni-arena/bkowpu05vltlulvdwdsb.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758653798/sokoni-arena/xq8s3on4a41xdsuh3ogt.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758653802/sokoni-arena/jyqc4dqefxorgtqgbeib.jpg"
+    ],
+    "seller": {
+      "username": "Prince",
+      "name": "Prince kris",
+      "phone": "0708069880",
+      "whatsapp": "0708069880",
+      "email": "Magari254@gmail.com",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-23"
+  },
+  {
+    "id": "prod_1758654583754_ijein",
+    "title": "Mansion",
+    "description": "4 bedrooms \nPlot size 150?75",
+    "price": 10600000,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "real-estate",
+    "location": "Nairobi,  kabati near police station",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758654559/sokoni-arena/upsatevdu97n8zxkhhcm.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758654564/sokoni-arena/v3n0dts0nu3b63n4ljeu.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758654571/sokoni-arena/xftiu0id8dyv0qksjetm.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758654575/sokoni-arena/w6rxwjxybsn1inzvby35.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758654581/sokoni-arena/lli1osfagslri6f5mfy5.jpg"
+    ],
+    "seller": {
+      "username": "Brady pally",
+      "name": "Brady pally",
+      "phone": "0704787741",
+      "whatsapp": "0704787741",
+      "email": "Paally@gmail.com",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-23"
+  },
+  {
+    "id": "prod_1758655774752_rw7iy",
+    "title": "Toyota hiace",
+    "description": "TOYOTA HIACE 7L\n2013 MODEL\n2WD\n1KD-ENGINE\n3000CC (DIESEL)\n14 SEATER\nWELL MAINTAINED\nPRIVATELY USED",
+    "price": 1450000,
+    "originalPrice": null,
+    "condition": "used",
+    "category": "vehicles",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758655755/sokoni-arena/jcbkbzeezbl2kugzwgcf.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758655759/sokoni-arena/nvaakdxgrdtyhq3wjxtg.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758655765/sokoni-arena/azopolmf2fjvcpvpfe45.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758655769/sokoni-arena/wcj5sivzjltw8t75hqid.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758655774/sokoni-arena/jdeq1r9qea5b6s7qc6in.jpg"
+    ],
+    "seller": {
+      "username": "Nick odera",
+      "name": "Nick odera",
+      "phone": "0740083001",
+      "whatsapp": "0740083001",
+      "email": "Magari254@gmail.com",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-23"
+  },
+  {
+    "id": "prod_1758700014819_nq1qy",
+    "title": "Kienyeji eggs",
+    "description": "Nutritious high protein eggs",
+    "price": 450,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "agriculture",
+    "location": "Nyahururu",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758700014/sokoni-arena/mk5x04xnahh5jhpj49yc.jpg"
+    ],
+    "seller": {
+      "username": "Ruth",
+      "name": "Ruth",
+      "phone": "0723441719",
+      "whatsapp": "0723441719",
+      "email": "Ruth@gmail.com",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-24"
+  },
+  {
+    "id": "prod_1758712293594_66lkq",
+    "title": "Long Dress",
+    "description": "Long Dress black, maroon, white, sky blue, light blue available now.\nDelivery available countrywide.",
+    "price": 2500,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "fashion",
+    "location": "Nyahururu",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758712287/sokoni-arena/apabjo8t4pxwk5vgj2ly.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758712292/sokoni-arena/b0rdk3b4muxc183cibh6.jpg"
+    ],
+    "seller": {
+      "username": "Eliza",
+      "name": "Eliza",
+      "phone": "0712552068",
+      "whatsapp": "0712552068",
+      "email": "@eliza.com",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-24"
+  },
+  {
+    "id": "prod_1758713027130_0m5cs",
+    "title": "Ladies leather jacket",
+    "description": "Ladies leather jacket, beautiful,  warm, all weather. Available and countrywide delivery.",
+    "price": 1800,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "fashion",
+    "location": "Nyahururu",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758713020/sokoni-arena/fncuk0kg4tzrqaytsv5c.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758713025/sokoni-arena/uwb3mbmozxgsggmwjsz4.jpg"
+    ],
+    "seller": {
+      "username": "Eliza",
+      "name": "Eliza",
+      "phone": "0712552068",
+      "whatsapp": "0712552068",
+      "email": "@eliza.com",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-24"
+  },
+  {
+    "id": "prod_1758717631854_zrkte",
+    "title": "Men shirt",
+    "description": "Men shirt short sleeve, silk, quality product",
+    "price": 1200,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "fashion",
+    "location": "Nyahururu",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758717618/sokoni-arena/lpjgd7s4yv4xhd3gojkj.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758717625/sokoni-arena/yoi3vjhvuemnjqks3oap.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758717631/sokoni-arena/wx7pf5nrn0e1btafpf75.jpg"
+    ],
+    "seller": {
+      "username": "John",
+      "name": "John",
+      "phone": "0721242539",
+      "whatsapp": "0721242539",
+      "email": "@john.com",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-24"
+  },
+  {
+    "id": "prod_1758720550461_bwtn3",
+    "title": "Lenovo T480",
+    "description": "8gb ram 256 gb ssd\nIntel Core i5 \n8th generation",
+    "price": 30000,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "electronics",
+    "location": "Nyahururu,  countrywide delivery",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758720528/sokoni-arena/gfihozi0b7nuiyiwsieu.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758720533/sokoni-arena/ohhccff41t2bnyvyazuz.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758720538/sokoni-arena/dupwfcqdpcbsojxp0eta.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758720544/sokoni-arena/zzhjva9jmzzphye43pv5.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758720549/sokoni-arena/bswozdtfrbuvlhkwk8or.jpg"
+    ],
+    "seller": {
+      "username": "Davy",
+      "name": "Davy",
+      "phone": "0115899993",
+      "whatsapp": "0115899993",
+      "email": "@davy.com",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-24"
+  },
+  {
+    "id": "prod_1758789432703_emild",
+    "title": "Swimming costumes",
+    "description": "High quality, sleek and beautiful, sporty and comfortable",
+    "price": 4000,
+    "originalPrice": null,
+    "condition": "new",
+    "category": "sports",
+    "location": "Nairobi",
+    "images": [
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758789419/sokoni-arena/moffkuoua3lrxvyyrdiq.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758789423/sokoni-arena/fa5i12mzfyff4tollave.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758789426/sokoni-arena/t4jxv0py2jofrgfmirkx.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758789429/sokoni-arena/kjqr7o3tkpgnf9sxacnk.jpg",
+      "https://res.cloudinary.com/dxzbol4lf/image/upload/v1758789432/sokoni-arena/l3ai5dsnrpfnnojwtorf.jpg"
+    ],
+    "seller": {
+      "username": "Nairobi sports house",
+      "name": "Nairobi sports house",
+      "phone": "0729589180",
+      "whatsapp": "0729589180",
+      "email": "enquiries@nairobisportshouse.com",
+      "verified": true
+    },
+    "isHotDeal": false,
+    "featured": false,
+    "dateAdded": "2025-09-25"
+  }
+]
