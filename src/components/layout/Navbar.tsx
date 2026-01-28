@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Search, ShoppingBag, Sparkles, Calendar, User, X } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Menu, Search, ShoppingBag, Sparkles, Calendar, User, X, LogOut, LayoutDashboard, Shield } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/contexts/AuthContext";
 
 const navLinks = [
   { href: "/products", label: "Products", icon: ShoppingBag },
@@ -14,6 +16,13 @@ const navLinks = [
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, isAdmin, signOut } = useAuth();
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate("/");
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -56,17 +65,52 @@ export function Navbar() {
               <Search className="h-5 w-5" />
             </Link>
           </Button>
-          <Button variant="outline" asChild>
-            <Link to="/login">
-              <User className="h-4 w-4" />
-              Sign In
-            </Link>
-          </Button>
-          <Button asChild>
-            <Link to="/register">
-              Post Ad
-            </Link>
-          </Button>
+
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="gap-2">
+                  <User className="h-4 w-4" />
+                  Account
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuItem asChild>
+                  <Link to="/dashboard" className="flex items-center gap-2 cursor-pointer">
+                    <LayoutDashboard className="h-4 w-4" />
+                    Dashboard
+                  </Link>
+                </DropdownMenuItem>
+                {isAdmin && (
+                  <DropdownMenuItem asChild>
+                    <Link to="/admin" className="flex items-center gap-2 cursor-pointer">
+                      <Shield className="h-4 w-4" />
+                      Admin Panel
+                    </Link>
+                  </DropdownMenuItem>
+                )}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleSignOut} className="flex items-center gap-2 cursor-pointer text-destructive">
+                  <LogOut className="h-4 w-4" />
+                  Sign Out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <>
+              <Button variant="outline" asChild>
+                <Link to="/login">
+                  <User className="h-4 w-4" />
+                  Sign In
+                </Link>
+              </Button>
+              <Button asChild>
+                <Link to="/register">
+                  Post Ad
+                </Link>
+              </Button>
+            </>
+          )}
         </div>
 
         {/* Mobile Menu */}
@@ -113,19 +157,58 @@ export function Navbar() {
                       </Link>
                     );
                   })}
+
+                  {user && (
+                    <>
+                      <Link
+                        to="/dashboard"
+                        onClick={() => setIsOpen(false)}
+                        className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-muted"
+                      >
+                        <LayoutDashboard className="h-5 w-5" />
+                        Dashboard
+                      </Link>
+                      {isAdmin && (
+                        <Link
+                          to="/admin"
+                          onClick={() => setIsOpen(false)}
+                          className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-muted"
+                        >
+                          <Shield className="h-5 w-5" />
+                          Admin Panel
+                        </Link>
+                      )}
+                    </>
+                  )}
                 </nav>
                 <div className="p-4 border-t space-y-3">
-                  <Button variant="outline" className="w-full" asChild>
-                    <Link to="/login" onClick={() => setIsOpen(false)}>
-                      <User className="h-4 w-4" />
-                      Sign In
-                    </Link>
-                  </Button>
-                  <Button className="w-full" asChild>
-                    <Link to="/register" onClick={() => setIsOpen(false)}>
-                      Post Ad
-                    </Link>
-                  </Button>
+                  {user ? (
+                    <Button
+                      variant="outline"
+                      className="w-full"
+                      onClick={() => {
+                        setIsOpen(false);
+                        handleSignOut();
+                      }}
+                    >
+                      <LogOut className="h-4 w-4" />
+                      Sign Out
+                    </Button>
+                  ) : (
+                    <>
+                      <Button variant="outline" className="w-full" asChild>
+                        <Link to="/login" onClick={() => setIsOpen(false)}>
+                          <User className="h-4 w-4" />
+                          Sign In
+                        </Link>
+                      </Button>
+                      <Button className="w-full" asChild>
+                        <Link to="/register" onClick={() => setIsOpen(false)}>
+                          Post Ad
+                        </Link>
+                      </Button>
+                    </>
+                  )}
                 </div>
               </div>
             </SheetContent>

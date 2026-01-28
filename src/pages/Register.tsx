@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
@@ -6,8 +6,18 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Eye, EyeOff, Mail, Lock, User, Phone, ArrowRight } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, User, Phone, ArrowRight, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
+import { z } from "zod";
+
+// Validation schema
+const registerSchema = z.object({
+  username: z.string().min(3, "Username must be at least 3 characters").max(30, "Username must be less than 30 characters"),
+  email: z.string().email("Invalid email address"),
+  phone: z.string().min(10, "Phone number must be at least 10 digits"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
+});
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -21,8 +31,17 @@ export default function Register() {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [acceptedPrivacy, setAcceptedPrivacy] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { user, signUp } = useAuth();
+
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user) {
+      navigate("/dashboard", { replace: true });
+    }
+  }, [user, navigate]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({
@@ -34,6 +53,7 @@ export default function Register() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Validate passwords match
     if (formData.password !== formData.confirmPassword) {
       toast({
         title: "Passwords don't match",
@@ -43,6 +63,7 @@ export default function Register() {
       return;
     }
 
+    // Validate terms acceptance
     if (!acceptedTerms || !acceptedPrivacy) {
       toast({
         title: "Please accept the terms",
@@ -52,27 +73,81 @@ export default function Register() {
       return;
     }
 
+    // Validate form data
+    try {
+      registerSchema.parse(formData);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        toast({
+          title: "Validation error",
+          description: error.errors[0].message,
+          variant: "destructive",
+        });
+        return;
+      }
+    }
+
     setIsLoading(true);
 
-    // TODO: Implement actual registration with Supabase
-    try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+    const { error } = await signUp(
+      formData.email,
+      formData.password,
+      formData.username,
+      formData.phone
+    );
+
+    if (error) {
+      let message = "An error occurred during sign up.";
+      
+      if (error.message.includes("already registered")) {
+        message = "This email is already registered. Please sign in instead.";
+      } else if (error.message.includes("password")) {
+        message = "Password is too weak. Please use a stronger password.";
+      }
       
       toast({
-        title: "Registration functionality coming soon",
-        description: "Authentication will be implemented with the database.",
-      });
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Something went wrong. Please try again.",
+        title: "Sign up failed",
+        description: message,
         variant: "destructive",
       });
-    } finally {
       setIsLoading(false);
+      return;
     }
+
+    setIsSuccess(true);
+    toast({
+      title: "Account created!",
+      description: "Welcome to Sokoni Arena!",
+    });
+
+    // Redirect to dashboard after short delay
+    setTimeout(() => {
+      navigate("/dashboard", { replace: true });
+    }, 1500);
   };
+
+  if (isSuccess) {
+    return (
+      <Layout>
+        <div className="min-h-[80vh] flex items-center justify-center py-12 px-4">
+          <Card className="w-full max-w-md border-border/50 shadow-lg">
+            <CardContent className="pt-8 pb-8 text-center">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <CheckCircle className="h-8 w-8 text-primary" />
+              </div>
+              <h2 className="font-display text-2xl font-bold mb-2">Welcome to Sokoni Arena!</h2>
+              <p className="text-muted-foreground mb-6">
+                Your account has been created successfully. Redirecting to your dashboard...
+              </p>
+              <Button asChild>
+                <Link to="/dashboard">Go to Dashboard</Link>
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
