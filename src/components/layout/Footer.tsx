@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from "lucide-react";
+import { Facebook, Twitter, Instagram, Linkedin, Mail, MapPin } from "lucide-react";
 
 const footerLinks = {
   marketplace: [
@@ -124,11 +124,9 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3 text-sm text-background/70">
                 <Mail className="h-4 w-4 shrink-0" />
-                <span>hello@sokoniarena.co.ke</span>
-              </li>
-              <li className="flex items-center gap-3 text-sm text-background/70">
-                <Phone className="h-4 w-4 shrink-0" />
-                <span>+254 700 000 000</span>
+                <a href="mailto:sokoniarena@gmail.com" className="hover:text-primary transition-colors">
+                  sokoniarena@gmail.com
+                </a>
               </li>
             </ul>
           </div>
