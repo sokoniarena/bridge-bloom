@@ -4,20 +4,22 @@ import { CreateStoryForm } from "@/components/fun-circle/CreateStoryForm";
 import { StoryCard } from "@/components/fun-circle/StoryCard";
 import { FriendsPanel } from "@/components/fun-circle/FriendsPanel";
 import { MessagesDrawer } from "@/components/fun-circle/MessagesDrawer";
-import { useFunCircleStories } from "@/hooks/useFunCircleStories";
+import { MobileFriendsSheet } from "@/components/fun-circle/MobileFriendsSheet";
+import { useFunCircleStories, ReactionType } from "@/hooks/useFunCircleStories";
 import { useFunCircleMessages } from "@/hooks/useFunCircleMessages";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { MessageCircle, Users, Sparkles, LogIn } from "lucide-react";
+import { MessageCircle, Users, Sparkles, LogIn, Bell } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function FunCircle() {
   const { user } = useAuth();
-  const { stories, isLoading, likeStory, unlikeStory, deleteStory } = useFunCircleStories();
+  const { stories, isLoading, addReaction, deleteStory } = useFunCircleStories();
   const { startConversation, conversations, openConversation } = useFunCircleMessages();
   const [showMessages, setShowMessages] = useState(false);
+  const [showMobileFriends, setShowMobileFriends] = useState(false);
 
   const unreadCount = conversations.reduce(
     (sum, c) => sum + (c.unread_count || 0),
@@ -30,6 +32,10 @@ export default function FunCircle() {
       await openConversation(conv);
       setShowMessages(true);
     }
+  };
+
+  const handleReact = (storyId: string, reactionType: ReactionType) => {
+    addReaction(storyId, reactionType);
   };
 
   if (!user) {
@@ -77,19 +83,30 @@ export default function FunCircle() {
               </p>
             </div>
           </div>
-          <Button
-            variant="outline"
-            className="relative"
-            onClick={() => setShowMessages(true)}
-          >
-            <MessageCircle className="h-4 w-4 mr-2" />
-            Messages
-            {unreadCount > 0 && (
-              <Badge className="absolute -top-2 -right-2 h-5 min-w-5 p-0 flex items-center justify-center text-xs">
-                {unreadCount}
-              </Badge>
-            )}
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              asChild
+            >
+              <Link to="/fun-circle/notifications">
+                <Bell className="h-4 w-4 mr-2" />
+                Notifications
+              </Link>
+            </Button>
+            <Button
+              variant="outline"
+              className="relative"
+              onClick={() => setShowMessages(true)}
+            >
+              <MessageCircle className="h-4 w-4 mr-2" />
+              Messages
+              {unreadCount > 0 && (
+                <Badge className="absolute -top-2 -right-2 h-5 min-w-5 p-0 flex items-center justify-center text-xs">
+                  {unreadCount}
+                </Badge>
+              )}
+            </Button>
+          </div>
         </div>
 
         <div className="grid lg:grid-cols-[1fr_320px] gap-6">
@@ -119,8 +136,7 @@ export default function FunCircle() {
                   <StoryCard
                     key={story.id}
                     story={story}
-                    onLike={likeStory}
-                    onUnlike={unlikeStory}
+                    onReact={handleReact}
                     onDelete={deleteStory}
                     onStartChat={handleStartChat}
                   />
@@ -154,6 +170,14 @@ export default function FunCircle() {
         <div className="lg:hidden fixed bottom-20 right-4 flex flex-col gap-2 z-40">
           <Button
             size="icon"
+            variant="secondary"
+            className="h-12 w-12 rounded-full shadow-lg"
+            onClick={() => setShowMobileFriends(true)}
+          >
+            <Users className="h-5 w-5" />
+          </Button>
+          <Button
+            size="icon"
             className="h-12 w-12 rounded-full shadow-lg relative"
             onClick={() => setShowMessages(true)}
           >
@@ -165,6 +189,16 @@ export default function FunCircle() {
             )}
           </Button>
         </div>
+
+        {/* Mobile Friends Sheet */}
+        <MobileFriendsSheet
+          isOpen={showMobileFriends}
+          onClose={() => setShowMobileFriends(false)}
+          onStartChat={(userId) => {
+            setShowMobileFriends(false);
+            handleStartChat(userId);
+          }}
+        />
 
         {/* Mobile Messages Drawer */}
         {showMessages && (
