@@ -1,10 +1,8 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
-interface FunCircleTheme {
-  mode: "light" | "dark" | "system";
-  chatBubbleColor: string;
-  chatBubbleOpacity: number;
-  accentColor: string;
+interface ChatSettings {
+  bubbleColor: string;
+  bubbleOpacity: number;
 }
 
 interface StoryStyle {
@@ -14,23 +12,21 @@ interface StoryStyle {
 }
 
 interface FunCircleSettings {
-  theme: FunCircleTheme;
+  chat: ChatSettings;
   storyStyle: StoryStyle;
 }
 
 interface FunCircleSettingsContextType {
   settings: FunCircleSettings;
-  updateTheme: (theme: Partial<FunCircleTheme>) => void;
+  updateChatSettings: (chat: Partial<ChatSettings>) => void;
   updateStoryStyle: (style: Partial<StoryStyle>) => void;
   resetSettings: () => void;
 }
 
 const defaultSettings: FunCircleSettings = {
-  theme: {
-    mode: "system",
-    chatBubbleColor: "hsl(var(--primary))",
-    chatBubbleOpacity: 100,
-    accentColor: "hsl(var(--primary))",
+  chat: {
+    bubbleColor: "hsl(var(--primary))",
+    bubbleOpacity: 100,
   },
   storyStyle: {
     backgroundColor: "transparent",
@@ -43,43 +39,18 @@ const FunCircleSettingsContext = createContext<FunCircleSettingsContextType | nu
 
 export function FunCircleSettingsProvider({ children }: { children: ReactNode }) {
   const [settings, setSettings] = useState<FunCircleSettings>(() => {
-    const stored = localStorage.getItem("fun-circle-settings");
+    const stored = localStorage.getItem("fun-circle-settings-v2");
     return stored ? { ...defaultSettings, ...JSON.parse(stored) } : defaultSettings;
   });
 
   useEffect(() => {
-    localStorage.setItem("fun-circle-settings", JSON.stringify(settings));
+    localStorage.setItem("fun-circle-settings-v2", JSON.stringify(settings));
   }, [settings]);
 
-  // Apply theme mode to document
-  useEffect(() => {
-    const root = document.documentElement;
-    const { mode } = settings.theme;
-
-    if (mode === "system") {
-      const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      root.classList.toggle("dark", systemDark);
-    } else if (mode === "dark") {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
-
-    // Listen for system theme changes when in system mode
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const handleChange = (e: MediaQueryListEvent) => {
-      if (settings.theme.mode === "system") {
-        root.classList.toggle("dark", e.matches);
-      }
-    };
-    mediaQuery.addEventListener("change", handleChange);
-    return () => mediaQuery.removeEventListener("change", handleChange);
-  }, [settings.theme.mode]);
-
-  const updateTheme = (theme: Partial<FunCircleTheme>) => {
+  const updateChatSettings = (chat: Partial<ChatSettings>) => {
     setSettings((prev) => ({
       ...prev,
-      theme: { ...prev.theme, ...theme },
+      chat: { ...prev.chat, ...chat },
     }));
   };
 
@@ -96,7 +67,7 @@ export function FunCircleSettingsProvider({ children }: { children: ReactNode })
 
   return (
     <FunCircleSettingsContext.Provider
-      value={{ settings, updateTheme, updateStoryStyle, resetSettings }}
+      value={{ settings, updateChatSettings, updateStoryStyle, resetSettings }}
     >
       {children}
     </FunCircleSettingsContext.Provider>

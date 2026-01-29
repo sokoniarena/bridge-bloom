@@ -7,6 +7,7 @@ import { Menu, Search, ShoppingBag, Sparkles, Calendar, User, X, LogOut, LayoutD
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
 import { NotificationBell } from "@/components/notifications/NotificationBell";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { useUnreadMessages } from "@/hooks/useUnreadMessages";
 import { Badge } from "@/components/ui/badge";
 
@@ -64,7 +65,9 @@ export function Navbar() {
         </nav>
 
         {/* Desktop Actions */}
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-2">
+          <ThemeToggle />
+          
           <Button variant="ghost" size="icon" asChild>
             <Link to="/search">
               <Search className="h-5 w-5" />
@@ -142,7 +145,8 @@ export function Navbar() {
         </div>
 
         {/* Mobile Menu */}
-        <div className="flex md:hidden items-center gap-2">
+        <div className="flex md:hidden items-center gap-1">
+          <ThemeToggle />
           <Button variant="ghost" size="icon" asChild>
             <Link to="/search">
               <Search className="h-5 w-5" />

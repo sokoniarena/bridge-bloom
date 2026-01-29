@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Switch } from "@/components/ui/switch";
 import {
   Sheet,
   SheetContent,
@@ -14,6 +13,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Settings, Sun, Moon, Monitor, RotateCcw } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 import {
   useFunCircleSettings,
   CHAT_BUBBLE_COLORS,
@@ -23,7 +23,8 @@ import {
 } from "@/contexts/FunCircleSettingsContext";
 
 export function FunCircleSettingsSheet() {
-  const { settings, updateTheme, updateStoryStyle, resetSettings } = useFunCircleSettings();
+  const { mode, setMode } = useTheme();
+  const { settings, updateChatSettings, updateStoryStyle, resetSettings } = useFunCircleSettings();
 
   return (
     <Sheet>
@@ -47,8 +48,8 @@ export function FunCircleSettingsSheet() {
             <div className="space-y-3">
               <Label className="text-base font-semibold">Appearance</Label>
               <RadioGroup
-                value={settings.theme.mode}
-                onValueChange={(value) => updateTheme({ mode: value as "light" | "dark" | "system" })}
+                value={mode}
+                onValueChange={(value) => setMode(value as "light" | "dark" | "system")}
                 className="grid grid-cols-3 gap-2"
               >
                 <Label
@@ -87,9 +88,9 @@ export function FunCircleSettingsSheet() {
                 {CHAT_BUBBLE_COLORS.map((color) => (
                   <button
                     key={color.name}
-                    onClick={() => updateTheme({ chatBubbleColor: color.value })}
+                    onClick={() => updateChatSettings({ bubbleColor: color.value })}
                     className={`h-8 w-8 rounded-full border-2 transition-all ${
-                      settings.theme.chatBubbleColor === color.value
+                      settings.chat.bubbleColor === color.value
                         ? "ring-2 ring-offset-2 ring-primary"
                         : "hover:scale-110"
                     }`}
@@ -105,12 +106,12 @@ export function FunCircleSettingsSheet() {
               <div className="flex justify-between">
                 <Label className="text-base font-semibold">Bubble Opacity</Label>
                 <span className="text-sm text-muted-foreground">
-                  {settings.theme.chatBubbleOpacity}%
+                  {settings.chat.bubbleOpacity}%
                 </span>
               </div>
               <Slider
-                value={[settings.theme.chatBubbleOpacity]}
-                onValueChange={([value]) => updateTheme({ chatBubbleOpacity: value })}
+                value={[settings.chat.bubbleOpacity]}
+                onValueChange={([value]) => updateChatSettings({ bubbleOpacity: value })}
                 min={50}
                 max={100}
                 step={5}
