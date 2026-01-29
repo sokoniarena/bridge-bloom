@@ -45,6 +45,8 @@ const queryClient = new QueryClient({
   },
 });
 
+
+
 // Minimal loading fallback
 function PageLoader() {
   return (

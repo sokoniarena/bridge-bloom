@@ -18,7 +18,15 @@ export default defineConfig(({ mode }) => ({
     mode === "development" && componentTagger(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["favicon.ico", "robots.txt"],
+      includeAssets: [
+        "favicon.ico", 
+        "robots.txt", 
+        "sitemap.xml",
+        "favicon-16x16.png",
+        "favicon-32x32.png",
+        "pwa-192x192.png",
+        "pwa-512x512.png"
+      ],
       manifest: {
         name: "SokoniArena - Kenya's Premier Marketplace",
         short_name: "SokoniArena",
@@ -49,7 +57,7 @@ export default defineConfig(({ mode }) => ({
         ],
       },
       workbox: {
-        globPatterns: ["**/*.{js,css,html,ico,png,svg,woff2}"],
+        globPatterns: ["**/*.{js,css,html,ico,png,svg,woff2,xml,txt}"],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/images\.unsplash\.com\/.*/i,
@@ -58,7 +66,7 @@ export default defineConfig(({ mode }) => ({
               cacheName: "unsplash-images",
               expiration: {
                 maxEntries: 100,
-                maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+                maxAgeSeconds: 60 * 60 * 24 * 30,
               },
               cacheableResponse: {
                 statuses: [0, 200],
@@ -72,7 +80,7 @@ export default defineConfig(({ mode }) => ({
               cacheName: "cloudinary-images",
               expiration: {
                 maxEntries: 100,
-                maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+                maxAgeSeconds: 60 * 60 * 24 * 30,
               },
               cacheableResponse: {
                 statuses: [0, 200],
@@ -88,4 +96,17 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  
+  // Build configuration
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'index.html'),
+      },
+    },
+  },
+  
+  publicDir: 'public',
 }));

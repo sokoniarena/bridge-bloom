@@ -5,10 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && copy public\\sitemap.xml dist\\sitemap.xml && copy public\\robots.txt dist\\robots.txt",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
+    "serve:prod": "npm run build && npx serve dist",
+    "deploy": "npm run build && echo 'Deploy dist folder to your hosting'",
     "test": "vitest run",
     "test:watch": "vitest"
   },
