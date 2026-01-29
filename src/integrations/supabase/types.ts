@@ -123,6 +123,38 @@ export type Database = {
           },
         ]
       }
+      fun_circle_comments: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          story_id: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          story_id: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          story_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fun_circle_comments_story_id_fkey"
+            columns: ["story_id"]
+            isOneToOne: false
+            referencedRelation: "fun_circle_stories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       fun_circle_conversations: {
         Row: {
           created_at: string
@@ -174,6 +206,35 @@ export type Database = {
         }
         Relationships: []
       }
+      fun_circle_mentions: {
+        Row: {
+          created_at: string
+          id: string
+          mentioned_user_id: string
+          story_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          mentioned_user_id: string
+          story_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          mentioned_user_id?: string
+          story_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fun_circle_mentions_story_id_fkey"
+            columns: ["story_id"]
+            isOneToOne: false
+            referencedRelation: "fun_circle_stories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       fun_circle_messages: {
         Row: {
           content: string
@@ -216,7 +277,7 @@ export type Database = {
           expires_at: string
           id: string
           images: string[] | null
-          likes_count: number | null
+          reactions_count: Json | null
           user_id: string
           views_count: number | null
         }
@@ -226,7 +287,7 @@ export type Database = {
           expires_at?: string
           id?: string
           images?: string[] | null
-          likes_count?: number | null
+          reactions_count?: Json | null
           user_id: string
           views_count?: number | null
         }
@@ -236,34 +297,37 @@ export type Database = {
           expires_at?: string
           id?: string
           images?: string[] | null
-          likes_count?: number | null
+          reactions_count?: Json | null
           user_id?: string
           views_count?: number | null
         }
         Relationships: []
       }
-      fun_circle_story_likes: {
+      fun_circle_story_reactions: {
         Row: {
           created_at: string
           id: string
+          reaction_type: Database["public"]["Enums"]["story_reaction_type"]
           story_id: string
           user_id: string
         }
         Insert: {
           created_at?: string
           id?: string
+          reaction_type?: Database["public"]["Enums"]["story_reaction_type"]
           story_id: string
           user_id: string
         }
         Update: {
           created_at?: string
           id?: string
+          reaction_type?: Database["public"]["Enums"]["story_reaction_type"]
           story_id?: string
           user_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "fun_circle_story_likes_story_id_fkey"
+            foreignKeyName: "fun_circle_story_reactions_story_id_fkey"
             columns: ["story_id"]
             isOneToOne: false
             referencedRelation: "fun_circle_stories"
@@ -574,6 +638,7 @@ export type Database = {
       friend_request_status: "pending" | "accepted" | "rejected"
       listing_status: "available" | "out_of_stock" | "expired" | "draft"
       listing_type: "product" | "service" | "event"
+      story_reaction_type: "like" | "love" | "laugh" | "wow" | "sad" | "angry"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -705,6 +770,7 @@ export const Constants = {
       friend_request_status: ["pending", "accepted", "rejected"],
       listing_status: ["available", "out_of_stock", "expired", "draft"],
       listing_type: ["product", "service", "event"],
+      story_reaction_type: ["like", "love", "laugh", "wow", "sad", "angry"],
     },
   },
 } as const

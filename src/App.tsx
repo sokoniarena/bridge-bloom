@@ -22,6 +22,7 @@ import Profile from "./pages/Profile";
 import Favorites from "./pages/Favorites";
 import Messages from "./pages/Messages";
 import FunCircle from "./pages/FunCircle";
+import FunCircleNotifications from "./pages/FunCircleNotifications";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -45,6 +46,7 @@ const App = () => (
             <Route path="/favorites" element={<Favorites />} />
             <Route path="/messages" element={<Messages />} />
             <Route path="/fun-circle" element={<FunCircle />} />
+            <Route path="/fun-circle/notifications" element={<FunCircleNotifications />} />
             <Route path="/profile/:userId" element={<Profile />} />
             <Route
               path="/dashboard"

@@ -3,6 +3,17 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 
+export type ReactionType = "like" | "love" | "laugh" | "wow" | "sad" | "angry";
+
+export interface ReactionCounts {
+  like: number;
+  love: number;
+  laugh: number;
+  wow: number;
+  sad: number;
+  angry: number;
+}
+
 export interface Story {
   id: string;
   user_id: string;
@@ -10,14 +21,36 @@ export interface Story {
   images: string[];
   created_at: string;
   expires_at: string;
-  likes_count: number;
+  reactions_count: ReactionCounts;
   views_count: number;
   profile?: {
     username: string;
     avatar_url: string | null;
   };
-  is_liked?: boolean;
+  user_reaction?: ReactionType | null;
+  mentions?: string[];
 }
+
+export interface Comment {
+  id: string;
+  story_id: string;
+  user_id: string;
+  content: string;
+  created_at: string;
+  profile?: {
+    username: string;
+    avatar_url: string | null;
+  };
+}
+
+const defaultReactionCounts: ReactionCounts = {
+  like: 0,
+  love: 0,
+  laugh: 0,
+  wow: 0,
+  sad: 0,
+  angry: 0,
+};
 
 export function useFunCircleStories() {
   const { user } = useAuth();
@@ -47,20 +80,40 @@ export function useFunCircleStories() {
         .select("user_id, username, avatar_url")
         .in("user_id", userIds);
 
-      // Get user's likes
-      const { data: likes } = await supabase
-        .from("fun_circle_story_likes")
-        .select("story_id")
+      // Get user's reactions
+      const { data: reactions } = await supabase
+        .from("fun_circle_story_reactions")
+        .select("story_id, reaction_type")
         .eq("user_id", user.id);
 
-      const likedStoryIds = new Set(likes?.map(l => l.story_id) || []);
+      const userReactions = new Map(
+        reactions?.map(r => [r.story_id, r.reaction_type as ReactionType]) || []
+      );
 
-      const storiesWithProfiles = (data || []).map(story => ({
-        ...story,
-        images: story.images || [],
-        profile: profiles?.find(p => p.user_id === story.user_id),
-        is_liked: likedStoryIds.has(story.id),
-      }));
+      // Get mentions for stories
+      const storyIds = data?.map(s => s.id) || [];
+      const { data: mentions } = await supabase
+        .from("fun_circle_mentions")
+        .select("story_id, mentioned_user_id")
+        .in("story_id", storyIds);
+
+      const mentionsByStory = new Map<string, string[]>();
+      mentions?.forEach(m => {
+        const existing = mentionsByStory.get(m.story_id) || [];
+        mentionsByStory.set(m.story_id, [...existing, m.mentioned_user_id]);
+      });
+
+      const storiesWithProfiles = (data || []).map(story => {
+        const rawReactions = story.reactions_count as unknown as ReactionCounts;
+        return {
+          ...story,
+          images: story.images || [],
+          reactions_count: rawReactions || defaultReactionCounts,
+          profile: profiles?.find(p => p.user_id === story.user_id),
+          user_reaction: userReactions.get(story.id) || null,
+          mentions: mentionsByStory.get(story.id) || [],
+        };
+      });
 
       setStories(storiesWithProfiles);
     } catch (error) {
@@ -89,7 +142,7 @@ export function useFunCircleStories() {
     setImagesUploadedToday(count);
   };
 
-  const createStory = async (content: string, images: string[]) => {
+  const createStory = async (content: string, images: string[], mentionedUserIds: string[] = []) => {
     if (!user) return { error: new Error("Not authenticated") };
 
     if (imagesUploadedToday + images.length > 5) {
@@ -120,6 +173,16 @@ export function useFunCircleStories() {
       return { error };
     }
 
+    // Add mentions if any
+    if (mentionedUserIds.length > 0 && data) {
+      await supabase.from("fun_circle_mentions").insert(
+        mentionedUserIds.map(userId => ({
+          story_id: data.id,
+          mentioned_user_id: userId,
+        }))
+      );
+    }
+
     toast({
       title: "Story posted!",
       description: "Your story will disappear in 24 hours.",
@@ -130,43 +193,86 @@ export function useFunCircleStories() {
     return { data };
   };
 
-  const likeStory = async (storyId: string) => {
+  const addReaction = async (storyId: string, reactionType: ReactionType) => {
     if (!user) return;
 
-    const { error } = await supabase
-      .from("fun_circle_story_likes")
-      .insert({
-        story_id: storyId,
-        user_id: user.id,
-      });
+    // Check if user already has a reaction
+    const story = stories.find(s => s.id === storyId);
+    const existingReaction = story?.user_reaction;
 
-    if (!error) {
-      setStories(prev =>
-        prev.map(s =>
-          s.id === storyId
-            ? { ...s, is_liked: true, likes_count: s.likes_count + 1 }
-            : s
-        )
-      );
+    if (existingReaction) {
+      if (existingReaction === reactionType) {
+        // Remove reaction if same type
+        await removeReaction(storyId);
+        return;
+      }
+      // Update reaction
+      const { error } = await supabase
+        .from("fun_circle_story_reactions")
+        .update({ reaction_type: reactionType })
+        .eq("story_id", storyId)
+        .eq("user_id", user.id);
+
+      if (!error) {
+        setStories(prev =>
+          prev.map(s => {
+            if (s.id === storyId) {
+              const newCounts = { ...s.reactions_count };
+              if (existingReaction) newCounts[existingReaction]--;
+              newCounts[reactionType]++;
+              return { ...s, user_reaction: reactionType, reactions_count: newCounts };
+            }
+            return s;
+          })
+        );
+      }
+    } else {
+      // Insert new reaction
+      const { error } = await supabase
+        .from("fun_circle_story_reactions")
+        .insert({
+          story_id: storyId,
+          user_id: user.id,
+          reaction_type: reactionType,
+        });
+
+      if (!error) {
+        setStories(prev =>
+          prev.map(s => {
+            if (s.id === storyId) {
+              const newCounts = { ...s.reactions_count };
+              newCounts[reactionType]++;
+              return { ...s, user_reaction: reactionType, reactions_count: newCounts };
+            }
+            return s;
+          })
+        );
+      }
     }
   };
 
-  const unlikeStory = async (storyId: string) => {
+  const removeReaction = async (storyId: string) => {
     if (!user) return;
 
+    const story = stories.find(s => s.id === storyId);
+    const existingReaction = story?.user_reaction;
+
     const { error } = await supabase
-      .from("fun_circle_story_likes")
+      .from("fun_circle_story_reactions")
       .delete()
       .eq("story_id", storyId)
       .eq("user_id", user.id);
 
-    if (!error) {
+    if (!error && existingReaction) {
       setStories(prev =>
-        prev.map(s =>
-          s.id === storyId
-            ? { ...s, is_liked: false, likes_count: Math.max(0, s.likes_count - 1) }
-            : s
-        )
+        prev.map(s => {
+          if (s.id === storyId) {
+            const newCounts = { ...s.reactions_count };
+            newCounts[existingReaction]--;
+            return { ...s, user_reaction: null, reactions_count: newCounts };
+          }
+          return s;
+        })
       );
     }
   };
@@ -184,6 +290,53 @@ export function useFunCircleStories() {
       setStories(prev => prev.filter(s => s.id !== storyId));
       toast({ title: "Story deleted" });
     }
+  };
+
+  // Comments functions
+  const getComments = async (storyId: string): Promise<Comment[]> => {
+    const { data, error } = await supabase
+      .from("fun_circle_comments")
+      .select("*")
+      .eq("story_id", storyId)
+      .order("created_at", { ascending: true });
+
+    if (error) return [];
+
+    const userIds = [...new Set(data?.map(c => c.user_id) || [])];
+    const { data: profiles } = await supabase
+      .from("profiles")
+      .select("user_id, username, avatar_url")
+      .in("user_id", userIds);
+
+    return (data || []).map(comment => ({
+      ...comment,
+      profile: profiles?.find(p => p.user_id === comment.user_id),
+    }));
+  };
+
+  const addComment = async (storyId: string, content: string) => {
+    if (!user) return null;
+
+    const { data, error } = await supabase
+      .from("fun_circle_comments")
+      .insert({
+        story_id: storyId,
+        user_id: user.id,
+        content,
+      })
+      .select()
+      .single();
+
+    if (error) {
+      toast({
+        title: "Failed to add comment",
+        description: error.message,
+        variant: "destructive",
+      });
+      return null;
+    }
+
+    return data;
   };
 
   useEffect(() => {
@@ -215,9 +368,11 @@ export function useFunCircleStories() {
     imagesUploadedToday,
     remainingImages: 5 - imagesUploadedToday,
     createStory,
-    likeStory,
-    unlikeStory,
+    addReaction,
+    removeReaction,
     deleteStory,
+    getComments,
+    addComment,
     refreshStories: fetchStories,
   };
 }
