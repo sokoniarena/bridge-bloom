@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Menu, Search, ShoppingBag, Sparkles, Calendar, User, X, LogOut, LayoutDashboard, Shield, Heart, MessageCircle } from "lucide-react";
+import { Menu, Search, ShoppingBag, Sparkles, Calendar, User, X, LogOut, LayoutDashboard, Shield, Heart, MessageCircle, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
 import { NotificationBell } from "@/components/notifications/NotificationBell";
@@ -14,6 +14,7 @@ const navLinks = [
   { href: "/products", label: "Products", icon: ShoppingBag },
   { href: "/services", label: "Services", icon: Sparkles },
   { href: "/events", label: "Events", icon: Calendar },
+  { href: "/fun-circle", label: "Fun Circle", icon: Users },
 ];
 
 export function Navbar() {
