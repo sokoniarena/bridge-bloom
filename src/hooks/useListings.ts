@@ -26,7 +26,9 @@ export function useListings(options: UseListingsOptions = {}) {
       let query = supabase
         .from("listings")
         .select("*")
-        .eq("status", "available");
+        .eq("status", "available")
+        // Exclude sponsored listings from regular queries - they only appear in Promoted section
+        .eq("is_sponsored", false);
 
       // Filter by type
       if (options.type) {
@@ -61,8 +63,8 @@ export function useListings(options: UseListingsOptions = {}) {
           query = query.order("favorites_count", { ascending: false });
           break;
         default:
-          // Sponsored listings first, then by created_at
-          query = query.order("is_sponsored", { ascending: false }).order("created_at", { ascending: false });
+          // Featured listings first within category, then by created_at
+          query = query.order("is_featured", { ascending: false }).order("created_at", { ascending: false });
       }
 
       // Limit
