@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "serve:prod": "npm run build && npx serve dist",
-    "deploy": "npm run build && echo 'Deploy dist folder to your hosting'",
+    "deploy": "npm run build",
     "test": "vitest run",
     "test:watch": "vitest"
   },

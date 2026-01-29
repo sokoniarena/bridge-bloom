@@ -4,7 +4,6 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 import { VitePWA } from "vite-plugin-pwa";
 
-// https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
@@ -19,8 +18,8 @@ export default defineConfig(({ mode }) => ({
     VitePWA({
       registerType: "autoUpdate",
       includeAssets: [
-        "favicon.ico", 
-        "robots.txt", 
+        "favicon.ico",
+        "robots.txt",
         "sitemap.xml",
         "favicon-16x16.png",
         "favicon-32x32.png",
@@ -97,10 +96,11 @@ export default defineConfig(({ mode }) => ({
     },
   },
   
-  // Build configuration
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
+    chunkSizeWarningLimit: 1000,
+    // Simple rollup options without problematic manual chunks
     rollupOptions: {
       input: {
         main: path.resolve(__dirname, 'index.html'),
