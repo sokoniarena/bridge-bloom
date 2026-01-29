@@ -10,11 +10,11 @@ interface MobileFriendsSheetProps {
 export function MobileFriendsSheet({ isOpen, onClose, onStartChat }: MobileFriendsSheetProps) {
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
-      <SheetContent side="bottom" className="h-[80vh] rounded-t-xl p-0">
-        <SheetHeader className="p-4 border-b">
+      <SheetContent side="bottom" className="h-[85vh] rounded-t-xl p-0 flex flex-col">
+        <SheetHeader className="p-4 border-b shrink-0">
           <SheetTitle>Friends</SheetTitle>
         </SheetHeader>
-        <div className="overflow-auto h-full pb-8">
+        <div className="flex-1 overflow-auto pb-safe">
           <FriendsPanel onStartChat={onStartChat} />
         </div>
       </SheetContent>

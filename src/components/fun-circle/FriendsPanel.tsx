@@ -81,8 +81,8 @@ export function FriendsPanel({ onStartChat }: FriendsPanelProps) {
   ]);
 
   return (
-    <Card className="h-full">
-      <CardHeader className="pb-3">
+    <Card className="h-full flex flex-col">
+      <CardHeader className="pb-3 shrink-0">
         <CardTitle className="text-lg flex items-center gap-2">
           <Users className="h-5 w-5" />
           Friends
@@ -91,23 +91,23 @@ export function FriendsPanel({ onStartChat }: FriendsPanelProps) {
           )}
         </CardTitle>
       </CardHeader>
-      <CardContent className="p-0">
-        <Tabs defaultValue="friends" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mx-4" style={{ width: "calc(100% - 2rem)" }}>
+      <CardContent className="p-0 flex-1 flex flex-col min-h-0">
+        <Tabs defaultValue="friends" className="w-full flex flex-col flex-1 min-h-0">
+          <TabsList className="grid w-full grid-cols-3 mx-4 shrink-0" style={{ width: "calc(100% - 2rem)" }}>
             <TabsTrigger value="friends">Friends</TabsTrigger>
             <TabsTrigger value="requests" className="relative">
               Requests
               {pendingRequests.length > 0 && (
-                <Badge className="absolute -top-1 -right-1 h-5 min-w-5 p-0 flex items-center justify-center text-xs">
+                <span className="absolute -top-1 -right-1 h-5 min-w-5 p-0 flex items-center justify-center text-xs bg-primary text-primary-foreground rounded-full">
                   {pendingRequests.length}
-                </Badge>
+                </span>
               )}
             </TabsTrigger>
             <TabsTrigger value="find">Find</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="friends" className="mt-0">
-            <ScrollArea className="h-[300px]">
+          <TabsContent value="friends" className="mt-0 flex-1 min-h-0">
+            <ScrollArea className="h-full max-h-[350px]">
               {isLoading ? (
                 <div className="flex items-center justify-center py-8">
                   <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
@@ -133,8 +133,8 @@ export function FriendsPanel({ onStartChat }: FriendsPanelProps) {
             </ScrollArea>
           </TabsContent>
 
-          <TabsContent value="requests" className="mt-0">
-            <ScrollArea className="h-[300px]">
+          <TabsContent value="requests" className="mt-0 flex-1 min-h-0">
+            <ScrollArea className="h-full max-h-[350px]">
               {pendingRequests.length === 0 ? (
                 <div className="text-center py-8 text-muted-foreground">
                   <p>No pending requests</p>
@@ -154,8 +154,8 @@ export function FriendsPanel({ onStartChat }: FriendsPanelProps) {
             </ScrollArea>
           </TabsContent>
 
-          <TabsContent value="find" className="mt-0">
-            <div className="p-4 pb-2">
+          <TabsContent value="find" className="mt-0 flex-1 min-h-0 flex flex-col">
+            <div className="p-4 pb-2 shrink-0">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
@@ -168,7 +168,7 @@ export function FriendsPanel({ onStartChat }: FriendsPanelProps) {
             </div>
             
             {searchQuery.length >= 2 ? (
-              <ScrollArea className="h-[250px]">
+              <ScrollArea className="flex-1 max-h-[300px]">
                 {isSearching ? (
                   <div className="flex items-center justify-center py-8">
                     <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />

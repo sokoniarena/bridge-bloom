@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -83,7 +82,7 @@ export function FriendSuggestions({ onSendRequest, excludeIds }: FriendSuggestio
   }
 
   return (
-    <ScrollArea className="h-[300px]">
+    <ScrollArea className="flex-1 max-h-[300px]">
       <div className="p-2">
         <p className="text-xs font-medium text-muted-foreground px-2 mb-2">
           People you may know
@@ -151,13 +150,13 @@ function SuggestionCard({
         </Link>
         
         <div className="flex items-center gap-2 mt-0.5">
-          <Badge variant="secondary" className={`text-xs px-1.5 py-0 ${config.color}`}>
+          <span className={`inline-flex items-center text-xs px-1.5 py-0.5 rounded-md font-medium ${config.color}`}>
             <ReasonIcon className="h-3 w-3 mr-1" />
             {config.label}
             {suggestion.suggestion_reason === "mutual" && suggestion.mutual_friends_count && (
               <span className="ml-1">({suggestion.mutual_friends_count})</span>
             )}
-          </Badge>
+          </span>
         </div>
         
         {suggestion.location && (
