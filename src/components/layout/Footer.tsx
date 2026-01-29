@@ -1,32 +1,27 @@
 import { Link } from "react-router-dom";
-import { Facebook, Twitter, Instagram, Linkedin, Mail, MapPin } from "lucide-react";
+import { Facebook, Mail, MapPin } from "lucide-react";
 
 const footerLinks = {
   marketplace: [
     { label: "Products", href: "/products" },
     { label: "Services", href: "/services" },
     { label: "Events", href: "/events" },
-    { label: "Sponsored Ads", href: "/sponsored" },
+    { label: "Fun Circle", href: "/fun-circle" },
   ],
-  company: [
-    { label: "About Us", href: "/about" },
-    { label: "How It Works", href: "/how-it-works" },
-    { label: "Contact", href: "/contact" },
-    { label: "Blog", href: "/blog" },
+  account: [
+    { label: "Dashboard", href: "/dashboard" },
+    { label: "My Favorites", href: "/favorites" },
+    { label: "Messages", href: "/messages" },
+    { label: "Search", href: "/search" },
   ],
   legal: [
     { label: "Terms & Conditions", href: "/terms" },
     { label: "Privacy Policy", href: "/privacy" },
-    { label: "Cookie Policy", href: "/cookies" },
-    { label: "Safety Tips", href: "/safety" },
   ],
 };
 
 const socialLinks = [
-  { icon: Facebook, href: "#", label: "Facebook" },
-  { icon: Twitter, href: "#", label: "Twitter" },
-  { icon: Instagram, href: "#", label: "Instagram" },
-  { icon: Linkedin, href: "#", label: "LinkedIn" },
+  { icon: Facebook, href: "https://facebook.com/groups/824226770472011/", label: "Facebook" },
 ];
 
 export function Footer() {
@@ -55,6 +50,8 @@ export function Footer() {
                   <a
                     key={social.label}
                     href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex h-10 w-10 items-center justify-center rounded-full bg-background/10 hover:bg-primary hover:text-primary-foreground transition-colors"
                     aria-label={social.label}
                   >
@@ -83,9 +80,9 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-display font-semibold mb-4">Company</h4>
+            <h4 className="font-display font-semibold mb-4">Account</h4>
             <ul className="space-y-3">
-              {footerLinks.company.map((link) => (
+              {footerLinks.account.map((link) => (
                 <li key={link.label}>
                   <Link
                     to={link.href}
