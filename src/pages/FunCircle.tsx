@@ -7,6 +7,7 @@ import { MessagesDrawer } from "@/components/fun-circle/MessagesDrawer";
 import { MobileFriendsSheet } from "@/components/fun-circle/MobileFriendsSheet";
 import { ProfileHeader } from "@/components/fun-circle/ProfileHeader";
 import { FunCircleSettingsSheet } from "@/components/fun-circle/FunCircleSettingsSheet";
+import { ThemeToggle } from "@/components/fun-circle/ThemeToggle";
 import { FunCircleSettingsProvider } from "@/contexts/FunCircleSettingsContext";
 import { useFunCircleStories, ReactionType } from "@/hooks/useFunCircleStories";
 import { useFunCircleMessages } from "@/hooks/useFunCircleMessages";
@@ -97,7 +98,8 @@ function FunCircleContent() {
               </p>
             </div>
           </div>
-          <div className="flex gap-2 flex-wrap">
+          <div className="flex gap-2 flex-wrap items-center">
+            <ThemeToggle />
             <FunCircleSettingsSheet />
             <Button
               variant="outline"
