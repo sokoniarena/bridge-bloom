@@ -1,3 +1,4 @@
+import { memo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Heart, MapPin, Star, Clock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -21,7 +22,7 @@ interface ListingCardProps {
   isFree?: boolean;
 }
 
-export function ListingCard({
+export const ListingCard = memo(function ListingCard({
   id,
   title,
   price,
@@ -38,6 +39,12 @@ export function ListingCard({
   const categoryPath = category === "product" ? "products" : category === "service" ? "services" : "events";
   const { isFavorite, toggleFavorite } = useFavorites();
   const isFav = isFavorite(id);
+
+  const handleFavoriteClick = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleFavorite(id);
+  }, [id, toggleFavorite]);
   
   return (
     <Link to={`/${categoryPath}/${id}`} className="group">
@@ -84,11 +91,7 @@ export function ListingCard({
               "absolute top-2 right-2 h-8 w-8 transition-opacity",
               isFav ? "opacity-100" : "opacity-0 group-hover:opacity-100"
             )}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              toggleFavorite(id);
-            }}
+            onClick={handleFavoriteClick}
           >
             <Heart className={cn("h-4 w-4", isFav && "fill-destructive text-destructive")} />
           </Button>
@@ -140,4 +143,4 @@ export function ListingCard({
       </article>
     </Link>
   );
-}
+});

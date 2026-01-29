@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, memo, useCallback, useMemo } from "react";
 import { Layout } from "@/components/layout/Layout";
 import { CreateStoryForm } from "@/components/fun-circle/CreateStoryForm";
 import { StoryCard } from "@/components/fun-circle/StoryCard";
@@ -17,6 +17,34 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { MessageCircle, Users, Sparkles, LogIn, Bell, X } from "lucide-react";
 import { Link } from "react-router-dom";
 
+// Memoized story skeletons for faster perceived loading
+const StorySkeleton = memo(function StorySkeleton() {
+  return (
+    <div className="bg-card rounded-xl p-4 space-y-3">
+      <div className="flex items-center gap-3">
+        <Skeleton className="h-10 w-10 rounded-full" />
+        <div className="space-y-1.5">
+          <Skeleton className="h-4 w-24" />
+          <Skeleton className="h-3 w-16" />
+        </div>
+      </div>
+      <Skeleton className="h-4 w-full" />
+      <Skeleton className="h-4 w-3/4" />
+      <Skeleton className="h-48 w-full rounded-lg" />
+    </div>
+  );
+});
+
+const StorySkeletons = memo(function StorySkeletons() {
+  return (
+    <div className="space-y-4">
+      <StorySkeleton />
+      <StorySkeleton />
+      <StorySkeleton />
+    </div>
+  );
+});
+
 function FunCircleContent() {
   const { user } = useAuth();
   const { stories, isLoading, addReaction, deleteStory } = useFunCircleStories();
@@ -29,15 +57,14 @@ function FunCircleContent() {
   const [showMessages, setShowMessages] = useState(false);
   const [showMobileFriends, setShowMobileFriends] = useState(false);
 
-  const unreadCount = conversations.reduce(
-    (sum, c) => sum + (c.unread_count || 0),
-    0
+  const unreadCount = useMemo(() => 
+    conversations.reduce((sum, c) => sum + (c.unread_count || 0), 0),
+    [conversations]
   );
 
-  const handleStartChat = async (userId: string) => {
+  const handleStartChat = useCallback(async (userId: string) => {
     const conv = await startConversation(userId);
     if (conv) {
-      // Find the full conversation with other_user info
       const fullConv = conversations.find(c => c.id === conv.id);
       if (fullConv) {
         await openConversation(fullConv);
@@ -46,11 +73,15 @@ function FunCircleContent() {
       }
       setShowMessages(true);
     }
-  };
+  }, [startConversation, conversations, openConversation]);
 
-  const handleReact = (storyId: string, reactionType: ReactionType) => {
+  const handleReact = useCallback((storyId: string, reactionType: ReactionType) => {
     addReaction(storyId, reactionType);
-  };
+  }, [addReaction]);
+
+  const handleDelete = useCallback((storyId: string) => {
+    deleteStory(storyId);
+  }, [deleteStory]);
 
   if (!user) {
     return (
@@ -137,11 +168,7 @@ function FunCircleContent() {
 
             {/* Stories Feed */}
             {isLoading ? (
-              <div className="space-y-4">
-                {[1, 2, 3].map((i) => (
-                  <Skeleton key={i} className="h-64 rounded-xl" />
-                ))}
-              </div>
+              <StorySkeletons />
             ) : stories.length === 0 ? (
               <div className="text-center py-12 bg-muted/30 rounded-xl">
                 <Users className="h-16 w-16 mx-auto mb-4 text-muted-foreground/50" />
@@ -157,7 +184,7 @@ function FunCircleContent() {
                     key={story.id}
                     story={story}
                     onReact={handleReact}
-                    onDelete={deleteStory}
+                    onDelete={handleDelete}
                     onStartChat={handleStartChat}
                   />
                 ))}
