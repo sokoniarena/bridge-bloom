@@ -1,7 +1,6 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Tables } from "@/integrations/supabase/types";
-import { useDebounce } from "./useDebounce";
 
 type Listing = Tables<"listings">;
 type ListingType = "product" | "service" | "event";
@@ -18,9 +17,25 @@ export function useListings(options: UseListingsOptions = {}) {
   const [listings, setListings] = useState<Listing[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [debouncedSearch, setDebouncedSearch] = useState(options.searchQuery || "");
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Debounce search query for performance
-  const debouncedSearch = useDebounce(options.searchQuery || "", 300);
+  // Debounce search query inline to avoid hook ordering issues
+  useEffect(() => {
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+    
+    debounceTimerRef.current = setTimeout(() => {
+      setDebouncedSearch(options.searchQuery || "");
+    }, 300);
+
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+  }, [options.searchQuery]);
 
   // Memoize query params to prevent unnecessary refetches
   const queryKey = useMemo(() => 
