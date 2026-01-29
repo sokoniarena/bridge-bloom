@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
@@ -31,94 +31,83 @@ export function useFunCircleFriends() {
   const [sentRequests, setSentRequests] = useState<FriendRequest[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchFriends = async () => {
+  const fetchFriendsAndRequests = useCallback(async () => {
     if (!user) return;
 
     setIsLoading(true);
     try {
-      // Get all accepted friendships
-      const { data: friendships, error } = await supabase
-        .from("fun_circle_friends")
-        .select("*")
-        .eq("status", "accepted")
-        .or(`requester_id.eq.${user.id},addressee_id.eq.${user.id}`);
+      // Parallel fetch for friends and pending requests
+      const [friendshipsResult, incomingResult, outgoingResult] = await Promise.all([
+        supabase
+          .from("fun_circle_friends")
+          .select("*")
+          .eq("status", "accepted")
+          .or(`requester_id.eq.${user.id},addressee_id.eq.${user.id}`),
+        supabase
+          .from("fun_circle_friends")
+          .select("*")
+          .eq("addressee_id", user.id)
+          .eq("status", "pending"),
+        supabase
+          .from("fun_circle_friends")
+          .select("*")
+          .eq("requester_id", user.id)
+          .eq("status", "pending"),
+      ]);
 
-      if (error) throw error;
+      const friendships = friendshipsResult.data || [];
+      const incoming = incomingResult.data || [];
+      const outgoing = outgoingResult.data || [];
 
-      // Get the friend user IDs
-      const friendUserIds = (friendships || []).map(f =>
+      // Get all user IDs we need profiles for
+      const friendUserIds = friendships.map(f =>
         f.requester_id === user.id ? f.addressee_id : f.requester_id
       );
+      const requesterIds = incoming.map(r => r.requester_id);
+      const allUserIds = [...new Set([...friendUserIds, ...requesterIds])];
 
-      if (friendUserIds.length > 0) {
-        const { data: profiles } = await supabase
+      // Single batch profile fetch
+      let profiles: Array<{ user_id: string; username: string; avatar_url: string | null }> = [];
+      if (allUserIds.length > 0) {
+        const { data } = await supabase
           .from("profiles")
           .select("user_id, username, avatar_url")
-          .in("user_id", friendUserIds);
-
-        const friendsList = (friendships || []).map(f => {
-          const friendUserId = f.requester_id === user.id ? f.addressee_id : f.requester_id;
-          const profile = profiles?.find(p => p.user_id === friendUserId);
-          return {
-            user_id: friendUserId,
-            username: profile?.username || "Unknown",
-            avatar_url: profile?.avatar_url,
-            friendship_id: f.id,
-          };
-        });
-
-        setFriends(friendsList);
-      } else {
-        setFriends([]);
+          .in("user_id", allUserIds);
+        profiles = data || [];
       }
+
+      // Build friends list
+      const friendsList = friendships.map(f => {
+        const friendUserId = f.requester_id === user.id ? f.addressee_id : f.requester_id;
+        const profile = profiles.find(p => p.user_id === friendUserId);
+        return {
+          user_id: friendUserId,
+          username: profile?.username || "Unknown",
+          avatar_url: profile?.avatar_url,
+          friendship_id: f.id,
+        };
+      });
+      setFriends(friendsList);
+
+      // Build pending requests
+      const requestsWithProfiles = incoming.map(r => ({
+        ...r,
+        status: r.status as "pending" | "accepted" | "rejected",
+        profile: profiles.find(p => p.user_id === r.requester_id),
+      }));
+      setPendingRequests(requestsWithProfiles);
+
+      // Set sent requests
+      setSentRequests(outgoing.map(r => ({
+        ...r,
+        status: r.status as "pending" | "accepted" | "rejected",
+      })));
     } catch (error) {
       console.error("Error fetching friends:", error);
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const fetchPendingRequests = async () => {
-    if (!user) return;
-
-    // Requests sent to me
-    const { data: incoming } = await supabase
-      .from("fun_circle_friends")
-      .select("*")
-      .eq("addressee_id", user.id)
-      .eq("status", "pending");
-
-    const requesterIds = (incoming || []).map(r => r.requester_id);
-    
-    if (requesterIds.length > 0) {
-      const { data: profiles } = await supabase
-        .from("profiles")
-        .select("user_id, username, avatar_url")
-        .in("user_id", requesterIds);
-
-      const requestsWithProfiles = (incoming || []).map(r => ({
-        ...r,
-        status: r.status as "pending" | "accepted" | "rejected",
-        profile: profiles?.find(p => p.user_id === r.requester_id),
-      }));
-
-      setPendingRequests(requestsWithProfiles);
-    } else {
-      setPendingRequests([]);
-    }
-
-    // Requests I sent
-    const { data: outgoing } = await supabase
-      .from("fun_circle_friends")
-      .select("*")
-      .eq("requester_id", user.id)
-      .eq("status", "pending");
-
-    setSentRequests((outgoing || []).map(r => ({
-      ...r,
-      status: r.status as "pending" | "accepted" | "rejected",
-    })));
-  };
+  }, [user]);
 
   const sendFriendRequest = async (addresseeId: string) => {
     if (!user) return { error: new Error("Not authenticated") };
@@ -165,7 +154,7 @@ export function useFunCircleFriends() {
     }
 
     toast({ title: "Friend request sent!" });
-    await fetchPendingRequests();
+    await fetchFriendsAndRequests();
     return { error: null };
   };
 
@@ -177,8 +166,7 @@ export function useFunCircleFriends() {
 
     if (!error) {
       toast({ title: "Friend request accepted!" });
-      await fetchFriends();
-      await fetchPendingRequests();
+      await fetchFriendsAndRequests();
     }
   };
 
@@ -190,7 +178,7 @@ export function useFunCircleFriends() {
 
     if (!error) {
       toast({ title: "Friend request declined" });
-      await fetchPendingRequests();
+      await fetchFriendsAndRequests();
     }
   };
 
@@ -202,11 +190,11 @@ export function useFunCircleFriends() {
 
     if (!error) {
       toast({ title: "Friend removed" });
-      await fetchFriends();
+      await fetchFriendsAndRequests();
     }
   };
 
-  const searchUsers = async (query: string) => {
+  const searchUsers = useCallback(async (query: string) => {
     if (!user || query.length < 2) return [];
 
     const { data } = await supabase
@@ -217,23 +205,23 @@ export function useFunCircleFriends() {
       .limit(10);
 
     return data || [];
-  };
+  }, [user]);
 
   useEffect(() => {
-    fetchFriends();
-    fetchPendingRequests();
-  }, [user]);
+    fetchFriendsAndRequests();
+  }, [fetchFriendsAndRequests]);
 
   // Subscribe to realtime updates
   useEffect(() => {
+    if (!user) return;
+
     const channel = supabase
       .channel("fun_circle_friends_changes")
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "fun_circle_friends" },
         () => {
-          fetchFriends();
-          fetchPendingRequests();
+          fetchFriendsAndRequests();
         }
       )
       .subscribe();
@@ -241,7 +229,7 @@ export function useFunCircleFriends() {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [user]);
+  }, [user, fetchFriendsAndRequests]);
 
   return {
     friends,
@@ -253,6 +241,6 @@ export function useFunCircleFriends() {
     rejectRequest,
     removeFriend,
     searchUsers,
-    refreshFriends: fetchFriends,
+    refreshFriends: fetchFriendsAndRequests,
   };
 }

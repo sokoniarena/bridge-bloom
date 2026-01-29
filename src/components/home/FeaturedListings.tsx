@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Loader2, Sparkles } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ListingCard } from "@/components/listings/ListingCard";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useListings } from "@/hooks/useListings";
 import { format } from "date-fns";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, memo } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
 interface SponsoredListing {
@@ -23,7 +24,23 @@ interface SponsoredListing {
   event_date: string | null;
 }
 
-export function FeaturedListings() {
+// Skeleton grid for loading state
+const ListingGridSkeleton = memo(function ListingGridSkeleton({ count = 6 }: { count?: number }) {
+  return (
+    <div className="listing-grid">
+      {Array.from({ length: count }).map((_, i) => (
+        <div key={i} className="space-y-3">
+          <Skeleton className="aspect-[4/3] rounded-xl" />
+          <Skeleton className="h-4 w-3/4" />
+          <Skeleton className="h-3 w-1/2" />
+          <Skeleton className="h-4 w-1/3" />
+        </div>
+      ))}
+    </div>
+  );
+});
+
+export const FeaturedListings = memo(function FeaturedListings() {
   const { listings: products, isLoading: productsLoading } = useListings({ type: "product", limit: 30 });
   const { listings: services, isLoading: servicesLoading } = useListings({ type: "service", limit: 30 });
   const { listings: events, isLoading: eventsLoading } = useListings({ type: "event", limit: 30 });
@@ -34,10 +51,9 @@ export function FeaturedListings() {
 
   useEffect(() => {
     const fetchSponsored = async () => {
-      setSponsoredLoading(true);
       const { data, error } = await supabase
         .from("listings")
-        .select("*")
+        .select("id, title, price, original_price, images, location, listing_type, is_sponsored, is_featured, is_free, favorites_count, event_date")
         .eq("status", "available")
         .eq("is_sponsored", true)
         .order("created_at", { ascending: false })
@@ -52,9 +68,7 @@ export function FeaturedListings() {
     fetchSponsored();
   }, []);
 
-  const isLoading = productsLoading || servicesLoading || eventsLoading;
-
-  const mapListingToCard = (listing: any) => ({
+  const mapListingToCard = useMemo(() => (listing: any) => ({
     id: listing.id,
     title: listing.title,
     price: listing.price,
@@ -67,7 +81,7 @@ export function FeaturedListings() {
     rating: listing.favorites_count ? Math.min(5, 4 + listing.favorites_count * 0.1) : undefined,
     eventDate: listing.event_date ? format(new Date(listing.event_date), "MMM d") : undefined,
     isFree: listing.is_free,
-  });
+  }), []);
 
   return (
     <section className="py-16 md:py-20 bg-muted/30">
@@ -83,9 +97,7 @@ export function FeaturedListings() {
               <h3 className="font-display text-xl font-semibold">Promoted Listings</h3>
             </div>
             {sponsoredLoading ? (
-              <div className="flex items-center justify-center py-8">
-                <Loader2 className="h-6 w-6 animate-spin text-primary" />
-              </div>
+              <ListingGridSkeleton count={4} />
             ) : (
               <div className="listing-grid">
                 {sponsoredListings.map((listing) => (
@@ -124,9 +136,7 @@ export function FeaturedListings() {
 
           <TabsContent value="products" className="mt-0">
             {productsLoading ? (
-              <div className="flex items-center justify-center py-12">
-                <Loader2 className="h-8 w-8 animate-spin text-primary" />
-              </div>
+              <ListingGridSkeleton />
             ) : products.length > 0 ? (
               <div className="listing-grid">
                 {products.map((listing) => (
@@ -140,9 +150,7 @@ export function FeaturedListings() {
 
           <TabsContent value="services" className="mt-0">
             {servicesLoading ? (
-              <div className="flex items-center justify-center py-12">
-                <Loader2 className="h-8 w-8 animate-spin text-primary" />
-              </div>
+              <ListingGridSkeleton />
             ) : services.length > 0 ? (
               <div className="listing-grid">
                 {services.map((listing) => (
@@ -156,9 +164,7 @@ export function FeaturedListings() {
 
           <TabsContent value="events" className="mt-0">
             {eventsLoading ? (
-              <div className="flex items-center justify-center py-12">
-                <Loader2 className="h-8 w-8 animate-spin text-primary" />
-              </div>
+              <ListingGridSkeleton />
             ) : events.length > 0 ? (
               <div className="listing-grid">
                 {events.map((listing) => (
@@ -173,4 +179,4 @@ export function FeaturedListings() {
       </div>
     </section>
   );
-}
+});

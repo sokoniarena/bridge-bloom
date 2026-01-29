@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, memo, useCallback } from "react";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -38,7 +38,7 @@ const REACTIONS: { type: ReactionType; emoji: string; label: string }[] = [
   { type: "angry", emoji: "😠", label: "Angry" },
 ];
 
-export function StoryCard({ story, onReact, onDelete, onStartChat }: StoryCardProps) {
+export const StoryCard = memo(function StoryCard({ story, onReact, onDelete, onStartChat }: StoryCardProps) {
   const { user } = useAuth();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [showComments, setShowComments] = useState(false);
@@ -55,6 +55,19 @@ export function StoryCard({ story, onReact, onDelete, onStartChat }: StoryCardPr
     .filter(r => story.reactions_count[r.type] > 0)
     .sort((a, b) => story.reactions_count[b.type] - story.reactions_count[a.type])
     .slice(0, 3);
+
+  const handleReact = useCallback((reactionType: ReactionType) => {
+    onReact(story.id, reactionType);
+    setShowReactionPicker(false);
+  }, [story.id, onReact]);
+
+  const handleDelete = useCallback(() => {
+    onDelete(story.id);
+  }, [story.id, onDelete]);
+
+  const handleStartChat = useCallback(() => {
+    onStartChat?.(story.user_id);
+  }, [story.user_id, onStartChat]);
 
   return (
     <>
@@ -78,12 +91,12 @@ export function StoryCard({ story, onReact, onDelete, onStartChat }: StoryCardPr
           </Link>
 
           <div className="flex items-center gap-2">
-            {isOwner ? (
+            {isOwner && (
               <Badge variant="outline" className="text-xs gap-1">
                 <Clock className="h-3 w-3" />
                 Expires {expiresIn}
               </Badge>
-            ) : null}
+            )}
             
             {isOwner && (
               <DropdownMenu>
@@ -94,7 +107,7 @@ export function StoryCard({ story, onReact, onDelete, onStartChat }: StoryCardPr
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   <DropdownMenuItem
-                    onClick={() => onDelete(story.id)}
+                    onClick={handleDelete}
                     className="text-destructive"
                   >
                     <Trash2 className="h-4 w-4 mr-2" />
@@ -131,6 +144,7 @@ export function StoryCard({ story, onReact, onDelete, onStartChat }: StoryCardPr
                   src={url}
                   alt={`Story image ${index + 1}`}
                   className="w-full h-full object-cover hover:scale-105 transition-transform"
+                  loading="lazy"
                 />
                 {index === 5 && story.images.length > 6 && (
                   <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
@@ -186,10 +200,7 @@ export function StoryCard({ story, onReact, onDelete, onStartChat }: StoryCardPr
                 {REACTIONS.map(reaction => (
                   <button
                     key={reaction.type}
-                    onClick={() => {
-                      onReact(story.id, reaction.type);
-                      setShowReactionPicker(false);
-                    }}
+                    onClick={() => handleReact(reaction.type)}
                     className={cn(
                       "p-2 rounded-full hover:bg-muted transition-transform hover:scale-125",
                       story.user_reaction === reaction.type && "bg-primary/10"
@@ -217,7 +228,7 @@ export function StoryCard({ story, onReact, onDelete, onStartChat }: StoryCardPr
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => onStartChat(story.user_id)}
+              onClick={handleStartChat}
               className="gap-2 flex-1"
             >
               <SmilePlus className="h-4 w-4" />
@@ -255,4 +266,4 @@ export function StoryCard({ story, onReact, onDelete, onStartChat }: StoryCardPr
       )}
     </>
   );
-}
+});
