@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Events Listing Page -->
+  <url>
+    <loc>https://sokoniarena.co.ke/events</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- 
+    NOTE: For dynamic event listings, consider generating this sitemap 
+    server-side or via an edge function that queries the database.
+    Events should be added here as they are created.
+  -->
+</urlset>

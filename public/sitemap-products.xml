@@ -1,21 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <!-- Products Listing Page -->
   <url>
     <loc>https://sokoniarena.co.ke/products</loc>
     <lastmod>2026-01-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
+  
+  <!-- Individual Product Pages -->
   <url>
     <loc>https://sokoniarena.co.ke/products/f48e4850-9d9f-42bd-8dc6-b8e366a535c0</loc>
     <lastmod>2026-01-30</lastmod>
-    <changefreq>monthly</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://sokoniarena.co.ke/products/3c3d7be4-4e3b-4e28-8c7f-5f36c4554234</loc>
     <lastmod>2026-01-30</lastmod>
-    <changefreq>monthly</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
+  
+  <!-- 
+    NOTE: For dynamic product listings, consider generating this sitemap 
+    server-side or via an edge function that queries the database.
+    Products should be added here as they are created.
+  -->
 </urlset>
