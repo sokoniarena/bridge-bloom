@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <!-- Services Listing Page -->
+  <url>
+    <loc>https://sokoniarena.co.ke/services</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Individual Service Pages -->
+  <url>
+    <loc>https://sokoniarena.co.ke/services/9e97df1f-22f6-4ad6-a2c7-6bf6ac994259</loc>
+    <lastmod>2026-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- 
+    NOTE: For dynamic service listings, consider generating this sitemap 
+    server-side or via an edge function that queries the database.
+    Services should be added here as they are created.
+  -->
+</urlset>
