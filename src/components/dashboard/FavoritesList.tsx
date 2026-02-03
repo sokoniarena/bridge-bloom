@@ -14,7 +14,7 @@ interface FavoriteListing {
   price: number | null;
   location: string;
   images: string[];
-  listing_type: "product" | "service" | "event";
+  listing_type: string;
 }
 
 const typeIcons = {

@@ -78,6 +78,321 @@ export type Database = {
           },
         ]
       }
+      fun_circle_comments: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          story_id: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          story_id: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          story_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fun_circle_comments_story_id_fkey"
+            columns: ["story_id"]
+            isOneToOne: false
+            referencedRelation: "fun_circle_stories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      fun_circle_conversations: {
+        Row: {
+          created_at: string
+          id: string
+          last_message_at: string | null
+          participant_one: string
+          participant_two: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          last_message_at?: string | null
+          participant_one: string
+          participant_two: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          last_message_at?: string | null
+          participant_one?: string
+          participant_two?: string
+        }
+        Relationships: []
+      }
+      fun_circle_friends: {
+        Row: {
+          addressee_id: string
+          created_at: string
+          id: string
+          requester_id: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          addressee_id: string
+          created_at?: string
+          id?: string
+          requester_id: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          addressee_id?: string
+          created_at?: string
+          id?: string
+          requester_id?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      fun_circle_mentions: {
+        Row: {
+          created_at: string
+          id: string
+          mentioned_user_id: string
+          story_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          mentioned_user_id: string
+          story_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          mentioned_user_id?: string
+          story_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fun_circle_mentions_story_id_fkey"
+            columns: ["story_id"]
+            isOneToOne: false
+            referencedRelation: "fun_circle_stories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      fun_circle_messages: {
+        Row: {
+          content: string
+          conversation_id: string | null
+          created_at: string
+          id: string
+          is_read: boolean | null
+          receiver_id: string
+          sender_id: string
+        }
+        Insert: {
+          content: string
+          conversation_id?: string | null
+          created_at?: string
+          id?: string
+          is_read?: boolean | null
+          receiver_id: string
+          sender_id: string
+        }
+        Update: {
+          content?: string
+          conversation_id?: string | null
+          created_at?: string
+          id?: string
+          is_read?: boolean | null
+          receiver_id?: string
+          sender_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fun_circle_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "fun_circle_conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      fun_circle_profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          created_at: string
+          id: string
+          is_public: boolean | null
+          updated_at: string
+          user_id: string
+          username: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          id?: string
+          is_public?: boolean | null
+          updated_at?: string
+          user_id: string
+          username?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          id?: string
+          is_public?: boolean | null
+          updated_at?: string
+          user_id?: string
+          username?: string | null
+        }
+        Relationships: []
+      }
+      fun_circle_stories: {
+        Row: {
+          content: string | null
+          created_at: string
+          expires_at: string
+          id: string
+          images: string[] | null
+          media_type: string | null
+          media_url: string | null
+          reactions_count: Json | null
+          user_id: string
+          views_count: number | null
+        }
+        Insert: {
+          content?: string | null
+          created_at?: string
+          expires_at?: string
+          id?: string
+          images?: string[] | null
+          media_type?: string | null
+          media_url?: string | null
+          reactions_count?: Json | null
+          user_id: string
+          views_count?: number | null
+        }
+        Update: {
+          content?: string | null
+          created_at?: string
+          expires_at?: string
+          id?: string
+          images?: string[] | null
+          media_type?: string | null
+          media_url?: string | null
+          reactions_count?: Json | null
+          user_id?: string
+          views_count?: number | null
+        }
+        Relationships: []
+      }
+      fun_circle_story_comments: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          story_id: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          story_id: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          story_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fun_circle_story_comments_story_id_fkey"
+            columns: ["story_id"]
+            isOneToOne: false
+            referencedRelation: "fun_circle_stories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      fun_circle_story_reactions: {
+        Row: {
+          created_at: string
+          id: string
+          reaction_type: string
+          story_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          reaction_type: string
+          story_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          reaction_type?: string
+          story_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fun_circle_story_reactions_story_id_fkey"
+            columns: ["story_id"]
+            isOneToOne: false
+            referencedRelation: "fun_circle_stories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      fun_circle_story_views: {
+        Row: {
+          id: string
+          story_id: string
+          viewed_at: string
+          viewer_id: string
+        }
+        Insert: {
+          id?: string
+          story_id: string
+          viewed_at?: string
+          viewer_id: string
+        }
+        Update: {
+          id?: string
+          story_id?: string
+          viewed_at?: string
+          viewer_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fun_circle_story_views_story_id_fkey"
+            columns: ["story_id"]
+            isOneToOne: false
+            referencedRelation: "fun_circle_stories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       job_categories: {
         Row: {
           created_at: string
@@ -367,53 +682,68 @@ export type Database = {
         Row: {
           approved_earnings: number
           avatar_url: string | null
+          bio: string | null
           created_at: string
           daily_tasks_used: number
           email: string
           full_name: string | null
           id: string
+          is_verified: boolean | null
           last_task_reset_date: string
+          location: string | null
           membership_expires_at: string | null
           membership_tier: Database["public"]["Enums"]["membership_tier"]
           pending_earnings: number
+          phone: string | null
           rating: number | null
           tasks_completed: number
           total_earnings: number
           updated_at: string
+          username: string | null
         }
         Insert: {
           approved_earnings?: number
           avatar_url?: string | null
+          bio?: string | null
           created_at?: string
           daily_tasks_used?: number
           email: string
           full_name?: string | null
           id: string
+          is_verified?: boolean | null
           last_task_reset_date?: string
+          location?: string | null
           membership_expires_at?: string | null
           membership_tier?: Database["public"]["Enums"]["membership_tier"]
           pending_earnings?: number
+          phone?: string | null
           rating?: number | null
           tasks_completed?: number
           total_earnings?: number
           updated_at?: string
+          username?: string | null
         }
         Update: {
           approved_earnings?: number
           avatar_url?: string | null
+          bio?: string | null
           created_at?: string
           daily_tasks_used?: number
           email?: string
           full_name?: string | null
           id?: string
+          is_verified?: boolean | null
           last_task_reset_date?: string
+          location?: string | null
           membership_expires_at?: string | null
           membership_tier?: Database["public"]["Enums"]["membership_tier"]
           pending_earnings?: number
+          phone?: string | null
           rating?: number | null
           tasks_completed?: number
           total_earnings?: number
           updated_at?: string
+          username?: string | null
         }
         Relationships: []
       }

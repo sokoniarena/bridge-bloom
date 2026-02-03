@@ -58,11 +58,11 @@ export function SponsorRequestsManager() {
 
       const [{ data: listings }, { data: profiles }] = await Promise.all([
         supabase.from("listings").select("id, title, listing_type, images").in("id", listingIds),
-        supabase.from("profiles").select("user_id, username, email").in("user_id", userIds),
+        supabase.from("profiles").select("id, username, email").in("id", userIds),
       ]);
 
       const listingMap = new Map(listings?.map(l => [l.id, l]) || []);
-      const profileMap = new Map(profiles?.map(p => [p.user_id, p]) || []);
+      const profileMap = new Map((profiles as any[])?.map(p => [p.id, p]) || []);
 
       const enrichedRequests = data.map(r => ({
         ...r,

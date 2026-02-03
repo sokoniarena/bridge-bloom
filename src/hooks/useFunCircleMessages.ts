@@ -53,12 +53,12 @@ export function useFunCircleMessages() {
         c.participant_one === user.id ? c.participant_two : c.participant_one
       );
 
-      // Parallel fetches for profiles, unread counts, and last messages
+      // Parallel fetches for profiles and messages - use 'id' instead of 'user_id'
       const [profilesResult, messagesResult] = await Promise.all([
         supabase
           .from("profiles")
-          .select("user_id, username, avatar_url")
-          .in("user_id", otherUserIds),
+          .select("id, username, avatar_url")
+          .in("id", otherUserIds),
         supabase
           .from("fun_circle_messages")
           .select("conversation_id, content, is_read, sender_id, created_at")
@@ -66,8 +66,8 @@ export function useFunCircleMessages() {
           .order("created_at", { ascending: false }),
       ]);
 
-      const profiles = profilesResult.data || [];
-      const allMessages = messagesResult.data || [];
+      const profiles = (profilesResult.data as any[]) || [];
+      const allMessages = (messagesResult.data as any[]) || [];
 
       // Process messages to get unread counts and last messages
       const conversationsWithDetails = (data || []).map(conv => {
@@ -79,9 +79,11 @@ export function useFunCircleMessages() {
         const unreadCount = convMessages.filter(m => !m.is_read && m.sender_id !== user.id).length;
         const lastMessage = convMessages[0]?.content;
 
+        const profile = profiles.find(p => p.id === otherUserId);
+
         return {
           ...conv,
-          other_user: profiles.find(p => p.user_id === otherUserId),
+          other_user: profile ? { user_id: profile.id, username: profile.username, avatar_url: profile.avatar_url } : undefined,
           unread_count: unreadCount,
           last_message: lastMessage,
         };
@@ -103,7 +105,7 @@ export function useFunCircleMessages() {
       .order("created_at", { ascending: true });
 
     if (!error) {
-      setMessages(data || []);
+      setMessages((data as FunCircleMessage[]) || []);
       
       // Mark messages as read
       if (user) {
@@ -167,8 +169,11 @@ export function useFunCircleMessages() {
       .insert({
         conversation_id: conversationId,
         sender_id: user.id,
+        receiver_id: currentConversation?.participant_one === user.id 
+          ? currentConversation?.participant_two 
+          : currentConversation?.participant_one,
         content: content.trim(),
-      })
+      } as any)
       .select()
       .single();
 
@@ -187,7 +192,7 @@ export function useFunCircleMessages() {
       .update({ last_message_at: new Date().toISOString() })
       .eq("id", conversationId);
 
-    setMessages(prev => [...prev, data]);
+    setMessages(prev => [...prev, data as FunCircleMessage]);
   };
 
   const openConversation = async (conversation: FunCircleConversation) => {

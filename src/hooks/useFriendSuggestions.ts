@@ -29,11 +29,13 @@ export function useFriendSuggestions() {
     setIsLoading(true);
     try {
       // Get current user's profile for location-based matching
-      const { data: myProfile } = await supabase
+      const { data: myProfileData } = await supabase
         .from("profiles")
         .select("location")
-        .eq("user_id", user.id)
+        .eq("id", user.id)
         .maybeSingle();
+      
+      const myProfile = myProfileData as { location: string | null } | null;
 
       // Get existing friends and pending requests to exclude
       const { data: friendships } = await supabase
@@ -47,21 +49,23 @@ export function useFriendSuggestions() {
         excludedIds.add(f.addressee_id);
       });
 
-      // Fetch all potential suggestions
-      const { data: allProfiles } = await supabase
+      // Fetch all potential suggestions - use 'id' instead of 'user_id'
+      const { data: allProfilesData } = await supabase
         .from("profiles")
-        .select("user_id, username, avatar_url, location, bio, is_verified, created_at")
-        .not("user_id", "in", `(${Array.from(excludedIds).join(",")})`)
+        .select("id, username, avatar_url, location, bio, is_verified, created_at")
+        .not("id", "in", `(${Array.from(excludedIds).join(",")})`)
         .limit(50);
 
-      if (!allProfiles || allProfiles.length === 0) {
+      const allProfiles = (allProfilesData as any[]) || [];
+
+      if (allProfiles.length === 0) {
         setSuggestions([]);
         setIsLoading(false);
         return;
       }
 
       // Get story counts for activity-based suggestions
-      const userIds = allProfiles.map(p => p.user_id);
+      const userIds = allProfiles.map(p => p.id);
       const { data: storyCounts } = await supabase
         .from("fun_circle_stories")
         .select("user_id")
@@ -106,8 +110,8 @@ export function useFriendSuggestions() {
         let score = 0;
         let reason: SuggestedFriend["suggestion_reason"] = "popular";
 
-        const mutualCount = mutualCountMap.get(profile.user_id) || 0;
-        const storyCount = storyCountMap.get(profile.user_id) || 0;
+        const mutualCount = mutualCountMap.get(profile.id) || 0;
+        const storyCount = storyCountMap.get(profile.id) || 0;
         const isNewMember = new Date(profile.created_at) > oneWeekAgo;
         const sameLocation = myProfile?.location && profile.location && 
           profile.location.toLowerCase().includes(myProfile.location.toLowerCase().split(",")[0]);
@@ -138,7 +142,13 @@ export function useFriendSuggestions() {
         }
 
         return {
-          ...profile,
+          user_id: profile.id,
+          username: profile.username || profile.full_name || "Unknown",
+          avatar_url: profile.avatar_url,
+          location: profile.location,
+          bio: profile.bio,
+          is_verified: profile.is_verified || false,
+          created_at: profile.created_at,
           suggestion_reason: reason,
           mutual_friends_count: mutualCount,
           score,

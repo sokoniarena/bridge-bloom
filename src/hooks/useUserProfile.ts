@@ -4,8 +4,7 @@ import { useAuth } from "@/contexts/AuthContext";
 
 export interface UserProfile {
   id: string;
-  user_id: string;
-  username: string;
+  username: string | null;
   email: string;
   phone: string | null;
   avatar_url: string | null;
@@ -29,11 +28,11 @@ export function useUserProfile() {
     const { data, error } = await supabase
       .from("profiles")
       .select("*")
-      .eq("user_id", user.id)
+      .eq("id", user.id)
       .maybeSingle();
 
     if (!error && data) {
-      setProfile(data as UserProfile);
+      setProfile(data as unknown as UserProfile);
     }
     setIsLoading(false);
   };
@@ -63,8 +62,8 @@ export function useUserProfile() {
     // Update profile
     const { error: updateError } = await supabase
       .from("profiles")
-      .update({ avatar_url: avatarUrl })
-      .eq("user_id", user.id);
+      .update({ avatar_url: avatarUrl } as any)
+      .eq("id", user.id);
 
     if (updateError) {
       console.error("Profile update error:", updateError);

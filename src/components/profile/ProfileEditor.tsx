@@ -12,8 +12,7 @@ import { Loader2, Camera, CheckCircle } from "lucide-react";
 
 interface Profile {
   id: string;
-  user_id: string;
-  username: string;
+  username: string | null;
   email: string;
   phone: string | null;
   avatar_url: string | null;
@@ -43,17 +42,17 @@ export function ProfileEditor() {
       const { data } = await supabase
         .from("profiles")
         .select("*")
-        .eq("user_id", user.id)
+        .eq("id", user.id)
         .maybeSingle();
 
       if (data) {
-        setProfile(data as Profile);
+        setProfile(data as unknown as Profile);
         setFormData({
-          username: data.username || "",
-          phone: data.phone || "",
-          bio: data.bio || "",
-          location: data.location || "",
-          avatar_url: data.avatar_url || "",
+          username: (data as any).username || (data as any).full_name || "",
+          phone: (data as any).phone || "",
+          bio: (data as any).bio || "",
+          location: (data as any).location || "",
+          avatar_url: (data as any).avatar_url || "",
         });
       }
       setIsLoading(false);
@@ -81,12 +80,13 @@ export function ProfileEditor() {
       .from("profiles")
       .update({
         username: formData.username,
+        full_name: formData.username,
         phone: formData.phone || null,
         bio: formData.bio || null,
         location: formData.location || null,
         avatar_url: formData.avatar_url || null,
-      })
-      .eq("user_id", user.id);
+      } as any)
+      .eq("id", user.id);
 
     if (error) {
       toast({

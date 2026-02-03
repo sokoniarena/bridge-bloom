@@ -78,11 +78,11 @@ export function useUnreadMessages() {
             // Fetch sender's profile
             const { data: profile } = await supabase
               .from("profiles")
-              .select("username")
-              .eq("user_id", newMessage.sender_id)
+              .select("username, full_name")
+              .eq("id", newMessage.sender_id)
               .maybeSingle();
 
-            const senderName = profile?.username || "Someone";
+            const senderName = (profile as any)?.username || (profile as any)?.full_name || "Someone";
             showPushNotification(senderName, newMessage.content);
           }
 

@@ -66,20 +66,20 @@ export function useFunCircleFriends() {
       const requesterIds = incoming.map(r => r.requester_id);
       const allUserIds = [...new Set([...friendUserIds, ...requesterIds])];
 
-      // Single batch profile fetch
-      let profiles: Array<{ user_id: string; username: string; avatar_url: string | null }> = [];
+      // Single batch profile fetch - use 'id' instead of 'user_id' since profiles.id = auth.users.id
+      let profiles: Array<{ id: string; username: string; avatar_url: string | null }> = [];
       if (allUserIds.length > 0) {
         const { data } = await supabase
           .from("profiles")
-          .select("user_id, username, avatar_url")
-          .in("user_id", allUserIds);
-        profiles = data || [];
+          .select("id, username, avatar_url")
+          .in("id", allUserIds);
+        profiles = (data as any[]) || [];
       }
 
       // Build friends list
       const friendsList = friendships.map(f => {
         const friendUserId = f.requester_id === user.id ? f.addressee_id : f.requester_id;
-        const profile = profiles.find(p => p.user_id === friendUserId);
+        const profile = profiles.find(p => p.id === friendUserId);
         return {
           user_id: friendUserId,
           username: profile?.username || "Unknown",
@@ -93,7 +93,7 @@ export function useFunCircleFriends() {
       const requestsWithProfiles = incoming.map(r => ({
         ...r,
         status: r.status as "pending" | "accepted" | "rejected",
-        profile: profiles.find(p => p.user_id === r.requester_id),
+        profile: profiles.find(p => p.id === r.requester_id) ? { ...profiles.find(p => p.id === r.requester_id)!, user_id: r.requester_id } : undefined,
       }));
       setPendingRequests(requestsWithProfiles);
 
@@ -199,12 +199,12 @@ export function useFunCircleFriends() {
 
     const { data } = await supabase
       .from("profiles")
-      .select("user_id, username, avatar_url")
-      .neq("user_id", user.id)
+      .select("id, username, avatar_url")
+      .neq("id", user.id)
       .ilike("username", `%${query}%`)
       .limit(10);
 
-    return data || [];
+    return ((data as any[]) || []).map(p => ({ ...p, user_id: p.id }));
   }, [user]);
 
   useEffect(() => {

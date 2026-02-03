@@ -16,11 +16,10 @@ import { formatDistanceToNow } from "date-fns";
 
 interface Notification {
   id: string;
-  type: string;
+  type: string | null;
   title: string;
   message: string;
-  read: boolean;
-  metadata: { listing_id?: string; status?: string };
+  is_read: boolean;
   created_at: string;
 }
 
@@ -29,7 +28,7 @@ export function NotificationBell() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
-  const unreadCount = notifications.filter((n) => !n.read).length;
+  const unreadCount = notifications.filter((n) => !n.is_read).length;
 
   useEffect(() => {
     if (!user) return;
@@ -73,9 +72,9 @@ export function NotificationBell() {
   }, [user]);
 
   const markAsRead = async (id: string) => {
-    await supabase.from("notifications").update({ read: true }).eq("id", id);
+    await supabase.from("notifications").update({ is_read: true }).eq("id", id);
     setNotifications((prev) =>
-      prev.map((n) => (n.id === id ? { ...n, read: true } : n))
+      prev.map((n) => (n.id === id ? { ...n, is_read: true } : n))
     );
   };
 
@@ -83,10 +82,10 @@ export function NotificationBell() {
     if (!user) return;
     await supabase
       .from("notifications")
-      .update({ read: true })
+      .update({ is_read: true })
       .eq("user_id", user.id)
-      .eq("read", false);
-    setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
+      .eq("is_read", false);
+    setNotifications((prev) => prev.map((n) => ({ ...n, is_read: true })));
   };
 
   const getNotificationIcon = (type: string) => {
@@ -142,13 +141,11 @@ export function NotificationBell() {
                   key={notification.id}
                   className={cn(
                     "p-3 hover:bg-muted/50 transition-colors cursor-pointer",
-                    !notification.read && "bg-primary/5"
+                    !notification.is_read && "bg-primary/5"
                   )}
                   onClick={() => {
                     markAsRead(notification.id);
-                    if (notification.metadata?.listing_id) {
-                      setIsOpen(false);
-                    }
+                    setIsOpen(false);
                   }}
                 >
                   <div className="flex gap-3">
@@ -166,7 +163,7 @@ export function NotificationBell() {
                         })}
                       </p>
                     </div>
-                    {!notification.read && (
+                    {!notification.is_read && (
                       <div className="flex-shrink-0">
                         <div className="h-2 w-2 rounded-full bg-primary" />
                       </div>

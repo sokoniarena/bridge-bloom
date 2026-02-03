@@ -68,7 +68,7 @@ export function useFunCircleStories() {
         .select("*")
         .gt("expires_at", new Date().toISOString())
         .order("created_at", { ascending: false })
-        .limit(50); // Limit for performance
+        .limit(50);
 
       if (error) throw error;
       if (!data || data.length === 0) {
@@ -79,12 +79,12 @@ export function useFunCircleStories() {
       const userIds = [...new Set(data.map(s => s.user_id))];
       const storyIds = data.map(s => s.id);
 
-      // Parallel fetch for profiles, reactions, and mentions
+      // Parallel fetch for profiles, reactions, and mentions - use 'id' for profiles
       const [profilesResult, reactionsResult, mentionsResult] = await Promise.all([
         supabase
           .from("profiles")
-          .select("user_id, username, avatar_url")
-          .in("user_id", userIds),
+          .select("id, username, avatar_url")
+          .in("id", userIds),
         user
           ? supabase
               .from("fun_circle_story_reactions")
@@ -98,25 +98,31 @@ export function useFunCircleStories() {
           .in("story_id", storyIds),
       ]);
 
-      const profiles = profilesResult.data || [];
+      const profiles = (profilesResult.data as any[]) || [];
       const userReactions = new Map<string, ReactionType>(
-        (reactionsResult.data || []).map(r => [r.story_id, r.reaction_type as ReactionType])
+        ((reactionsResult.data as any[]) || []).map(r => [r.story_id, r.reaction_type as ReactionType])
       );
 
       const mentionsByStory = new Map<string, string[]>();
-      (mentionsResult.data || []).forEach(m => {
+      ((mentionsResult.data as any[]) || []).forEach(m => {
         const existing = mentionsByStory.get(m.story_id) || [];
         mentionsByStory.set(m.story_id, [...existing, m.mentioned_user_id]);
       });
 
       // Build stories with all related data
-      const storiesWithProfiles = data.map(story => {
-        const rawReactions = story.reactions_count as unknown as ReactionCounts;
+      const storiesWithProfiles: Story[] = data.map(story => {
+        const rawReactions = (story as any).reactions_count as unknown as ReactionCounts;
+        const profile = profiles.find(p => p.id === story.user_id);
         return {
-          ...story,
-          images: story.images || [],
+          id: story.id,
+          user_id: story.user_id,
+          content: story.content,
+          images: (story as any).images || [],
+          created_at: story.created_at,
+          expires_at: story.expires_at,
+          views_count: story.views_count || 0,
           reactions_count: rawReactions || defaultReactionCounts,
-          profile: profiles.find(p => p.user_id === story.user_id),
+          profile: profile ? { username: profile.username || profile.full_name, avatar_url: profile.avatar_url } : undefined,
           user_reaction: userReactions.get(story.id) || null,
           mentions: mentionsByStory.get(story.id) || [],
         };
@@ -142,7 +148,7 @@ export function useFunCircleStories() {
       .eq("user_id", user.id)
       .gte("created_at", today.toISOString());
 
-    const count = (data || []).reduce((sum, story) => {
+    const count = ((data as any[]) || []).reduce((sum, story) => {
       return sum + (story.images?.length || 0);
     }, 0);
 
@@ -167,7 +173,7 @@ export function useFunCircleStories() {
         user_id: user.id,
         content,
         images,
-      })
+      } as any)
       .select()
       .single();
 
@@ -216,7 +222,7 @@ export function useFunCircleStories() {
       // Update reaction
       const { error } = await supabase
         .from("fun_circle_story_reactions")
-        .update({ reaction_type: reactionType })
+        .update({ reaction_type: reactionType } as any)
         .eq("story_id", storyId)
         .eq("user_id", user.id);
 
@@ -241,7 +247,7 @@ export function useFunCircleStories() {
           story_id: storyId,
           user_id: user.id,
           reaction_type: reactionType,
-        });
+        } as any);
 
       if (!error) {
         setStories(prev =>
@@ -309,15 +315,24 @@ export function useFunCircleStories() {
 
     if (error) return [];
 
-    const userIds = [...new Set(data?.map(c => c.user_id) || [])];
-    const { data: profiles } = await supabase
+    const commentsData = (data as any[]) || [];
+    const userIds = [...new Set(commentsData.map(c => c.user_id))];
+    const { data: profilesData } = await supabase
       .from("profiles")
-      .select("user_id, username, avatar_url")
-      .in("user_id", userIds);
+      .select("id, username, avatar_url")
+      .in("id", userIds);
 
-    return (data || []).map(comment => ({
-      ...comment,
-      profile: profiles?.find(p => p.user_id === comment.user_id),
+    const profiles = (profilesData as any[]) || [];
+
+    return commentsData.map(comment => ({
+      id: comment.id,
+      story_id: comment.story_id,
+      user_id: comment.user_id,
+      content: comment.content,
+      created_at: comment.created_at,
+      profile: profiles.find(p => p.id === comment.user_id) 
+        ? { username: profiles.find(p => p.id === comment.user_id)?.username, avatar_url: profiles.find(p => p.id === comment.user_id)?.avatar_url }
+        : undefined,
     }));
   };
 
@@ -330,7 +345,7 @@ export function useFunCircleStories() {
         story_id: storyId,
         user_id: user.id,
         content,
-      })
+      } as any)
       .select()
       .single();
 
