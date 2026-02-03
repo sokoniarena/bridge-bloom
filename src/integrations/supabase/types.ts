@@ -14,6 +14,70 @@ export type Database = {
   }
   public: {
     Tables: {
+      conversations: {
+        Row: {
+          buyer_id: string
+          created_at: string
+          id: string
+          last_message_at: string | null
+          listing_id: string | null
+          seller_id: string
+        }
+        Insert: {
+          buyer_id: string
+          created_at?: string
+          id?: string
+          last_message_at?: string | null
+          listing_id?: string | null
+          seller_id: string
+        }
+        Update: {
+          buyer_id?: string
+          created_at?: string
+          id?: string
+          last_message_at?: string | null
+          listing_id?: string | null
+          seller_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "conversations_listing_id_fkey"
+            columns: ["listing_id"]
+            isOneToOne: false
+            referencedRelation: "listings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      favorites: {
+        Row: {
+          created_at: string
+          id: string
+          listing_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          listing_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          listing_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "favorites_listing_id_fkey"
+            columns: ["listing_id"]
+            isOneToOne: false
+            referencedRelation: "listings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       job_categories: {
         Row: {
           created_at: string
@@ -159,6 +223,116 @@ export type Database = {
           },
         ]
       }
+      listings: {
+        Row: {
+          category: string | null
+          created_at: string
+          delivery_available: boolean | null
+          description: string | null
+          event_date: string | null
+          favorites_count: number | null
+          id: string
+          images: string[] | null
+          is_featured: boolean | null
+          is_free: boolean | null
+          is_negotiable: boolean | null
+          is_sponsored: boolean | null
+          listing_type: string
+          location: string
+          original_price: number | null
+          price: number | null
+          sponsored_until: string | null
+          status: string
+          title: string
+          updated_at: string
+          user_id: string
+          views_count: number | null
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          delivery_available?: boolean | null
+          description?: string | null
+          event_date?: string | null
+          favorites_count?: number | null
+          id?: string
+          images?: string[] | null
+          is_featured?: boolean | null
+          is_free?: boolean | null
+          is_negotiable?: boolean | null
+          is_sponsored?: boolean | null
+          listing_type?: string
+          location?: string
+          original_price?: number | null
+          price?: number | null
+          sponsored_until?: string | null
+          status?: string
+          title: string
+          updated_at?: string
+          user_id: string
+          views_count?: number | null
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          delivery_available?: boolean | null
+          description?: string | null
+          event_date?: string | null
+          favorites_count?: number | null
+          id?: string
+          images?: string[] | null
+          is_featured?: boolean | null
+          is_free?: boolean | null
+          is_negotiable?: boolean | null
+          is_sponsored?: boolean | null
+          listing_type?: string
+          location?: string
+          original_price?: number | null
+          price?: number | null
+          sponsored_until?: string | null
+          status?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+          views_count?: number | null
+        }
+        Relationships: []
+      }
+      messages: {
+        Row: {
+          content: string
+          conversation_id: string
+          created_at: string
+          id: string
+          is_read: boolean | null
+          sender_id: string
+        }
+        Insert: {
+          content: string
+          conversation_id: string
+          created_at?: string
+          id?: string
+          is_read?: boolean | null
+          sender_id: string
+        }
+        Update: {
+          content?: string
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          is_read?: boolean | null
+          sender_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       notifications: {
         Row: {
           created_at: string
@@ -242,6 +416,47 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      sponsor_requests: {
+        Row: {
+          admin_notes: string | null
+          created_at: string
+          duration_days: number
+          id: string
+          listing_id: string
+          requested_at: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          created_at?: string
+          duration_days?: number
+          id?: string
+          listing_id: string
+          requested_at?: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          admin_notes?: string | null
+          created_at?: string
+          duration_days?: number
+          id?: string
+          listing_id?: string
+          requested_at?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sponsor_requests_listing_id_fkey"
+            columns: ["listing_id"]
+            isOneToOne: false
+            referencedRelation: "listings"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       transactions: {
         Row: {
