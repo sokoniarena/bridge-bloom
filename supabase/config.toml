@@ -1,1 +1,13 @@
-project_id = "yotxgvtqhjonujoiebno"
+project_id = "tzrdtxrplzcvfotzndrp"
+
+[functions.cleanup-expired-stories]
+verify_jwt = false
+
+[functions.cloudinary-upload]
+verify_jwt = false
+
+[functions.import-listings]
+verify_jwt = false
+
+[functions.send-confirmation-email]
+verify_jwt = false
