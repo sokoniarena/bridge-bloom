@@ -15,12 +15,11 @@ import { useFunCircleFriends } from "@/hooks/useFunCircleFriends";
 
 interface Notification {
   id: string;
-  type: string;
+  type: string | null;
   title: string;
   message: string;
-  read: boolean;
+  is_read: boolean;
   created_at: string;
-  metadata: Record<string, unknown>;
 }
 
 export default function FunCircleNotifications() {
@@ -50,38 +49,25 @@ export default function FunCircleNotifications() {
   }, [user]);
 
   const markAsRead = async (id: string) => {
-    await supabase.from("notifications").update({ read: true }).eq("id", id);
-    setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n));
+    await supabase.from("notifications").update({ is_read: true }).eq("id", id);
+    setNotifications(prev => prev.map(n => n.id === id ? { ...n, is_read: true } : n));
   };
 
   const handleNotificationClick = (notification: Notification) => {
     markAsRead(notification.id);
     
     // Navigate based on notification type
-    const { type, metadata } = notification;
+    const { type } = notification;
     
     switch (type) {
       case "friend_request":
-        // Stay on this page, switch to requests tab or just mark read
+        // Stay on this page
         break;
       case "friend_accepted":
-        // Navigate to the friend's profile if user_id is in metadata
-        if (metadata?.user_id) {
-          navigate(`/profile/${metadata.user_id}`);
-        }
-        break;
-      case "fun_circle_story":
-        // Navigate to fun circle main page
         navigate("/fun-circle");
         break;
+      case "fun_circle_story":
       case "fun_circle_mention":
-        // Navigate to the story if story_id is in metadata
-        if (metadata?.story_id) {
-          navigate("/fun-circle");
-        } else {
-          navigate("/fun-circle");
-        }
-        break;
       default:
         navigate("/fun-circle");
     }
@@ -153,11 +139,11 @@ export default function FunCircleNotifications() {
                           key={notification.id}
                           onClick={() => handleNotificationClick(notification)}
                           className={`w-full flex items-start gap-3 p-4 text-left hover:bg-muted/50 transition-colors ${
-                            !notification.read ? "bg-primary/5" : ""
+                            !notification.is_read ? "bg-primary/5" : ""
                           }`}
                         >
                           <div className="p-2 rounded-full bg-primary/10 text-primary">
-                            {getIcon(notification.type)}
+                            {getIcon(notification.type || "")}
                           </div>
                           <div className="flex-1 min-w-0">
                             <p className="font-medium text-sm">{notification.title}</p>
@@ -166,7 +152,7 @@ export default function FunCircleNotifications() {
                               {formatDistanceToNow(new Date(notification.created_at), { addSuffix: true })}
                             </p>
                           </div>
-                          {!notification.read && (
+                          {!notification.is_read && (
                             <div className="w-2 h-2 rounded-full bg-primary mt-2" />
                           )}
                         </button>

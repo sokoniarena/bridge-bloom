@@ -21,18 +21,17 @@ import { OptimizedImage } from "@/components/ui/optimized-image";
 interface Listing {
   id: string;
   title: string;
-  description: string;
+  description: string | null;
   listing_type: "product" | "service" | "event";
   category: string | null;
   price: number | null;
   original_price: number | null;
   location: string;
-  images: string[];
+  images: string[] | null;
   is_free: boolean | null;
   is_negotiable: boolean | null;
   delivery_available: boolean | null;
   event_date: string | null;
-  event_end_date: string | null;
   is_sponsored: boolean | null;
   is_featured: boolean | null;
   views_count: number | null;
@@ -80,7 +79,7 @@ export default function ListingDetail() {
     setIsLoading(true);
     const { data, error } = await supabase
       .from("listings")
-      .select("*")
+      .select("id, title, description, listing_type, category, price, original_price, location, images, is_free, is_negotiable, delivery_available, event_date, is_sponsored, is_featured, views_count, favorites_count, created_at, user_id")
       .eq("id", id)
       .maybeSingle();
 
@@ -94,13 +93,13 @@ export default function ListingDetail() {
       return;
     }
 
-    setListing(data);
+    setListing(data as Listing);
     
-    // Fetch seller profile
+    // Fetch seller profile - profiles table uses 'id' as the user identifier
     const { data: profile } = await supabase
       .from("profiles")
-      .select("*")
-      .eq("user_id", data.user_id)
+      .select("username, email, phone, avatar_url, is_verified, created_at")
+      .eq("id", data.user_id)
       .maybeSingle();
     
     setSeller(profile);
@@ -108,13 +107,13 @@ export default function ListingDetail() {
     // Fetch related listings
     const { data: related } = await supabase
       .from("listings")
-      .select("*")
+      .select("id, title, description, listing_type, category, price, original_price, location, images, is_free, is_negotiable, delivery_available, event_date, is_sponsored, is_featured, views_count, favorites_count, created_at, user_id")
       .eq("listing_type", data.listing_type)
       .neq("id", data.id)
       .eq("status", "available")
       .limit(4);
 
-    setRelatedListings(related || []);
+    setRelatedListings((related || []) as Listing[]);
     setIsLoading(false);
   };
 

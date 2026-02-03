@@ -22,12 +22,12 @@ interface Listing {
   id: string;
   title: string;
   listing_type: "product" | "service" | "event";
-  status: "available" | "out_of_stock" | "expired" | "draft";
+  status: string;
   price: number | null;
-  views_count: number;
-  favorites_count: number;
+  views_count: number | null;
+  favorites_count: number | null;
   created_at: string;
-  images: string[];
+  images: string[] | null;
 }
 
 const statusColors = {
@@ -67,7 +67,7 @@ export default function Dashboard() {
     setIsLoading(true);
     const { data, error } = await supabase
       .from("listings")
-      .select("*")
+      .select("id, title, listing_type, status, price, views_count, favorites_count, created_at, images")
       .eq("user_id", user.id)
       .order("created_at", { ascending: false });
 
@@ -77,12 +77,12 @@ export default function Dashboard() {
         description: error.message,
         variant: "destructive",
       });
-    } else {
-      setListings(data || []);
-      const total = data?.length || 0;
-      const active = data?.filter((l) => l.status === "available").length || 0;
-      const views = data?.reduce((sum, l) => sum + (l.views_count || 0), 0) || 0;
-      const favorites = data?.reduce((sum, l) => sum + (l.favorites_count || 0), 0) || 0;
+    } else if (data) {
+      setListings(data as Listing[]);
+      const total = data.length;
+      const active = data.filter((l) => l.status === "available").length;
+      const views = data.reduce((sum, l) => sum + (l.views_count || 0), 0);
+      const favorites = data.reduce((sum, l) => sum + (l.favorites_count || 0), 0);
       setStats({ total, active, views, favorites });
     }
     setIsLoading(false);
