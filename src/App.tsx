@@ -15,6 +15,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 // Lazy load non-critical routes for faster initial load
 const Products = lazy(() => import("./pages/Products"));
@@ -75,6 +77,8 @@ const App = () => (
                 <Route path="/search" element={<Search />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
                 <Route path="/favorites" element={<Favorites />} />
                 <Route path="/messages" element={<Messages />} />
                 <Route path="/fun-circle" element={<FunCircle />} />
