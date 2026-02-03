@@ -14,448 +14,147 @@ export type Database = {
   }
   public: {
     Tables: {
-      audit_logs: {
+      job_categories: {
         Row: {
-          action: string
           created_at: string
-          entity_id: string | null
-          entity_type: string
+          description: string | null
+          icon: string | null
           id: string
-          metadata: Json | null
-          new_data: Json | null
-          old_data: Json | null
-          user_email: string | null
-          user_id: string | null
-          user_ip: string | null
+          job_count: number
+          name: string
         }
         Insert: {
-          action: string
           created_at?: string
-          entity_id?: string | null
-          entity_type: string
+          description?: string | null
+          icon?: string | null
           id?: string
-          metadata?: Json | null
-          new_data?: Json | null
-          old_data?: Json | null
-          user_email?: string | null
-          user_id?: string | null
-          user_ip?: string | null
+          job_count?: number
+          name: string
         }
         Update: {
-          action?: string
           created_at?: string
-          entity_id?: string | null
-          entity_type?: string
+          description?: string | null
+          icon?: string | null
           id?: string
-          metadata?: Json | null
-          new_data?: Json | null
-          old_data?: Json | null
-          user_email?: string | null
-          user_id?: string | null
-          user_ip?: string | null
+          job_count?: number
+          name?: string
         }
         Relationships: []
       }
-      conversations: {
+      job_submissions: {
         Row: {
-          buyer_id: string
+          admin_feedback: string | null
           created_at: string
           id: string
-          last_message_at: string | null
-          listing_id: string
-          seller_id: string
+          job_id: string
+          payment_amount: number
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: Database["public"]["Enums"]["submission_status"]
+          submission_content: string
+          submission_url: string | null
           updated_at: string
-        }
-        Insert: {
-          buyer_id: string
-          created_at?: string
-          id?: string
-          last_message_at?: string | null
-          listing_id: string
-          seller_id: string
-          updated_at?: string
-        }
-        Update: {
-          buyer_id?: string
-          created_at?: string
-          id?: string
-          last_message_at?: string | null
-          listing_id?: string
-          seller_id?: string
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "conversations_listing_id_fkey"
-            columns: ["listing_id"]
-            isOneToOne: false
-            referencedRelation: "listings"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      favorites: {
-        Row: {
-          created_at: string
-          id: string
-          listing_id: string
           user_id: string
         }
         Insert: {
+          admin_feedback?: string | null
           created_at?: string
           id?: string
-          listing_id: string
+          job_id: string
+          payment_amount: number
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["submission_status"]
+          submission_content: string
+          submission_url?: string | null
+          updated_at?: string
           user_id: string
         }
         Update: {
+          admin_feedback?: string | null
           created_at?: string
           id?: string
-          listing_id?: string
+          job_id?: string
+          payment_amount?: number
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["submission_status"]
+          submission_content?: string
+          submission_url?: string | null
+          updated_at?: string
           user_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "favorites_listing_id_fkey"
-            columns: ["listing_id"]
+            foreignKeyName: "job_submissions_job_id_fkey"
+            columns: ["job_id"]
             isOneToOne: false
-            referencedRelation: "listings"
+            referencedRelation: "jobs"
             referencedColumns: ["id"]
           },
         ]
       }
-      fun_circle_comments: {
+      jobs: {
         Row: {
-          content: string
+          category_id: string | null
           created_at: string
-          id: string
-          story_id: string
-          user_id: string
-        }
-        Insert: {
-          content: string
-          created_at?: string
-          id?: string
-          story_id: string
-          user_id: string
-        }
-        Update: {
-          content?: string
-          created_at?: string
-          id?: string
-          story_id?: string
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "fun_circle_comments_story_id_fkey"
-            columns: ["story_id"]
-            isOneToOne: false
-            referencedRelation: "fun_circle_stories"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      fun_circle_conversations: {
-        Row: {
-          created_at: string
-          id: string
-          last_message_at: string | null
-          participant_one: string
-          participant_two: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          last_message_at?: string | null
-          participant_one: string
-          participant_two: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          last_message_at?: string | null
-          participant_one?: string
-          participant_two?: string
-        }
-        Relationships: []
-      }
-      fun_circle_friends: {
-        Row: {
-          addressee_id: string
-          created_at: string
-          id: string
-          requester_id: string
-          status: Database["public"]["Enums"]["friend_request_status"]
-          updated_at: string
-        }
-        Insert: {
-          addressee_id: string
-          created_at?: string
-          id?: string
-          requester_id: string
-          status?: Database["public"]["Enums"]["friend_request_status"]
-          updated_at?: string
-        }
-        Update: {
-          addressee_id?: string
-          created_at?: string
-          id?: string
-          requester_id?: string
-          status?: Database["public"]["Enums"]["friend_request_status"]
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      fun_circle_mentions: {
-        Row: {
-          created_at: string
-          id: string
-          mentioned_user_id: string
-          story_id: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          mentioned_user_id: string
-          story_id: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          mentioned_user_id?: string
-          story_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "fun_circle_mentions_story_id_fkey"
-            columns: ["story_id"]
-            isOneToOne: false
-            referencedRelation: "fun_circle_stories"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      fun_circle_messages: {
-        Row: {
-          content: string
-          conversation_id: string
-          created_at: string
-          id: string
-          is_read: boolean | null
-          sender_id: string
-        }
-        Insert: {
-          content: string
-          conversation_id: string
-          created_at?: string
-          id?: string
-          is_read?: boolean | null
-          sender_id: string
-        }
-        Update: {
-          content?: string
-          conversation_id?: string
-          created_at?: string
-          id?: string
-          is_read?: boolean | null
-          sender_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "fun_circle_messages_conversation_id_fkey"
-            columns: ["conversation_id"]
-            isOneToOne: false
-            referencedRelation: "fun_circle_conversations"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      fun_circle_stories: {
-        Row: {
-          content: string | null
-          created_at: string
-          expires_at: string
-          id: string
-          images: string[] | null
-          reactions_count: Json | null
-          user_id: string
-          views_count: number | null
-        }
-        Insert: {
-          content?: string | null
-          created_at?: string
-          expires_at?: string
-          id?: string
-          images?: string[] | null
-          reactions_count?: Json | null
-          user_id: string
-          views_count?: number | null
-        }
-        Update: {
-          content?: string | null
-          created_at?: string
-          expires_at?: string
-          id?: string
-          images?: string[] | null
-          reactions_count?: Json | null
-          user_id?: string
-          views_count?: number | null
-        }
-        Relationships: []
-      }
-      fun_circle_story_reactions: {
-        Row: {
-          created_at: string
-          id: string
-          reaction_type: Database["public"]["Enums"]["story_reaction_type"]
-          story_id: string
-          user_id: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          reaction_type?: Database["public"]["Enums"]["story_reaction_type"]
-          story_id: string
-          user_id: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          reaction_type?: Database["public"]["Enums"]["story_reaction_type"]
-          story_id?: string
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "fun_circle_story_reactions_story_id_fkey"
-            columns: ["story_id"]
-            isOneToOne: false
-            referencedRelation: "fun_circle_stories"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      listings: {
-        Row: {
-          category: string | null
-          created_at: string
-          delivery_available: boolean | null
+          current_submissions: number
+          deadline: string | null
           description: string
-          event_date: string | null
-          event_end_date: string | null
-          expires_at: string | null
-          favorites_count: number | null
+          difficulty: Database["public"]["Enums"]["job_difficulty"]
+          estimated_time: string | null
           id: string
-          images: string[] | null
-          is_featured: boolean | null
-          is_free: boolean | null
-          is_negotiable: boolean | null
-          is_sponsored: boolean | null
-          latitude: number | null
-          listing_type: Database["public"]["Enums"]["listing_type"]
-          location: string
-          longitude: number | null
-          original_price: number | null
-          price: number | null
-          sponsored_until: string | null
-          status: Database["public"]["Enums"]["listing_status"]
-          subcategory: string | null
+          instructions: string
+          is_active: boolean
+          max_submissions: number | null
+          payment_amount: number
+          required_tier: Database["public"]["Enums"]["membership_tier"]
+          submission_format: string | null
           title: string
           updated_at: string
-          user_id: string
-          views_count: number | null
         }
         Insert: {
-          category?: string | null
+          category_id?: string | null
           created_at?: string
-          delivery_available?: boolean | null
+          current_submissions?: number
+          deadline?: string | null
           description: string
-          event_date?: string | null
-          event_end_date?: string | null
-          expires_at?: string | null
-          favorites_count?: number | null
+          difficulty?: Database["public"]["Enums"]["job_difficulty"]
+          estimated_time?: string | null
           id?: string
-          images?: string[] | null
-          is_featured?: boolean | null
-          is_free?: boolean | null
-          is_negotiable?: boolean | null
-          is_sponsored?: boolean | null
-          latitude?: number | null
-          listing_type: Database["public"]["Enums"]["listing_type"]
-          location: string
-          longitude?: number | null
-          original_price?: number | null
-          price?: number | null
-          sponsored_until?: string | null
-          status?: Database["public"]["Enums"]["listing_status"]
-          subcategory?: string | null
+          instructions: string
+          is_active?: boolean
+          max_submissions?: number | null
+          payment_amount: number
+          required_tier?: Database["public"]["Enums"]["membership_tier"]
+          submission_format?: string | null
           title: string
           updated_at?: string
-          user_id: string
-          views_count?: number | null
         }
         Update: {
-          category?: string | null
+          category_id?: string | null
           created_at?: string
-          delivery_available?: boolean | null
+          current_submissions?: number
+          deadline?: string | null
           description?: string
-          event_date?: string | null
-          event_end_date?: string | null
-          expires_at?: string | null
-          favorites_count?: number | null
+          difficulty?: Database["public"]["Enums"]["job_difficulty"]
+          estimated_time?: string | null
           id?: string
-          images?: string[] | null
-          is_featured?: boolean | null
-          is_free?: boolean | null
-          is_negotiable?: boolean | null
-          is_sponsored?: boolean | null
-          latitude?: number | null
-          listing_type?: Database["public"]["Enums"]["listing_type"]
-          location?: string
-          longitude?: number | null
-          original_price?: number | null
-          price?: number | null
-          sponsored_until?: string | null
-          status?: Database["public"]["Enums"]["listing_status"]
-          subcategory?: string | null
+          instructions?: string
+          is_active?: boolean
+          max_submissions?: number | null
+          payment_amount?: number
+          required_tier?: Database["public"]["Enums"]["membership_tier"]
+          submission_format?: string | null
           title?: string
           updated_at?: string
-          user_id?: string
-          views_count?: number | null
-        }
-        Relationships: []
-      }
-      messages: {
-        Row: {
-          content: string
-          conversation_id: string
-          created_at: string
-          id: string
-          is_read: boolean | null
-          sender_id: string
-        }
-        Insert: {
-          content: string
-          conversation_id: string
-          created_at?: string
-          id?: string
-          is_read?: boolean | null
-          sender_id: string
-        }
-        Update: {
-          content?: string
-          conversation_id?: string
-          created_at?: string
-          id?: string
-          is_read?: boolean | null
-          sender_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "messages_conversation_id_fkey"
-            columns: ["conversation_id"]
+            foreignKeyName: "jobs_category_id_fkey"
+            columns: ["category_id"]
             isOneToOne: false
-            referencedRelation: "conversations"
+            referencedRelation: "job_categories"
             referencedColumns: ["id"]
           },
         ]
@@ -464,139 +163,131 @@ export type Database = {
         Row: {
           created_at: string
           id: string
+          is_read: boolean
           message: string
-          metadata: Json | null
-          read: boolean | null
           title: string
-          type: string
+          type: string | null
           user_id: string
         }
         Insert: {
           created_at?: string
           id?: string
+          is_read?: boolean
           message: string
-          metadata?: Json | null
-          read?: boolean | null
           title: string
-          type: string
+          type?: string | null
           user_id: string
         }
         Update: {
           created_at?: string
           id?: string
+          is_read?: boolean
           message?: string
-          metadata?: Json | null
-          read?: boolean | null
           title?: string
-          type?: string
+          type?: string | null
           user_id?: string
         }
         Relationships: []
       }
       profiles: {
         Row: {
+          approved_earnings: number
           avatar_url: string | null
-          bio: string | null
           created_at: string
+          daily_tasks_used: number
           email: string
+          full_name: string | null
           id: string
-          is_verified: boolean | null
-          location: string | null
-          phone: string | null
+          last_task_reset_date: string
+          membership_expires_at: string | null
+          membership_tier: Database["public"]["Enums"]["membership_tier"]
+          pending_earnings: number
+          rating: number | null
+          tasks_completed: number
+          total_earnings: number
           updated_at: string
-          user_id: string
-          username: string
         }
         Insert: {
+          approved_earnings?: number
           avatar_url?: string | null
-          bio?: string | null
           created_at?: string
+          daily_tasks_used?: number
           email: string
-          id?: string
-          is_verified?: boolean | null
-          location?: string | null
-          phone?: string | null
+          full_name?: string | null
+          id: string
+          last_task_reset_date?: string
+          membership_expires_at?: string | null
+          membership_tier?: Database["public"]["Enums"]["membership_tier"]
+          pending_earnings?: number
+          rating?: number | null
+          tasks_completed?: number
+          total_earnings?: number
           updated_at?: string
-          user_id: string
-          username: string
         }
         Update: {
+          approved_earnings?: number
           avatar_url?: string | null
-          bio?: string | null
           created_at?: string
+          daily_tasks_used?: number
           email?: string
+          full_name?: string | null
           id?: string
-          is_verified?: boolean | null
-          location?: string | null
-          phone?: string | null
+          last_task_reset_date?: string
+          membership_expires_at?: string | null
+          membership_tier?: Database["public"]["Enums"]["membership_tier"]
+          pending_earnings?: number
+          rating?: number | null
+          tasks_completed?: number
+          total_earnings?: number
           updated_at?: string
-          user_id?: string
-          username?: string
         }
         Relationships: []
       }
-      sponsor_requests: {
+      transactions: {
         Row: {
-          admin_notes: string | null
+          amount: number
           created_at: string
-          duration_days: number
+          description: string | null
           id: string
-          listing_id: string
-          requested_at: string
-          reviewed_at: string | null
-          reviewed_by: string | null
+          reference_id: string | null
           status: string
+          type: string
           user_id: string
         }
         Insert: {
-          admin_notes?: string | null
+          amount: number
           created_at?: string
-          duration_days?: number
+          description?: string | null
           id?: string
-          listing_id: string
-          requested_at?: string
-          reviewed_at?: string | null
-          reviewed_by?: string | null
+          reference_id?: string | null
           status?: string
+          type: string
           user_id: string
         }
         Update: {
-          admin_notes?: string | null
+          amount?: number
           created_at?: string
-          duration_days?: number
+          description?: string | null
           id?: string
-          listing_id?: string
-          requested_at?: string
-          reviewed_at?: string | null
-          reviewed_by?: string | null
+          reference_id?: string | null
           status?: string
+          type?: string
           user_id?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: "sponsor_requests_listing_id_fkey"
-            columns: ["listing_id"]
-            isOneToOne: false
-            referencedRelation: "listings"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       user_roles: {
         Row: {
-          created_at: string
           id: string
           role: Database["public"]["Enums"]["app_role"]
           user_id: string
         }
         Insert: {
-          created_at?: string
           id?: string
-          role?: Database["public"]["Enums"]["app_role"]
+          role: Database["public"]["Enums"]["app_role"]
           user_id: string
         }
         Update: {
-          created_at?: string
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
@@ -608,23 +299,6 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      are_friends: {
-        Args: { _user_id_1: string; _user_id_2: string }
-        Returns: boolean
-      }
-      count_user_images_today: { Args: { _user_id: string }; Returns: number }
-      create_audit_log: {
-        Args: {
-          p_action: string
-          p_entity_id: string
-          p_entity_type: string
-          p_metadata?: Json
-          p_new_data?: Json
-          p_old_data?: Json
-          p_user_id: string
-        }
-        Returns: string
-      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -634,11 +308,10 @@ export type Database = {
       }
     }
     Enums: {
-      app_role: "admin" | "user"
-      friend_request_status: "pending" | "accepted" | "rejected"
-      listing_status: "available" | "out_of_stock" | "expired" | "draft"
-      listing_type: "product" | "service" | "event"
-      story_reaction_type: "like" | "love" | "laugh" | "wow" | "sad" | "angry"
+      app_role: "admin" | "freelancer"
+      job_difficulty: "easy" | "medium" | "hard"
+      membership_tier: "none" | "regular" | "pro" | "vip"
+      submission_status: "pending" | "approved" | "rejected"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -766,11 +439,10 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["admin", "user"],
-      friend_request_status: ["pending", "accepted", "rejected"],
-      listing_status: ["available", "out_of_stock", "expired", "draft"],
-      listing_type: ["product", "service", "event"],
-      story_reaction_type: ["like", "love", "laugh", "wow", "sad", "angry"],
+      app_role: ["admin", "freelancer"],
+      job_difficulty: ["easy", "medium", "hard"],
+      membership_tier: ["none", "regular", "pro", "vip"],
+      submission_status: ["pending", "approved", "rejected"],
     },
   },
 } as const
