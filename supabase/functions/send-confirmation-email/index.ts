@@ -1,9 +1,7 @@
 // deno-lint-ignore-file
-import * as React from 'https://esm.sh/react@18.3.1'
 import { Webhook } from 'https://esm.sh/standardwebhooks@1.0.0'
-import { Resend } from 'https://esm.sh/resend@4.0.0'
 
-const resend = new Resend(Deno.env.get('RESEND_API_KEY') as string)
+const BREVO_API_KEY = Deno.env.get('BREVO_API_KEY') as string
 const hookSecret = Deno.env.get('SEND_EMAIL_HOOK_SECRET') as string
 
 const corsHeaders = {
@@ -123,16 +121,29 @@ Deno.serve(async (req) => {
       email_action_type,
     })
 
-    const { error } = await resend.emails.send({
-      from: 'Sokoni Arena <noreply@sokoniarena.com>',
-      to: [user.email],
-      subject: 'Confirm your Sokoni Arena account',
-      html,
+    // Send email using Brevo API
+    const brevoResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: {
+        'accept': 'application/json',
+        'api-key': BREVO_API_KEY,
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        sender: {
+          name: 'Sokoni Arena',
+          email: 'noreply@sokoniarena.com',
+        },
+        to: [{ email: user.email }],
+        subject: 'Confirm your Sokoni Arena account',
+        htmlContent: html,
+      }),
     })
 
-    if (error) {
-      console.error('Resend error:', error)
-      throw error
+    if (!brevoResponse.ok) {
+      const errorData = await brevoResponse.json()
+      console.error('Brevo error:', errorData)
+      throw new Error(errorData.message || 'Failed to send email via Brevo')
     }
 
     console.log(`Confirmation email sent successfully to ${user.email}`)
