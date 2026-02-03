@@ -26,25 +26,24 @@ import {
 
 interface Conversation {
   id: string;
-  listing_id: string;
+  listing_id: string | null;
   buyer_id: string;
   seller_id: string;
   created_at: string;
-  updated_at: string;
   last_message_at: string | null;
   listing?: {
     title: string;
-    images: string[];
+    images: string[] | null;
     price: number | null;
   };
   other_user?: {
-    username: string;
+    username: string | null;
     avatar_url: string | null;
   };
   last_message?: {
     content: string;
     sender_id: string;
-    is_read: boolean;
+    is_read: boolean | null;
   };
   unread_count?: number;
 }
@@ -113,7 +112,7 @@ export default function Messages() {
 
     const { data: convos } = await supabase
       .from("conversations")
-      .select("*")
+      .select("id, listing_id, buyer_id, seller_id, created_at, last_message_at")
       .or(`buyer_id.eq.${user.id},seller_id.eq.${user.id}`)
       .order("last_message_at", { ascending: false, nullsFirst: false });
 
@@ -125,15 +124,15 @@ export default function Messages() {
           const { data: listing } = await supabase
             .from("listings")
             .select("title, images, price")
-            .eq("id", convo.listing_id)
+            .eq("id", convo.listing_id!)
             .maybeSingle();
 
-          // Get other user's profile
+          // Get other user's profile - profiles table uses 'id' as the user identifier
           const otherUserId = convo.buyer_id === user.id ? convo.seller_id : convo.buyer_id;
           const { data: profile } = await supabase
             .from("profiles")
             .select("username, avatar_url")
-            .eq("user_id", otherUserId)
+            .eq("id", otherUserId)
             .maybeSingle();
 
           // Get last message

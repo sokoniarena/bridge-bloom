@@ -22,28 +22,16 @@ interface Listing {
   location: string;
   created_at: string;
   user_id: string;
-  profiles?: { username: string; email: string } | null;
-}
-
-interface AuditLog {
-  id: string;
-  user_email: string | null;
-  entity_type: string;
-  entity_id: string | null;
-  action: string;
-  created_at: string;
-  old_data: any;
-  new_data: any;
+  profiles?: { username: string | null; email: string } | null;
 }
 
 interface UserProfile {
   id: string;
-  user_id: string;
-  username: string;
+  username: string | null;
   email: string;
   phone: string | null;
   created_at: string;
-  is_verified: boolean;
+  is_verified: boolean | null;
 }
 
 export default function Admin() {
@@ -56,13 +44,11 @@ export default function Admin() {
   // Data states
   const [listings, setListings] = useState<Listing[]>([]);
   const [users, setUsers] = useState<UserProfile[]>([]);
-  const [auditLogs, setAuditLogs] = useState<AuditLog[]>([]);
 
   // Stats
   const [stats, setStats] = useState({
     totalListings: 0,
     totalUsers: 0,
-    totalAuditLogs: 0,
   });
 
   const fetchListings = async () => {
@@ -73,14 +59,14 @@ export default function Admin() {
       .limit(100);
 
     if (!error && data) {
-      // Fetch profiles separately
+      // Fetch profiles separately - profiles table uses 'id' as the user identifier
       const userIds = [...new Set(data.map((l) => l.user_id))];
       const { data: profiles } = await supabase
         .from("profiles")
-        .select("user_id, username, email")
-        .in("user_id", userIds);
+        .select("id, username, email")
+        .in("id", userIds);
 
-      const profileMap = new Map(profiles?.map((p) => [p.user_id, p]) || []);
+      const profileMap = new Map(profiles?.map((p) => [p.id, p]) || []);
       
       const listingsWithProfiles = data.map((listing) => ({
         ...listing,
@@ -95,32 +81,19 @@ export default function Admin() {
   const fetchUsers = async () => {
     const { data, error } = await supabase
       .from("profiles")
-      .select("*")
+      .select("id, username, email, phone, created_at, is_verified")
       .order("created_at", { ascending: false })
       .limit(100);
 
-    if (!error) {
-      setUsers(data || []);
-      setStats((prev) => ({ ...prev, totalUsers: data?.length || 0 }));
-    }
-  };
-
-  const fetchAuditLogs = async () => {
-    const { data, error } = await supabase
-      .from("audit_logs")
-      .select("*")
-      .order("created_at", { ascending: false })
-      .limit(100);
-
-    if (!error) {
-      setAuditLogs(data || []);
-      setStats((prev) => ({ ...prev, totalAuditLogs: data?.length || 0 }));
+    if (!error && data) {
+      setUsers(data as UserProfile[]);
+      setStats((prev) => ({ ...prev, totalUsers: data.length }));
     }
   };
 
   const fetchAllData = async () => {
     setIsLoading(true);
-    await Promise.all([fetchListings(), fetchUsers(), fetchAuditLogs()]);
+    await Promise.all([fetchListings(), fetchUsers()]);
     setIsLoading(false);
   };
 
@@ -157,15 +130,8 @@ export default function Admin() {
 
   const filteredUsers = users.filter(
     (u) =>
-      u.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (u.username?.toLowerCase() || "").includes(searchQuery.toLowerCase()) ||
       u.email.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  const filteredAuditLogs = auditLogs.filter(
-    (l) =>
-      l.action.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      l.entity_type.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      l.user_email?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   if (!isAdmin) {
@@ -224,17 +190,6 @@ export default function Admin() {
               </div>
             </CardContent>
           </Card>
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <FileText className="h-5 w-5 text-primary" />
-                <div>
-                  <p className="text-2xl font-bold">{stats.totalAuditLogs}</p>
-                  <p className="text-sm text-muted-foreground">Audit Logs</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
         </div>
 
         {/* Search & Tabs */}
@@ -253,7 +208,6 @@ export default function Admin() {
               <TabsTrigger value="listings">Listings</TabsTrigger>
               <TabsTrigger value="sponsors">Sponsors</TabsTrigger>
               <TabsTrigger value="users">Users</TabsTrigger>
-              <TabsTrigger value="audit">Audit Logs</TabsTrigger>
             </TabsList>
           </Tabs>
         </div>
@@ -366,56 +320,6 @@ export default function Admin() {
                             </Badge>
                           </TableCell>
                           <TableCell>{format(new Date(user.created_at), "MMM d, yyyy")}</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Audit Logs Tab */}
-            {activeTab === "audit" && (
-              <Card>
-                <CardHeader>
-                  <CardTitle>Audit Logs</CardTitle>
-                  <CardDescription>Immutable record of all actions for legal evidence</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Timestamp</TableHead>
-                        <TableHead>User</TableHead>
-                        <TableHead>Action</TableHead>
-                        <TableHead>Entity Type</TableHead>
-                        <TableHead>Entity ID</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {filteredAuditLogs.map((log) => (
-                        <TableRow key={log.id}>
-                          <TableCell className="text-sm">
-                            {format(new Date(log.created_at), "MMM d, yyyy HH:mm:ss")}
-                          </TableCell>
-                          <TableCell>{log.user_email || "System"}</TableCell>
-                          <TableCell>
-                            <Badge
-                              variant={
-                                log.action === "delete"
-                                  ? "destructive"
-                                  : log.action === "create"
-                                  ? "default"
-                                  : "secondary"
-                              }
-                            >
-                              {log.action}
-                            </Badge>
-                          </TableCell>
-                          <TableCell>{log.entity_type}</TableCell>
-                          <TableCell className="font-mono text-xs">
-                            {log.entity_id?.slice(0, 8)}...
-                          </TableCell>
                         </TableRow>
                       ))}
                     </TableBody>

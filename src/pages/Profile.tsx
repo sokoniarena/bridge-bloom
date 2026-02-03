@@ -23,14 +23,13 @@ import { formatDistanceToNow } from "date-fns";
 
 interface Profile {
   id: string;
-  user_id: string;
-  username: string;
+  username: string | null;
   email: string;
   phone: string | null;
   avatar_url: string | null;
   bio: string | null;
   location: string | null;
-  is_verified: boolean;
+  is_verified: boolean | null;
   created_at: string;
 }
 
@@ -64,11 +63,11 @@ export default function Profile() {
 
       setIsLoading(true);
 
-      // Fetch profile
+      // Fetch profile - profiles table uses 'id' as the user identifier
       const { data: profileData } = await supabase
         .from("profiles")
-        .select("*")
-        .eq("user_id", userId)
+        .select("id, username, email, phone, avatar_url, bio, location, is_verified, created_at")
+        .eq("id", userId)
         .maybeSingle();
 
       if (profileData) {
@@ -167,7 +166,7 @@ export default function Profile() {
                 </Avatar>
 
                 <h1 className="font-display text-xl font-bold flex items-center justify-center gap-2">
-                  {profile.username}
+                  {profile.username || "User"}
                   {profile.is_verified && (
                     <CheckCircle className="h-5 w-5 text-primary fill-primary/20" />
                   )}
