@@ -1,4 +1,4 @@
-project_id = "tzrdtxrplzcvfotzndrp"
+project_id = "btusewcjqylfbemwkya"
 
 [functions.cleanup-expired-stories]
 verify_jwt = false
