@@ -9,5 +9,5 @@ verify_jwt = false
 [functions.import-listings]
 verify_jwt = false
 
-[functions.send-confirmation-email]
+[functions.send-auth-email]
 verify_jwt = false
